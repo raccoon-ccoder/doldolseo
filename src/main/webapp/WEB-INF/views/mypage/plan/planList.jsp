@@ -33,10 +33,10 @@
 </head>
 <body>
 <!-- header -->
-<div class="planL-header">
-    
+<div class="planD-header">
+    <jsp:include page="../../header.jsp"/>
 </div>
-<!-- // header-->
+<!-- // header -->
 
 <!-- 마이페이지 container -->
 <div class="planL-container">
@@ -204,7 +204,9 @@
 <!-- // 플래너 작성 버튼 클릭시 팝업창 -->
 
 <!-- footer -->
-<div class="planL-footer"></div>
+<div class="memberL-footer">
+    <%@ include file="../../footer.jsp" %>
+</div>
 <!-- // footer -->
 </body>
 </html>

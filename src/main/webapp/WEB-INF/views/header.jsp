@@ -6,55 +6,42 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css" type="text/css" rel="stylesheet">
-    <link href="_css/weather-icons.css" type="text/css" rel="stylesheet">
-    <link href="_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
-<%--    <style>--%>
-<%--        html, body {--%>
-<%--            font-size: 0;--%>
-<%--        }--%>
-<%--    </style>--%>
-    <meta charset="UTF-8">
-    <title>header</title>
-</head>
-<body>
-
-    <script>
-        var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=876eb9965cb5694a2644df701fa197dd";
-        $.ajax({
-            url: apiURI,
-            dataType: "json",
-            type: "GET",
-            async: "false",
-            success: function (resp) {
-                console.log(resp);
-                console.log("현재온도 : " + (resp.main.temp - 273.15));
-                console.log("현재습도 : " + resp.main.humidity);
-                console.log("날씨 : " + resp.weather[0].main);
-                console.log("상세날씨설명 : " + resp.weather[0].description);
-                console.log("날씨 이미지 : " + resp.weather[0].icon);
-                console.log("바람   : " + resp.wind.speed);
-                console.log("나라   : " + resp.sys.country);
-                console.log("도시이름  : " + resp.name);
-                console.log("구름  : " + (resp.clouds.all) + "%");
-
-                var text = resp.weather[0].description;
-                var tmp = Math.floor(resp.main.temp - 273.15);
-                var imgSrc = resp.weather[0].icon;
-
-                document.getElementById("weatherText").append(text);
-                document.getElementById("weatherTmp").append(tmp + "ºc");
-                document.getElementById("weatherImg").src = "http://openweathermap.org/img/wn/" + imgSrc + "@2x.png";
-            }
-        })
-    </script>
+<link href="_css/mainStyle.css" type="text/css" rel="stylesheet">
+<link href="_css/weather-icons.css" type="text/css" rel="stylesheet">
+<link href="_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
 
     <!--미니 헤더 : 로고, 검색, 날씨위젯-->
-    <div id="headerM-container">
+    <div id="headerM-container" style="font-size: 0">
+        <script>
+            var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&appid=876eb9965cb5694a2644df701fa197dd";
+            $.ajax({
+                url: apiURI,
+                dataType: "json",
+                type: "GET",
+                async: "false",
+                success: function (resp) {
+                    console.log(resp);
+                    console.log("현재온도 : " + (resp.main.temp - 273.15));
+                    console.log("현재습도 : " + resp.main.humidity);
+                    console.log("날씨 : " + resp.weather[0].main);
+                    console.log("상세날씨설명 : " + resp.weather[0].description);
+                    console.log("날씨 이미지 : " + resp.weather[0].icon);
+                    console.log("바람   : " + resp.wind.speed);
+                    console.log("나라   : " + resp.sys.country);
+                    console.log("도시이름  : " + resp.name);
+                    console.log("구름  : " + (resp.clouds.all) + "%");
+
+                    var text = resp.weather[0].description;
+                    var tmp = Math.floor(resp.main.temp - 273.15);
+                    var imgSrc = resp.weather[0].icon;
+
+                    document.getElementById("weatherText").append(text);
+                    document.getElementById("weatherTmp").append(tmp + "ºc");
+                    document.getElementById("weatherImg").src = "http://openweathermap.org/img/wn/" + imgSrc + "@2x.png";
+                }
+            })
+        </script>
+
         <!--로고-->
         <div id="headerM-logoBox">
             <img src="_image/logo/l2.png" style="width: 50px; height: 40px; margin: 4px 0 9px 0 ;">
@@ -155,6 +142,3 @@
             </ul>
         </div>
     </div>
-
-</body>
-</html>

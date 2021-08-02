@@ -114,6 +114,7 @@
             </div>
             <div class="msg" id="validate_birth"></div>
 
+            <!-- 성별 입력하는 구역 -->
             <h4 class="memberJ-container__h4--big">성별</h4>
             <select id="gender" class="memberJ-namecontainer__gender--blue" name="gender">
                 <option value="">성별</option>
@@ -121,6 +122,8 @@
                 <option value="F">여자</option>
                 <option value="U">선택 안함</option>
             </select>
+            <!-- // 성별 입력하는 구역 -->
+
             <div class="msg" id="validate_gender"></div>
         </div>
         <!-- // 이름, 닉네임, 생년월일, 성별  입력-->

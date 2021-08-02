@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <title>로그인</title>
     <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');

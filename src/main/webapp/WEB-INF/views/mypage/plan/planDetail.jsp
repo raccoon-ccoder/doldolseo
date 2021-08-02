@@ -374,7 +374,9 @@
     <!-- // 플래너 디테일-->
 
     <!-- footer -->
-    <div class="planD-footer"></div>
+    <div class="planD-footer">
+        <%@ include file="../../footer.jsp" %>
+    </div>
     <!-- // footer -->
 
     <!-- 플래너 수정 버튼 클릭시 팝업창 -->

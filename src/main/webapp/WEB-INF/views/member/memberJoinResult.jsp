@@ -13,17 +13,20 @@
     <meta charset="UTF-8">
     <title>회원가입 완료</title>
     <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
     </style>
 </head>
 <body>
-    <!-- -->
-    <div class="header"></div>
-    <!-- -->
+    <!-- header -->
+    <div class="planD-header">
+        <jsp:include page="../header.jsp"/>
+    </div>
+    <!-- // header -->
 
-    <!-- -->
+    <!-- 회원가입 완료 안내 container -->
     <div class="memberJR-container">
         <p class="memberJR-container__p1-bold">환영합니다!</p>
         <p class="memberJR-container__p2-bold">
@@ -37,10 +40,12 @@
         </p>
         <button class="memberJR-container__button-blue" onclick="#">메인으로</button>
     </div>
-    <!-- -->
+    <!-- // 회원가입 완료 안내 container -->
 
-    <!-- -->
-    <div class="footer"></div>
-    <!-- -->
+    <!-- footer -->
+    <div class="memberL-footer">
+        <%@ include file="../footer.jsp" %>
+    </div>
+    <!-- // footer -->
 </body>
 </html>
