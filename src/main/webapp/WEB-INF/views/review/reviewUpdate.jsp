@@ -120,7 +120,7 @@
                         <button type="button" class="button--exceptionboot" onclick="addTitle();">적용</button>
                     </td>
                 </tr>
-                    ㅋ
+
                 <%-- 코스 그리기 : canvas --%>
                 <tr class="common-tbl__item">
                     <td style="width: 180px">
