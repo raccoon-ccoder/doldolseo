@@ -88,7 +88,7 @@
             <div class="crew-info__introbox">
                 <div class="crew-info__item" style="margin-top: 112px">
                     관심지역 :
-                    <span class="crew-namelabel" style="width: auto; padding: 2px 13px 0 13px">홍대, 강남</span>
+                    <span class="crew-namelabel">홍대, 강남</span>
                     <button id="crewM-btn--modifyArea" class="crew-button">수정</button>
                 </div>
 

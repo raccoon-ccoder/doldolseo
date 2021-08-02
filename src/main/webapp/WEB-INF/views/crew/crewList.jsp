@@ -20,8 +20,7 @@
             <jsp:include page="../header.jsp"/>
         </div>
 
-    <section class="crew-mainContainer" style="height: 1000px">
-
+    <section class="crew-mainContainer">
         <%-- 크루 네비게이션 : 공통 --%>
         <nav class="crew-navi">
             <span class="crew-navi__btn">크루활동</span>
@@ -69,7 +68,7 @@
         </div>
 
         <%-- 크루 목록 --%>
-        <%-- * 크루이름 최대 7자 까지 --%>
+        <%-- * 크루이름 최대 8자 까지 --%>
         <div class="crew-listContainer">
             <%-- 크루프로필 start --%>
             <div class="crew-crewProfile">
@@ -105,7 +104,7 @@
                     <div class="crew-crewProfile__crewnameBox__grade">
                         <img src="_image/crew/crew_grade3.png" alt="crew_logo">
                     </div>
-                        방탕코딩단
+                        방탕코딩단단단단
                     </span>
                 </div>
                 <div class="crew-crewProfile__master">

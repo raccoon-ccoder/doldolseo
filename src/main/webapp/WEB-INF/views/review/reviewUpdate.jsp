@@ -18,28 +18,12 @@
     <%-- 코스 그리기 --%>
     <script src="_js/draw_course.js"></script>
 
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                //summernote 속성
-                width: 1100,
-                height: 400,
-                minHeight: null,
-                maxHeight: null,
-                focus: true,
-                lang: "ko-KR",
-                placeholder: '최대 2048자까지 쓸 수 있습니다'
-            });
-        });
-    </script>
+    <!-- include summernote css -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 </head>
 <body>
@@ -77,6 +61,7 @@
                         </select>
                     </td>
                 </tr>
+
                 <%-- 제목 : text --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
@@ -86,6 +71,7 @@
                         <input style="width: 600px" type="text"/>
                     </td>
                 </tr>
+
                 <%-- 내용 : summernote --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
@@ -94,7 +80,23 @@
                     <td>
                         <textarea id="summernote"></textarea>
                     </td>
+                    <%-- summernote 실행 --%>
+                    <script>
+                        $(function () {
+                            $('#summernote').summernote({
+                                //summernote 속성
+                                width: 1100,
+                                height: 400,
+                                minHeight: null,
+                                maxHeight: null,
+                                focus: true,
+                                lang: "ko-KR",
+                                placeholder: '최대 2048자까지 쓸 수 있습니다'
+                            });
+                        });
+                    </script>
                 </tr>
+
                 <%-- 코스 그리기 추가 : select (선택시 코스 이름, 코스그리기 항목 추가) --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
@@ -107,6 +109,7 @@
                         </select>
                     </td>
                 </tr>
+
                 <%-- 코스 이름 추가 : select --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
@@ -117,6 +120,7 @@
                         <button type="button" class="button--exceptionboot" onclick="addTitle();">적용</button>
                     </td>
                 </tr>
+
                 <%-- 코스 그리기 : canvas --%>
                 <tr class="common-tbl__item">
                     <td style="width: 180px">

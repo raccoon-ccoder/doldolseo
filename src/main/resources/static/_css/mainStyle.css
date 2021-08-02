@@ -47,7 +47,7 @@
 
 #main_bestcourse > p {
     background-color: #5882FA;
-    font-family: "jua" ,sans-serif;
+    font-family: "jua", sans-serif;
     color: white;
     width: 100%;
     font-size: 33px;
@@ -76,9 +76,10 @@
     font-family: "jua", sans-serif;
     font-size: 1.7em;
 }
+
 #main_map--text > p {
     background-color: #5882FA;
-    font-family: "jua" ,sans-serif;
+    font-family: "jua", sans-serif;
     color: white;
     width: 100%;
     font-size: 33px;
@@ -90,7 +91,8 @@
     width: 770px;
     margin: 0 auto;
 }
-#main_map >img{
+
+#main_map > img {
     display: block;
     width: 900px;
     height: 500px;
@@ -99,33 +101,29 @@
 
 #main_crew {
     margin-top: 40px;
-    text-align: center;
     font-size: 20px;
-    border: 1px solid;
     width: 1600px;
+    /*border: 1px solid;*/
 }
 
 #main_crew--text {
-    text-align: left;
+    width: 1600px;
+    text-align: center;
     display: block;
-    margin-left: 225px;
     font-size: 20px;
-    border: 1px solid;
+    /*border: 1px solid;*/
 }
 
-#main_crew--container {
-    margin-top: 0px;
-    display: block;
-    border: 1px solid;
-}
 
 #main_crew--text1 {
     display: inline-block;
+    width: 357px;
 }
 
 #main_crew--text2 {
     display: inline-block;
-    margin-left: 430px;
+    margin-left: 100px;
+    width: 857px;
 }
 
 #main_crew p {
@@ -136,12 +134,11 @@
 
 #main_crew--bc {
     width: 350px;
+    height: 310px;
     border: 4px solid #495c75;
     border-radius: 10px;
     display: inline-block;
-    margin-bottom: 10px;
     vertical-align: top;
-    padding-bottom: 5px;
 }
 
 #main_crew--bc--photo {
@@ -149,19 +146,25 @@
     display: inline-block;
 }
 
+#main_crew--container {
+    width: inherit;
+    display: block;
+    text-align: center;
+    /*border: 1px solid;*/
+}
+
 #main_crew--bcp {
-    margin-left: 70px;
-    width: 700px;
+    margin-left: 100px;
+    width: 850px;
+    height: 310px;
     border-radius: 10px;
     border: 4px solid #495c75;
     display: inline-block;
 }
 
 #main_crew--bcp--table {
-    margin-left: 50px;
-    margin-top: 20px;
-    margin-bottom: 23px;
     font-family: nanumB, nanum;
+    margin: 27px;
 }
 
 #main_crew--bcp--table tr {
@@ -296,7 +299,7 @@
     display: inline-block;
     position: absolute;
     left: 145px;
-    top: 45px;
+    top: 35px;
     /*border: 1px solid;*/
 }
 
@@ -453,7 +456,7 @@
 /**footer**/
 #footer_container {
     background-color: #495c75;
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
 #footer_content {
@@ -1312,7 +1315,7 @@ table {
 /* crew common */
 .crew-mainContainer {
     width: 1400px;
-    /*min-height: 1000px;*/
+    min-height: 800px;
     text-align: center;
     margin: 0 auto 30px;
     font-size: 0;
@@ -1430,9 +1433,7 @@ table {
 }
 
 .crew-listContainer {
-    /*width: 1291px;*/
     width: 1400px;
-    /*height: 1000px;*/
     margin: 1px auto 0;
     position: relative;
     text-align: left;
@@ -1488,30 +1489,30 @@ table {
 
 .crew-crewProfile__crewnameBox__name {
     display: inline-block;
-    width: 154px;
-    height: 23px;
+    width: 160px;
+    height: 30px;
     position: absolute;
-    top: 6px;
-    left: 1px;
+    top: 3px;
+    left: 0;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
-    padding-bottom: 20px;
     /*border: 1pt solid;*/
 }
 
 .crew-crewProfile__crewnameBox__grade {
-    display: inline-block;
+    display: inline;
     width: 19px;
     height: 20px;
     overflow: hidden;
-    vertical-align: center;
     /*border: 1pt solid;*/
 }
 
 .crew-crewProfile__crewnameBox__grade > img {
+    vertical-align: middle;
     width: inherit;
     height: inherit;
     object-fit: cover;
+    margin-bottom: 4px;
 }
 
 .crew-crewProfile__master {
@@ -1617,7 +1618,7 @@ table {
     height: 27px;
     width: 120px;
     border-radius: 5px;
-    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .crew-infolabel {

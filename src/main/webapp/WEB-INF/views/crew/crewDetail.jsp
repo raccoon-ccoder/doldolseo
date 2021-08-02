@@ -16,7 +16,7 @@
     <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
     <script>
         function popupCrewJoin() {
-            window.open("popup_crewJoin.jsp", "크루가입", "width = 600, height = 470");
+            window.open("/crewJ", "크루가입", "width = 900, height = 770");
         }
     </script>
 </head>
@@ -94,7 +94,7 @@
             <div class="crew-info__introbox">
                 <div class="crew-info__item" style="margin-top: 112px">
                     관심지역 :
-                    <span class="crew-namelabel" style="width: auto; padding: 2px 13px 0 13px">홍대, 강남</span>
+                    <span class="crew-namelabel">홍대, 강남</span>
                 </div>
 
                 <div class="crew-info__item" style="border: none">
