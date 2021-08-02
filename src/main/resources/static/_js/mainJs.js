@@ -124,11 +124,11 @@ function pwCheck(){
 
     if(num.test(pw) && eng.test(pw) && spe.test(pw) && pw.length >7 && pw.length <= 20) {
         document.joinFrm.check_pw.value = "y";
-        document.joinFrm.password.style.backgroundImage = "url('../_image/lock/lock_blue.png')";
+        document.joinFrm.password.style.backgroundImage = "url('_image/lock/lock_blue.png')";
         document.getElementById('validate_pw').innerText = "";
     }else{
         document.joinFrm.check_pw.value = "";
-        document.joinFrm.password.style.backgroundImage = "url('../_image/lock/lock_red.png')"
+        document.joinFrm.password.style.backgroundImage = "url('_image/lock/lock_red.png')"
         document.getElementById('validate_pw').innerText = "8~20자 영문, 숫자, 특수문자를 사용하세요.";
     }
 }
@@ -144,11 +144,11 @@ function pw2Check(){
     var re_pw = document.joinFrm.password2.value;
     if(pw == re_pw){
         document.joinFrm.check_pw2.value = "y";
-        document.joinFrm.password2.style.backgroundImage = "url('../_image/lock/lock_blue.png')";
+        document.joinFrm.password2.style.backgroundImage = "url('_image/lock/lock_blue.png')";
         document.getElementById('validate_pw2').innerText = "";
     }else{
         document.joinFrm.check_pw2.value = "";
-        document.joinFrm.password2.style.backgroundImage = "url('../_image/lock/lock_red.png')"
+        document.joinFrm.password2.style.backgroundImage = "url('_image/lock/lock_red.png')"
         document.getElementById('validate_pw2').innerText = "비밀번호가 일치하지 않습니다. ";
     }
 }
@@ -356,7 +356,7 @@ function planInsert(place_name,place_y,place_x){
 function getHtml(place_name,place_y,place_x,num, data_date){
     var div = "<div class=\"planI-planbox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\">";
     div += "<div class=\"planI-plannum\">";
-    div += "<img src=\"../_image/num/number" + num + ".png\" class=\"planI-plannum__img-navy\">";
+    div += "<img src=\"_image/num/number" + num + ".png\" class=\"planI-plannum__img-navy\">";
     div += "<span class=\"planI-plannum__span--time\">시간</span>";
     div += "<span class=\"planI-plannum__span--memo\">메모</span></div>";
     div += " <div class=\"planI-plandetail\">";
@@ -382,7 +382,7 @@ function planDelete(num){
     kid.detach();
 
     next_kids.each(function (index, element){
-        var url = "../_image/num/number" + num + ".png";
+        var url = "_image/num/number" + num + ".png";
         $(this).find('img').attr("src", url);
 
         var btn = "planDelete(" + num + ")";
