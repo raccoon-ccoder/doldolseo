@@ -30,7 +30,7 @@
 
             var img = '${member.member_img}';
             if(img == null){
-                $('#my_img').attr("src","img/sample.png");
+                $('#my_img').attr("src","../_image/sample.png");
             }
         });
     </script>
@@ -40,9 +40,11 @@
     </style>
 </head>
 <body>
-    <!--header -->
-    <div class="mypageD-header"></div>
-    <!-- // header -->
+<!-- header -->
+<div class="planD-header">
+    <jsp:include page="../header.jsp"/>
+</div>
+<!-- // header -->
 
     <!-- 마이페이지 container -->
     <div class="mypageD-mypagecontainer">
@@ -70,7 +72,7 @@
 
                     <div class="mypageD-imgbox">
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
-                        <img id="my_img" class="mypageD-imgbox__img--small" src="${member.member_img}">
+                        <img id="my_img" class="mypageD-imgbox__img--small" src="_image/sample.png">
                         <!-- 백엔드 작업시 src 속성값 변경 -->
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
                         <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="member_img" onchange="setImg(event);">
@@ -296,7 +298,9 @@
     <!-- // 마이페이지 상세 -->
 
     <!-- -->
-    <div class="mypageD-footer"></div>
+    <div class="mypageD-footer">
+        <%@ include file="../footer.jsp" %>
+    </div>
     <!-- -->
 </body>
 </html>

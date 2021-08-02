@@ -114,7 +114,7 @@
 
 <!-- header -->
 <div class="planI-header">
-    <a href="#"><img src="img/_img"></a>
+    <a href="#"><img src="_image/logo.png"></a>
 
     <button class="planI-header__button--sumbit">저장</button>
     <button class="planI-header__button--close">닫기</button>
@@ -150,7 +150,7 @@
                     <c:if test="${plan.date eq day}">
                         <div class="planI-planbox" data-date="${plan.date}" data-y="${plan.y}" data-x="${plan.x}">
                             <div class="planI-plannum">
-                                <img src="img/num/number<%=i%>.png" class="planI-plannum__img-navy">
+                                <img src="_img/num/number<%=i%>.png" class="planI-plannum__img-navy">
 
                                 <span class="planI-plannum__span--time">시간</span>
 
@@ -174,7 +174,7 @@
                 <!-- 예시 코드
                  <div class="planI-planbox" data-date="2021.07.01" data-y="30" data-x="120">
                      <div class="planI-plannum">
-                         <img src="img/num/number1.png" class="planI-plannum__img-navy">
+                         <img src="_img/num/number1.png" class="planI-plannum__img-navy">
 
                          <span class="planI-plannum__span--time">시간</span>
 
