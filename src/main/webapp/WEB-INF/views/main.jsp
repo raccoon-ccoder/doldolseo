@@ -12,8 +12,6 @@
 <head>
     <meta charset="UTF-8">
     <link href="_css/mainStyle.css" type="text/css" rel="stylesheet">
-    <link href="_css/weather-icons.css" type="text/css" rel="stylesheet">
-    <link href="_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
