@@ -26,7 +26,7 @@
             });
 
             let randomNum = Math.floor(Math.random() * 5) + 1;
-            $('.planD-imgbox').children('img').attr('src', '/_image/tour/tour' + randomNum + '.jpg');
+            $('.planD-imgbox').children('img').attr('src', '_image/tour/tour' + randomNum + '.jpg');
         });
     </script>
     <style>
