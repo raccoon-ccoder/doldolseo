@@ -25,12 +25,6 @@ next.onclick = nextSlide;
 // showSlide() 함수 이용하여 current에 보여줄 이미지
 function showSlide(n){
     for(var i=0;i<slides.length;i++){
-        area
-        areaListData
-        crewtest
-        logo
-        seoul
-        testdol
         slides[i].style.display = "none";
     }
     slides[n].style.display = "block";

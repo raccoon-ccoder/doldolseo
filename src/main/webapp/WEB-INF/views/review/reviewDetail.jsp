@@ -256,8 +256,8 @@
 
     </div>
     <%-- 푸터 --%>
-    <footer style="background-color: bisque">
-        footerfooterfooter
-    </footer>
+        <footer>
+            <jsp:include page="../footer.jsp"/>
+        </footer>
 </body>
 </html>

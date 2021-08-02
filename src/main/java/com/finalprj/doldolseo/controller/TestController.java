@@ -148,6 +148,11 @@ public class TestController {
         return "/crew/crewManage";
     }
 
+    @RequestMapping("/crewJ")
+    public String test23_1() throws Exception{
+        return "/crew/popup_crewJoin";
+    }
+
     @RequestMapping("/crewBoardL")
     public String test24() throws Exception{
         return "/crew/crewBoard/crewBoardList";

@@ -132,17 +132,16 @@
 
                 <div id="main_crew--bcp">
                     <div id="main_crew--bcp--table">
-                        <table width="600" height="250" style="border-collapse: collapse">
+                        <table style="width: 800px; height: 250px; border-collapse: collapse">
                             <thead>
-                            <tr height="30"
-                                style="text-align:center; padding: 10px; color: white; font-size: 1em; background-color: #1b3067;">
+                            <tr style="height:35px; line-height: 40px; text-align:center; color: white; font-size: 18px; background-color: #1b3067;">
                                 <th>CREW</th>
                                 <th>CATEGORY</th>
                                 <th>TITLE</th>
                                 <th>WRITER</th>
                             </tr>
                             </thead>
-                            <tbody style="text-align: center; font-family: nanumB; font-size: 1em;">
+                            <tbody style="text-align: center; font-family: nanumB; font-size: 16px;">
                             <tr>
                                 <td>돌고래와춤을</td>
                                 <td>맛집</td>

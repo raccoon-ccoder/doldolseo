@@ -63,7 +63,6 @@
 
         <%-- 크루 정보 입력 폼 : 로고, 크루명, 관심지역, 크루 소개(간략, 상세) --%>
         <div class="common-miniTitle" style="top:45px; width: 1115px;">
-            &bull;
             크루 정보 입력
         </div>
         <table class="crewI-insertTbl">
@@ -123,7 +122,6 @@
 
         <%-- 크루 모집 공고 입력 폼 : 모집공고, 가입양식 질문 , 짋문추가 기능 --%>
         <div class="common-miniTitle" style="top:45px; width: 1115px;">
-            &bull;
             크루 모집 공고 입력
             <button id="crewI-btn--addQuestion" class="crew-button">질문 추가</button>
             <%-- 클릭시 가입 질문 양식 추가 됨 --%>
