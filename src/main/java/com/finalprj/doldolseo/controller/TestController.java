@@ -108,7 +108,7 @@ public class TestController {
     }
 
     //test by 김경일
-    @RequestMapping("/review")
+    @RequestMapping("/reviewL")
     public String test16() throws Exception{
         return "/review/reviewList";
     }
