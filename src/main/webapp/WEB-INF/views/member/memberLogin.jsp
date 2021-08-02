@@ -18,8 +18,8 @@
     </style>
     <script type="text/javascript" src="_js/mainJs.js"></script>
     <script>
-        window.onload = function(){
-            if(getCookie("id")){
+        window.onload = function () {
+            if (getCookie("id")) {
                 document.getElementById('login_id').value = getCookie("id");
                 document.getElementById('remember_id').checked = true;
             }
@@ -43,7 +43,10 @@
 </head>
 <body>
     <!-- header  -->
-    <div class="memberL-header">
+    <%--    <div class="memberL-header">--%>
+    <%--    </div>--%>
+    <div class="planD-header">
+        <jsp:include page="../header.jsp"/>
     </div>
     <!-- // header  -->
 
@@ -53,17 +56,20 @@
 
         <form action="#" method="post" name="loginForm" onsubmit="return loginCheck()">
             <div>
-                <input id="login_id" class="memberL-container__input--big" type="text" name="id" size="30" placeholder="아이디"> <br />
-                <input id="login_pw" class="memberL-container__input--big" type="password" name="password" size="40" placeholder="비밀번호"> <br/>
+                <input id="login_id" class="memberL-container__input--big" type="text" name="id" size="30"
+                       placeholder="아이디"> <br/>
+                <input id="login_pw" class="memberL-container__input--big" type="password" name="password" size="40"
+                       placeholder="비밀번호"> <br/>
             </div>
 
-                <label class="memberL-container__label--move">
-                    <input id="remember_id" type="checkbox" name="remember_id" value="y"> 아이디 기억하기
-                </label>
+            <label class="memberL-container__label--move">
+                <input id="remember_id" type="checkbox" name="remember_id" value="y"> 아이디 기억하기
+            </label>
 
             <div id="memberL-btncontainer">
                 <input type="submit" class="memberL-btncontainer__input-big" value="로그인">
-                <input type="button" class="memberL-btncontainer__input-big" value="회원가입" onclick="location.href='http://localhost:8080/memberJ'">
+                <input type="button" class="memberL-btncontainer__input-big" value="회원가입"
+                       onclick="location.href='http://localhost:8080/memberJ'">
             </div>
         </form>
     </div>

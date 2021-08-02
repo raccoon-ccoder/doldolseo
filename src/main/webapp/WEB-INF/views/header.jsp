@@ -13,11 +13,11 @@
     <link href="_css/mainStyle.css" type="text/css" rel="stylesheet">
     <link href="_css/weather-icons.css" type="text/css" rel="stylesheet">
     <link href="_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
-    <style>
-        html, body {
-            font-size: 0;
-        }
-    </style>
+<%--    <style>--%>
+<%--        html, body {--%>
+<%--            font-size: 0;--%>
+<%--        }--%>
+<%--    </style>--%>
     <meta charset="UTF-8">
     <title>header</title>
 </head>
