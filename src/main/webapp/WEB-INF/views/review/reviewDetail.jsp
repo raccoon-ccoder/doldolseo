@@ -45,7 +45,7 @@
             <div class="review-container--top">
                 <%-- 제목 --%>
                 <div class="common-top__title" style="color: #F6CECE;">
-                    후기게시판 - 글 상세보기
+                    지역게시판
                 </div>
 
                 <%-- 게시판 드릴다운 --%>
@@ -256,8 +256,8 @@
 
     </div>
     <%-- 푸터 --%>
-        <footer>
-            <jsp:include page="../footer.jsp"/>
-        </footer>
+    <footer>
+        <jsp:include page="../footer.jsp"/>
+    </footer>
 </body>
 </html>
