@@ -16,9 +16,9 @@
 </head>
 <body>
     <%-- 헤더 --%>
-        <div>
-            <jsp:include page="../header.jsp"/>
-        </div>
+    <div>
+        <jsp:include page="../header.jsp"/>
+    </div>
 
     <section class="crew-mainContainer">
         <%-- 크루 네비게이션 : 공통 --%>
@@ -242,6 +242,8 @@
     </section>
 
     <%-- footer --%>
+    <footer>
         <jsp:include page="../footer.jsp"/>
+    </footer>
 </body>
 </html>

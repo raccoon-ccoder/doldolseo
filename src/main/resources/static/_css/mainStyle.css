@@ -456,13 +456,14 @@
 /**footer**/
 #footer_container {
     background-color: #495c75;
-    margin-top: 20px;
+    margin-top: 40px;
+    width: 100%;
 }
 
 #footer_content {
     color: white;
     text-align: center;
-    padding-top: 70px;
+    padding-top: 80px;
     padding-bottom: 40px;
 }
 
@@ -474,72 +475,102 @@
 /**areaList**/
 #areaList-container {
     background-color: white;
+    width: 1500px;
+    margin: 0 auto;
+    /*border: 1px solid;*/
 }
 
 #areaList-img {
-    margin-top: 60px;
+    margin-top: 50px;
     text-align: center;
+    /*border: 1px solid;*/
 }
 
 #areaList-nav {
-    margin-top: 10px;
+    width: 1500px;
+    height: 80px;
+    margin: 30px auto 0;
+    position: relative;
+    /*border: 1px solid;*/
 }
 
-#areaList-nav__cate {
+#areaList-nav__cat {
     display: inline-block;
-    margin-top: 20px;
-    margin-left: 90px;
-    border-radius: 20px;
-    border: 1px solid #E0EEFF;
+    width: 515px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 14px;
     background-color: #E0EEFF;
-    padding-bottom: 20px;
-    width: 500px;
-    height: 30px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 5px #CDCECF;
 }
 
-#areaList-nav__cate ul li {
+#areaList-nav__cat ul li {
     list-style: none;
     float: left;
-    font-family: jua;
-    font-size: 1.2em;
-    color: #2a5470;
-    margin-left: 30px;
+    font-family: 'jua', sans-serif;
+    font-size: 20px;
+    margin-left: 28px;
+}
+
+#areaList-nav__cat a {
+    color: #647C97;
 }
 
 #areaList-nav__search {
-    width: 350px;
-    height: 47px;
-    border: 1px solid #E0EEFF;
-    border-radius: 20px;
+    font-size: 0;
     display: inline-block;
-    margin-left: 350px;
-    vertical-align: top;
-    margin-top: 20px;
+    width: 310px;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    top: 14px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid #E0EEFF;
     background-color: #E0EEFF;
 }
 
 #areaList-nav__search__input {
-    margin-left: 50px;
-    margin-top: 14px;
-    margin-bottom: 10px;
-    width: 200px;
+    margin-top: 10px;
+    width: 220px;
+    height: 25px;
+    border: 2px solid #00addd;
 }
 
-#areaList-databox {
-    border: 1px solid #E0EEFF;
+#areaList-nav__search__btn {
+    vertical-align: bottom;
+    text-align: center;
+    width: 36px;
+    height: 31px;
+    border: 2px solid #00addd;
+    background-color: #00addd;
+}
+
+#areaList-dataContainer {
     border-radius: 20px;
-    width: 1200px;
-    height: 920px;
-    margin-left: 80px;
-    margin-top: 10px;
-    padding-top: 30px;
-    padding-left: 30px;
+    width: 1500px;
+    height: 1050px;
+    border: 1px solid #E0EEFF;
     background-color: #E0EEFF;
     color: #647C97;
 }
 
-#areaList-data {
-    border: 1px solid;
+#areaList-dataBox {
+    width: 1175px;
+    height: 965px;
+    margin: 30px auto 0;
+    text-align: center;
+    /*border: 1px solid;*/
+}
+
+.areaList-data {
+    float: left;
+    display: inline-block;
+    border: 1pt solid #E0EEFF;
+    width: 290px;
+    text-align: center
 }
 
 #areaList-dataImg {
@@ -561,76 +592,105 @@
 #areaList-dataPage {
     padding-top: 10px;
     color: #2a5470;
-    font-family: jua;
-    font-size: 1.2em;
+    font-family: 'jua', sans-serif;
+    font-size: 20px;
     text-align: center;
 }
 
 /**areaDetail**/
 #areaDetail-container {
     background-color: white;
+    width: 1500px;
+    margin: 0 auto;
+    /*border: 1px solid;*/
+}
+
+#areaD-topContainer {
+    width: 1500px;
+    height: 100px;
+    margin-top: 40px;
+    /*border: 1px solid;*/
+}
+
+
+#areaDetail-name {
+    width: 1200px;
+    /*border-bottom: none;*/
+    text-align: center;
+    margin: 0 auto;
+    font-family: "Jua", sans-serif;
+    /*border: 3px solid #CDCECF;*/
 }
 
 #areaDetail-content {
-    width: 880px;
-    height: auto;
-    border: 1px solid #E0EEFF;
-    border-radius: 20px;
-    margin-top: 60px;
-    margin-left: 250px;
-    background-color: #E0EEFF;
-    font-family: jua;
+    width: 1500px;
+    font-family: "Jua", sans-serif;
     text-align: center;
-    padding-top: 30px;
-}
-
-#areaDetail-name {
+    margin-top: 0;
+    /*border-radius: 20px;*/
+    border: 1px solid #CDCECF;
 }
 
 #areaDetail-name h3 {
-    color: #2a5470;
-    font-family: nanumB;
+    color: #5882FA;
+    font-family: 'Nanum Gothic Coding', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 30px 0 10px 0;
+    /*border: 1px solid;*/
 }
 
 #areaDetail-name p {
-    font-size: 1.5em;
+    margin-top: 5px;
+    color: #647C97;
+    font-size: 40px;
+    /*border: 1px solid;*/
 }
 
 #areaDetail-img {
     margin-top: 50px;
-    padding-left: 20px;
 }
 
 #areaDetail-info {
-    margin-top: 50px;
-    width: 550px;
-    height: auto;
-    margin-left: 180px;
-}
-
-#areaDetail-info__table {
-    margin-top: 30px;
-    padding: 10px 10px 10px 80px;
-    background-color: #647C97;
-    font-family: nanumB;
-    font-size: 1em;
-}
-
-#areaDetail-info__table td {
-    padding-left: 40px;
-}
-
-#areaDetail-info__text {
+    margin: 40px auto;
     text-align: left;
-    font-size: 1em;
+    height: auto;
+    width: 900px;
+    /*border: 1px solid;*/
+    font-family: "Nanum Gothic", sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+    padding: 20px;
 }
 
 #areaDetail-map {
-    width: 400px;
-    height: 250px;
-    margin-top: 50px;
-    margin-left: 260px;
-    margin-bottom: 80px;
+    width: 1200px;
+    margin: 40px auto;
+    /*border: 1px solid;*/
+}
+
+#map {
+    width: 700px;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid #CDCECF;
+}
+
+#areaDetail-info__table {
+    width: 640px;
+    text-align: center;
+    margin: 0 auto 40px;
+    background-color: #647C97;
+    font-family: nanumB ,sans-serif;
+    font-size: 18px;
+    border-color: #647C97;
+    border-radius: 10px;
+    padding: 10px 30px 10px 30px;
+}
+
+#areaDetail-info__table th,td {
+    /*border: 1px solid;*/
 }
 
 /* by 김경일 */
@@ -728,8 +788,9 @@ table {
 
 .pagination td {
     border: 1px #CDCECF solid;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 13px;
+    font-family: 'Nanum Gothic Coding', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
     padding: 4px 14px 4px 14px;
 }
 
@@ -2271,7 +2332,7 @@ table {
     width: 900px;
     margin: 70px 0 70px 0;
     border: 2px solid #dadce0;
-    border-radius:15px;
+    border-radius: 15px;
 }
 
 .mypageD-crewcontainer__span--big {
@@ -3141,7 +3202,7 @@ table {
     margin: 30px auto;
 }
 
-.planD-footer{
+.planD-footer {
 
 }
 
@@ -3798,7 +3859,7 @@ table {
     border: none;
     border-radius: 5px;
     font-family: 'Jua', sans-serif;
-    margin-bottom:100px;
+    margin-bottom: 100px;
 }
 
 /* memberJoinResult */
@@ -3824,7 +3885,7 @@ table {
     font-size: 23px;
     margin: 40px auto;
     border: none;
-    border-radius:10px;
+    border-radius: 10px;
     font-family: 'Jua', sans-serif;
 }
 
@@ -3885,7 +3946,7 @@ table {
     font-family: 'Jua', sans-serif;
 }
 
-.memberL-footer{
+.memberL-footer {
 
 }
 

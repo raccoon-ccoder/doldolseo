@@ -233,9 +233,9 @@
     </section>
 
     <%-- footer --%>
-        <footer>
-            <jsp:include page="../footer.jsp"/>
-        </footer>
+    <footer>
+        <jsp:include page="../footer.jsp"/>
+    </footer>
 
 </body>
 </html>
