@@ -177,11 +177,13 @@
             </div>
         </div>
 
-        <!--푸터-->
-        <div>
-            <jsp:include page="footer.jsp"/>
-        </div>
     </div>
+
+    <!--푸터-->
+    <div>
+        <jsp:include page="footer.jsp"/>
+    </div>
+
     <script type="text/javascript" src="_js/mainUtil.js"></script>
 </body>
 </html>
