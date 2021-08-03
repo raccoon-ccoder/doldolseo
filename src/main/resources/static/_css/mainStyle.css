@@ -2493,9 +2493,9 @@ table {
 }
 
 .planL-container {
-    width: 1270px;
-    min-height: 1000px;
+    width: 1300px;
     margin: 0px auto;
+    overflow: auto;
 }
 
 .planL-navbox {
@@ -2545,7 +2545,7 @@ table {
 .planL-planbox {
     float: right;
     width: 1000px;
-    margin: 70px auto;
+    margin: 70px 10px 70px 0px;
 }
 
 .planL-titlebox {
