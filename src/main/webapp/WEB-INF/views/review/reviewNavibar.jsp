@@ -22,6 +22,11 @@
         </li>
         <li class="nav-list__item">
             <a href="#">
+                강북
+            </a>
+        </li>
+        <li class="nav-list__item">
+            <a href="#">
                 광화문
             </a>
         </li>
@@ -33,11 +38,6 @@
         <li class="nav-list__item">
             <a href="#">
                 여의도
-            </a>
-        </li>
-        <li class="nav-list__item">
-            <a href="#">
-                용산
             </a>
         </li>
         <li class="nav-list__item">
