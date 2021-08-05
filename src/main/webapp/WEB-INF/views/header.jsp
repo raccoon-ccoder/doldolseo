@@ -135,14 +135,14 @@
     <div id="header-nav__area">
         <ul onmouseover="document.getElementById('header-nav__area').style.display='block';"
             onmouseout="document.getElementById('header-nav__area').style.display='none';">
-            <li><a href="/areaL?sigungu=1">강남</a></li>
-            <li><a href="/areaL?sigungu=2">강북</a></li>
-            <li><a href="/areaL?sigungu=3">광화문</a></li>
-            <li><a href="/areaL?sigungu=4">명동</a></li>
-            <li><a href="/areaL?sigungu=5">여의도</a></li>
-            <li><a href="/areaL?sigungu=6">잠실</a></li>
-            <li><a href="/areaL?sigungu=7">홍대</a></li>
-            <li><a href="/areaL?sigungu=0">etc</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=1">강남</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=2">강북</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=3">광화문</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=4">명동</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=5">여의도</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=6">잠실</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=7">홍대</a></li>
+            <li><a href="${pageContext.request.contextPath}/areaL?sigungu=0">etc</a></li>
         </ul>
     </div>
 </div>

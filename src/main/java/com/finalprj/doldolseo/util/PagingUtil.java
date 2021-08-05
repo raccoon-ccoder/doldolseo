@@ -3,7 +3,7 @@ package com.finalprj.doldolseo.util;
 import org.springframework.data.domain.Page;
 
 /*
- * 페이지블록 (한번에 출력할 페이지 갯수)과 page 객체를 입력 받아, 페이징처리에 필요한 변수 계산
+ * 페이지블록 (한번에 출력할 페이지 갯수)과 Page 객체를 입력 받아, 페이징처리에 필요한 변수 계산
  */
 public class PagingUtil {
 

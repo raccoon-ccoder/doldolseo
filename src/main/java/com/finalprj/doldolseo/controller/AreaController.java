@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 /*
  * 지역게시판 Controller
  *
@@ -25,26 +27,39 @@ public class AreaController {
     @Autowired
     private AreaService service;
 
-    /*
-     * 지역게시판 - 지역 목록 페이지 출력
-     */
+    //지역게시판 - 시군구 코드및 컨텐츠타입으로 지역게시글 목록 출력
     @GetMapping(value = "/areaL")
     public String areaList(Model model,
                            @RequestParam(value = "sigungu") Integer sigungu,
+                           @RequestParam(value = "contentType", required = false) Integer contentType,
+                           @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
                            @PageableDefault(page = 0, size = 12) Pageable pageable) {
-        Page<AreaVO> areaList = service.getAreaList(sigungu, pageable);
 
-        PagingUtil pagingUtil = new PagingUtil(10,areaList);
+        Page<AreaVO> areaList;
+
+        if (searchKeyword == null) {
+            areaList = service.getAreaList(sigungu, contentType, pageable);
+        } else {
+            areaList = service.getAreaListBySearch(sigungu, searchKeyword, pageable);
+        }
+
+        PagingUtil pagingUtil = new PagingUtil(10, areaList);
 
         model.addAttribute("sigungu", sigungu);
+        model.addAttribute("contentType", contentType);
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("areaList", areaList);
         return "area/areaList";
     }
 
+
+    //지역게시판 - 지역명으로 지역정보 상세조회
     @GetMapping(value = "/areaD")
-    public String areaDetail() {
+    public String areaDetail(Model model, @RequestParam(value = "name") String name) {
+
+        AreaVO area = service.getArea(name);
+        model.addAttribute("area", area);
         return "area/areaDetail";
     }
 

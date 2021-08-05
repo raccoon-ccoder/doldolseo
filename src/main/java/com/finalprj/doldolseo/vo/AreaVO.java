@@ -28,7 +28,7 @@ public class AreaVO {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "sigungu")
+    @Column(name = "sigungu", nullable = false)
     private Integer sigungu;
 
     @Column(name = "zipcode")
@@ -49,7 +49,10 @@ public class AreaVO {
     @Column(name = "image2")
     private String image2;
 
-    @Column(name = "contentid")
+    @Column(name = "contenttype", nullable = false)
+    private Integer contentType;
+
+    @Column(name = "contentid", nullable = false)
     private Long contentid;
 
 }
