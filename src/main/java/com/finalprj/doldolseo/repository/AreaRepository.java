@@ -18,13 +18,13 @@ import java.util.List;
 @Repository
 public interface AreaRepository extends JpaRepository<AreaVO, String> {
 
-    //지역명으로 지역정보 조회
+    //지역명으로 지역정보 상세 조회
     AreaVO findFirstByName(String name);
 
-    //지역명+ 컨텐츠타입 으로 지역정보 조회
-//    List<AreaVO> findBySigungu(Integer sigungu, Pageable pageable);
+    //시군구코드 + 컨텐츠타입 으로 지역정보 조회
     Page<AreaVO> findBySigunguAndContentType(Integer sigungu, Integer contentType, Pageable pageable);
 
+    //시군구코드로 지역정보 조회
     Page<AreaVO> findBySigungu(Integer sigungu, Pageable pageable);
 
 }

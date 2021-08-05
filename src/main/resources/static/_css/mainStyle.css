@@ -486,12 +486,19 @@
     /*border: 1px solid;*/
 }
 
+#areaL-drilldownBox{
+    /*border: 1px solid;*/
+    width: 350px;
+    height: 30px;
+    margin-top: 30px;
+}
+
 #areaList-nav {
     width: 1500px;
     height: 80px;
-    margin: 30px auto 0;
+    margin: 0 auto;
     position: relative;
-    border: 1px solid;
+    /*border: 1px solid;*/
 }
 
 #areaList-nav__cat {
