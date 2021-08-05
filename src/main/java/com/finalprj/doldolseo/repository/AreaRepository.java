@@ -21,10 +21,10 @@ public interface AreaRepository extends JpaRepository<AreaVO, String> {
     //지역명으로 지역정보 조회
     AreaVO findFirstByName(String name);
 
-    //지역명으로 지역정보 조회
+    //지역명+ 컨텐츠타입 으로 지역정보 조회
 //    List<AreaVO> findBySigungu(Integer sigungu, Pageable pageable);
+    Page<AreaVO> findBySigunguAndContentType(Integer sigungu, Integer contentType, Pageable pageable);
+
     Page<AreaVO> findBySigungu(Integer sigungu, Pageable pageable);
-
-
 
 }

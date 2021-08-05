@@ -25,18 +25,18 @@ public class AreaController {
     @Autowired
     private AreaService service;
 
-    /*
-     * 지역게시판 - 지역 목록 페이지 출력
-     */
+    //지역게시판 - 시군구 코드및 컨텐츠타입으로 지역게시글 목록 출력
     @GetMapping(value = "/areaL")
     public String areaList(Model model,
                            @RequestParam(value = "sigungu") Integer sigungu,
+                           @RequestParam(value = "contentType", required = false) Integer contentType,
                            @PageableDefault(page = 0, size = 12) Pageable pageable) {
-        Page<AreaVO> areaList = service.getAreaList(sigungu, pageable);
+        Page<AreaVO> areaList = service.getAreaList(sigungu,contentType, pageable);
 
         PagingUtil pagingUtil = new PagingUtil(10,areaList);
 
         model.addAttribute("sigungu", sigungu);
+        model.addAttribute("contentType", contentType);
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("areaList", areaList);

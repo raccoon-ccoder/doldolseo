@@ -30,19 +30,18 @@ public class AreaService {
     }
 
 
-    //지역 목록 조회(시군구)
-//    public List<AreaVO> getAreaList(Integer sigungu) {
-//        return areaRepository.findBySigungu(sigungu);
-//    }
-    public Page<AreaVO> getAreaList(Integer sigungu, Pageable pageable) {
-        return areaRepository.findBySigungu(sigungu, pageable);
+    //지역 목록 조회(시군구코드 + 페이징 처리)
+    public Page<AreaVO> getAreaList(Integer sigungu, Integer contentType, Pageable pageable) {
+        if(contentType == null){
+            return areaRepository.findBySigungu(sigungu, pageable);
+        }
+        return areaRepository.findBySigunguAndContentType(sigungu, contentType, pageable);
     }
 
     //지역 목록 조회 (전체)
     public List<AreaVO> getAreaList() {
         return areaRepository.findAll();
     }
-
 
 
 }
