@@ -3771,7 +3771,7 @@ table {
     font-size: 18px;
 }
 
-.memberJ-namecontainer__input--blue:focus, memberJ-namecontainer__birth--blue:focus {
+.memberJ-namecontainer__input--blue:focus, .memberJ-namecontainer__birth--blue:focus {
     border: 2px solid #0080c0;
     outline: none;
     box-shadow: 1px 1px 1px gray;
@@ -3782,6 +3782,10 @@ table {
     width: 150px;
     border: 2px solid #dadce0;
     font-size: 18px;
+}
+
+.memberJ-container__input--date{
+    display: none;
 }
 
 .memberJ-namecontainer__gender--blue {

@@ -52,62 +52,6 @@ function setImg(event){
     }
     reader.readAsDataURL(event.target.files[0]);
 }
-/*
-작성자 : 백정연
-작성일 : 210721
-사용 페이지 :   memberJoin.jsp
-함수 설명 : ID 유효성 검사 함수
- */
-
-function idCheck() {
-    $.ajax({
-        url: "/#", /* requestMapping*/
-        type: "post",
-        data: {"id": $('#id').val()},
-        contentType: "application/json; charset=UTF-8",
-        success: function (data) {
-            if (data == 1) {
-                document.joinFrm.check_id.value = "y";
-                document.getElementById('validate_id').innerText = "";
-            } else if (data == 0) {
-                document.joinFrm.check_id.value = "";
-                document.getElementById('validate_id').innerText = "중복된 아이디가 있습니다.";
-            }
-        }
-    })
-}
-    /*
-    * @RequestMapping(value="/#")
-    public String test(@RequestParam Map<String, Object> param) {
-    String id = (String) param.get("id");
-    return 1 or 0;
-    }
-    * */
-
-/*
-작성자 : 백정연
-작성일 : 210721
-사용 페이지 :   memberJoin.jsp
-함수 설명 : 닉네임 유효성 검사 함수
- */
-
-function nickNameCheck(){
-    $.ajax({
-        url : "#",
-        type : "post",
-        data : {"nickname" : $('#nickname').val()},
-        contentType: "application/json; charset=UTF-8",
-        success : function (data){
-            if(data == 1){
-                document.joinFrm.check_nickname.value = "y";
-                document.getElementById('validate_nickname').innerText = "";
-            }else if(data == 0){
-                document.joinFrm.check_nickname.value = "";
-                document.getElementById('validate_nickname').innerText = "중복된 닉네임이 있습니다.";
-            }
-        }
-    })
-}
 
 /*
 작성자 : 백정연
@@ -170,7 +114,7 @@ function joinCheck(){
     var date = document.joinFrm.dd;
     var gender = document.joinFrm.gender;
     var email = document.joinFrm.email;
-    var check = document.joinFrm.check;
+    var check = document.joinFrm.check_rule;
 
     if(id.value.length ==0 || document.joinFrm.check_id.value.length ==0){
         document.getElementById('validate_id').innerText = "아이디를 다시 입력해주세요.";
@@ -192,7 +136,7 @@ function joinCheck(){
         document.getElementById('validate_nickname').innerText = "닉네임을 다시 입력해주세요.";
         nickname.focus();
         return false;
-    }else if(year.value.length ==0 || isNaN(year.value) || year.value > 2021){
+    }else if(year.value.length != 4 || isNaN(year.value) || year.value > 2021){
         document.getElementById('validate_birth').innerText = "생년월일을 입력해주세요.";
         year.focus();
         return false;
@@ -200,7 +144,7 @@ function joinCheck(){
         document.getElementById('validate_birth').innerText = "생년월일을 입력해주세요.";
         month.focus();
         return false;
-    }else if(date.value.length == 0 || isNaN(date.value) || parseInt(date.value) <1 || 31 < parseInt(date.value)){
+    }else if(date.value.length != 2 || isNaN(date.value) || parseInt(date.value) <1 || 31 < parseInt(date.value)){
         document.getElementById('validate_birth').innerText = "생년월일을 입력해주세요.";
         date.focus();
         return false;
@@ -217,7 +161,11 @@ function joinCheck(){
         check.focus();
         return false;
     }else{
-       return true;
+        var birth_string = year.value + "/" + month.value + "/" + date.value;
+        var birth_date = new Date(birth_string);
+        var birth_form = document.getElementById('birth');
+        birth_form.valueAsDate = birth_date;
+        return true;
     }
 }
 /*

@@ -13,7 +13,6 @@
     <meta charset="UTF-8">
     <title>회원가입 완료</title>
     <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
@@ -38,7 +37,7 @@
             보다 좋은 서비스를 받을 수 있도록 노력하겠습니다.<br />
             감사합니다 :D
         </p>
-        <button class="memberJR-container__button-blue" onclick="#">메인으로</button>
+        <button class="memberJR-container__button-blue" onclick="location.href='${pageContext.request.contextPath}/memberL'">로그인</button>
     </div>
     <!-- // 회원가입 완료 안내 container -->
 

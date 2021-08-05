@@ -18,24 +18,73 @@
     </style>
     <script type="text/javascript" src="_js/mainJs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var form_id = document.getElementById("id");
+
+            form_id.addEventListener("focusout", function(event) {
+                var id = $('#id').val();
+                $.ajax({
+                    async: true,
+                    url: "member/checkId", /* requestMapping*/
+                    type: "post",
+                    data: id,
+                    dataType : "json",
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (data) {
+                        if (data.result == 1) {
+                            document.joinFrm.check_id.value = "y";
+                            document.getElementById('validate_id').innerText = "";
+                        } else if(data.result == 0){
+                            document.joinFrm.check_id.value = "";
+                            document.getElementById('validate_id').innerText = "중복된 아이디가 있습니다.";
+                        }
+                    }
+                });
+            });
+
+            var form_nickname = document.getElementById("nickname");
+
+            form_nickname.addEventListener("focusout", function(event) {
+                var nickname = $('#nickname').val();
+                $.ajax({
+                    async: true,
+                    url: "member/checkNickname", /* requestMapping*/
+                    type: "post",
+                    data: nickname,
+                    dataType : "json",
+                    contentType: "application/json; charset=UTF-8",
+                    success: function (data) {
+                        if (data.result == 1) {
+                            document.joinFrm.check_nickname.value = "y";
+                            document.getElementById('validate_nickname').innerText = "";
+                        } else if(data.result == 0){
+                            document.joinFrm.check_nickname.value = "";
+                            document.getElementById('validate_nickname').innerText = "중복된 닉네임이 있습니다.";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body style="background-color: #f2f2f2;">
     <!-- header -->
     <div id="header" class="memberJ-header">
-        <a href="/main" id="memberJ-header__a">
+        <a href="${pageContext.request.contextPath}/main" id="memberJ-header__a">
             <img id="logoImg" class="memberJ-header__img--small" src="_image/logo.png">
         </a>
     </div>
     <!-- header -->
 
     <!-- container -->
-    <form action="memberLogin" method="post" enctype="multipart/form-data" name="joinFrm" onsubmit="return joinCheck()">
+    <form action="/register" method="post" enctype="multipart/form-data" name="joinFrm" onsubmit="return joinCheck()">
     <div id="memberJ-container">
 
         <!-- 아아디, 비밀번호 입력 -->
         <div id="memberJ-idcontainer">
             <h4 class="memberJ-container__h4--big">아이디</h4>
-            <input type="text" name="id" id="id" class="memberJ-container__input--big" maxlength="20" pattern="^([a-z0-9]){4,20}$" placeholder="4~20자 영문, 숫자를 사용하세요" onkeyup="idCheck()">
+            <input type="text" name="id" id="id" class="memberJ-container__input--big" maxlength="20" pattern="^([a-z0-9]){4,20}$" placeholder="4~20자 영문, 숫자를 사용하세요">
             <input type="hidden" name="check_id">
             <div class="msg" id="validate_id"></div>
 
@@ -62,11 +111,13 @@
             <div class="msg" id="validate_name"></div>
 
             <h4 class="memberJ-container__h4--big">닉네임</h4>
-            <input type="text" class="memberJ-container__input--big" name="nickname" id="nickname" maxlength="20" onkeyup="nickNameCheck()">
+            <input type="text" class="memberJ-container__input--big" name="nickname" id="nickname" maxlength="20">
             <input type="hidden" name="check_nickname">
             <div class="msg" id="validate_nickname"></div>
 
             <h4 class="memberJ-container__h4--big">생년월일</h4>
+            <input type="date" name="birth" id="birth" class="memberJ-container__input--date">
+
             <div id="birth_wrap">
                 <input type="text" class="memberJ-namecontainer__input--blue" name="yy" maxlength="4" placeholder="년(4자)">
 
@@ -110,7 +161,7 @@
                     </option>
                 </select>
 
-                <input type="text" class="memberJ-namecontainer__input--blue" name="dd" maxlength="2" placeholder="일">
+                <input type="text" class="memberJ-namecontainer__input--blue" name="dd" maxlength="2" placeholder="일(2자)">
             </div>
             <div class="msg" id="validate_birth"></div>
 
@@ -133,7 +184,7 @@
             <h4 class="memberJ-container__h4--big">프로필 사진 (선택)</h4>
             <img id="my_img" class="memberJ-imgcontainer__img-small" src="_image/sample.png">
             <label id="my_img_label" class="memberJ-imgcontainer__label-blue" for="member_img">업로드</label>
-            <input type="file" name="member_img" id="member_img" class="memberJ-imgcontainer__input-disappear" onchange="setImg(event);">
+            <input type="file" name="member_img" id="member_img" class="memberJ-imgcontainer__input-disappear" value="" onchange="setImg(event);">
         </div>
         <!-- // 프로필 사진 등록 -->
 
@@ -144,14 +195,14 @@
             <div class="msg" id="validate_email"></div>
 
             <h4 class="memberJ-container__h4--big">전화번호 (선택)</h4>
-            <input type="tel" class="memberJ-container__input--big" name="phone" maxlength="30">
+            <input type="tel" class="memberJ-container__input--big" name="phone" maxlength="30" value="">
         </div>
         <!-- // 이메일, 전화번호 입력 -->
 
         <!-- 이용약관 체크 여부 -->
         <div class="memberJ-rulecontainer">
-            <input type="button" class="memberJ-rulecontainer__button-blue" value="이용방침" onclick="window.open('http://localhost:8080/memberP')">
-            <input type="button" class="memberJ-rulecontainer__button-blue" value="가입약관" onclick="window.open('http://localhost:8080/memberR')"> <br/>
+            <input type="button" class="memberJ-rulecontainer__button-blue" value="이용방침" onclick="window.open('${pageContext.request.contextPath}/memberP')">
+            <input type="button" class="memberJ-rulecontainer__button-blue" value="가입약관" onclick="window.open('${pageContext.request.contextPath}/memberR')"> <br/>
             <label class="memberJ-rulecontainer__label--move">
                 <input type="checkbox" class="memberJ-container__input--focus" name="check_rule"> 이용약관 체크 여부
                 <div class="msg" id="validate_check_rule"></div>
@@ -161,6 +212,7 @@
 
         <div class="memberJ-buttoncontainer">
             <input type="submit" class="memberJ-buttoncontainer__input--blue" value="회원가입">
+            <input type="hidden" name="crleader" value="n">
         </div>
     </div>
     </form>

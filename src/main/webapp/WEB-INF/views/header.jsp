@@ -36,7 +36,8 @@
 
             document.getElementById("weatherText").append(text);
             document.getElementById("weatherTmp").append(tmp + "ºc");
-            document.getElementById("weatherImg").src = "http://openweathermap.org/img/wn/" + imgSrc + "@2x.png";
+            document.getElementById("weatherImg").setAttribute("src","http://openweathermap.org/img/wn/" + imgSrc + "@2x.png");
+            // document.getElementById("weatherImg").src = "http://openweathermap.org/img/wn/" + imgSrc + "@2x.png";
         }
     })
 </script>
@@ -68,7 +69,7 @@
             <h4>Seoul,KR</h4>
         </div>
         <div id="headerM-weatherBox__icon">
-            <img id="weatherImg" src="#">
+            <img id="weatherImg">
         </div>
         <div id="weatherText" class="headerM-weatherBox__text">
             <!--날씨 설명 들어가는 란-->
