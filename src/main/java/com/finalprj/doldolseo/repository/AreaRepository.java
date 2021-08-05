@@ -27,4 +27,6 @@ public interface AreaRepository extends JpaRepository<AreaVO, String> {
     //시군구코드로 지역정보 조회
     Page<AreaVO> findBySigungu(Integer sigungu, Pageable pageable);
 
+    Page<AreaVO> findBySigunguAndNameContaining(Integer sigungu, String name, Pageable pageable);
+
 }

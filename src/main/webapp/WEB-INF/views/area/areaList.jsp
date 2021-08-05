@@ -9,6 +9,7 @@
     Map<Integer, String> contentTypeMap = CodeMappingUtil.getContentTypeMap();
     pageContext.setAttribute("areaMap", areaMap);
     pageContext.setAttribute("contentTypeMap", contentTypeMap);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -33,11 +34,12 @@
         <!-- 게시판 드릴 다운 메뉴 -->
         <div id="areaL-drilldownBox">
             <span class="common-top__drilldownbox">
-                        <a href="/areaL?sigungu=1}" style="color: #5882FA">지역게시판</a>
+                        <a href="${pageContext.request.contextPath}/areaL?sigungu=1}" style="color: #5882FA">지역게시판</a>
                 <span> > </span>
-                        <a href="/areaL?sigungu=${sigungu}" style="color: #0080c0">${areaMap.get(sigungu)}</a>
+                        <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}"
+                           style="color: #0080c0">${areaMap.get(sigungu)}</a>
                 <span> > </span>
-                        <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}">${contentTypeMap.get(contentType)}</a>
+                        <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}">${contentTypeMap.get(contentType)}</a>
             </span>
         </div>
 
@@ -46,24 +48,29 @@
             <!--네비_카테고리-->
             <div id="areaList-nav__cat">
                 <ul>
-                    <li><a href="/areaL?sigungu=${sigungu}">전체</a></li>
-                    <li><a href="/areaL?sigungu=${sigungu}&contentType=1">축제&행사</a></li>
-                    <li><a href="/areaL?sigungu=${sigungu}&contentType=2">음식</a></li>
-                    <li><a href="/areaL?sigungu=${sigungu}&contentType=3">쇼핑</a></li>
-                    <li><a href="/areaL?sigungu=${sigungu}&contentType=4">문화&관광</a></li>
-                    <li><a href="/areaL?sigungu=${sigungu}&contentType=0">기타</a></li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}">전체</a></li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=1">축제&행사</a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=2">음식</a></li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=3">쇼핑</a></li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=4">문화&관광</a>
+                    </li>
+                    <li><a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=0">기타</a></li>
                 </ul>
             </div>
 
             <!--네비_검색창-->
             <div id="areaList-nav__search">
-                <input id="areaList-nav__search__input" type="text"/>
-                <button id="areaList-nav__search__btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="white" class="bi bi-search"
-                         viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                    </svg>
-                </button>
+                <form action="${pageContext.request.contextPath}/areaL" method="get">
+                    <input type="hidden" name="sigungu" value="${sigungu}">
+                    <input id="areaList-nav__search__input" name="searchKeyword" type="text"/>
+                    <button id="areaList-nav__search__btn" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="white" class="bi bi-search"
+                             viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg>
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -84,7 +91,7 @@
                                 <script>
                                     function encodeAndLink(name) {
                                         name = encodeURIComponent(name);
-                                        location.href = '/areaD?name=' + name;
+                                        location.href = '${pageContext.request.contextPath}/areaD?name=' + name;
                                     }
                                 </script>
 
@@ -116,13 +123,14 @@
                     <tr>
                         <!-- 첫 페이지로 이동 -->
                         <td>
-                            <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=0"> << </a>
+                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=0">
+                                << </a>
                         </td>
 
                         <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
                         <c:if test="${startBlockPage ne 1}">
                             <td>
-                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${startBlockPage-2}">
+                                <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${startBlockPage-2}">
                                     < </a>
                             </td>
                         </c:if>
@@ -130,7 +138,7 @@
                         <!-- 페이징 블록 1 ~ 10 -->
                         <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
                             <td>
-                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${idx-1}">${idx}</a>
+                                <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${idx-1}">${idx}</a>
                                 <!-- 이거 현재 URL 로 반영되게 바꿀것 -->
                             </td>
                         </c:forEach>
@@ -138,14 +146,14 @@
                         <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
                         <c:if test="${endBlockPage ne areaList.totalPages}">
                             <td>
-                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}">
+                                <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}">
                                     > </a>
                             </td>
                         </c:if>
 
                         <!-- 마지막 페이지로 이동 -->
                         <td>
-                            <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}">
+                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}">
                                 >> </a>
                         </td>
                     </tr>

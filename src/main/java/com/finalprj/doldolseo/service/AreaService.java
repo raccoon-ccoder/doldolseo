@@ -38,6 +38,11 @@ public class AreaService {
         return areaRepository.findBySigunguAndContentType(sigungu, contentType, pageable);
     }
 
+    //검색어 입력시 검색결과 조회
+    public Page<AreaVO> getAreaListBySearch(Integer sigungu, String searchKeyword, Pageable pageable){
+        return areaRepository.findBySigunguAndNameContaining(sigungu,searchKeyword,pageable);
+    }
+
     //지역 목록 조회 (전체)
     public List<AreaVO> getAreaList() {
         return areaRepository.findAll();
