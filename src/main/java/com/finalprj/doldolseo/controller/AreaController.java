@@ -43,8 +43,12 @@ public class AreaController {
         return "area/areaList";
     }
 
+    //지역게시판 - 지역명으로 지역정보 상세조회
     @GetMapping(value = "/areaD")
-    public String areaDetail() {
+    public String areaDetail(Model model, @RequestParam(value = "name") String name) {
+
+        AreaVO area = service.getArea(name);
+        model.addAttribute("area",area);
         return "area/areaDetail";
     }
 

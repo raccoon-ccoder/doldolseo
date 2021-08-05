@@ -1,11 +1,12 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: young
-  Date: 2021-07-23
-  Time: 오후 5:33
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.finalprj.doldolseo.util.CodeMappingUtil" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%
+    Map<Integer, String> areaMap = CodeMappingUtil.getAreaMap();
+    pageContext.setAttribute("areaMap", areaMap);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,27 @@
     <%-- 메인 스타일 시트 --%>
     <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
 
-    <%-- 카카오 맵 API --%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <%-- contentId 통한 overview(내용) 추출 --%>
+    <script>
+        $(function () {
+            var key = "P3TbC5uJmBCIyJ5XyNE96Iggnml%2FE7YpEPLGKNQAG6P1Pg36WbbyZPeOkl%2BjZa9JsjLoIwO0saCVPxy48P5nMQ%3D%3D";
+            $.ajax({
+                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=" + key + "&contentTypeId=&contentId=" + "${area.contentid}" +
+                    "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y",
+                dataType: "json",
+                type: "GET",
+                async: "false",
+                success: function (resp) {
+                    var overview = resp.response.body.items.item.overview;
+                    document.getElementById("areaD-overview").innerHTML= overview;
+                },
+                error: function () {
+                    alert("로딩실패");
+                }
+            });
+        });
+    </script>
 
 </head>
 
@@ -36,7 +57,7 @@
             <span class="common-top__drilldownbox">
                     <a href="#" style="color: #495c75;">지역게시판</a>
                     <span> > </span>
-                    <a href="#">광화문</a>
+                    <a href="#">${areaMap.get(area.sigungu)}</a>
             </span>
         </div>
 
@@ -44,27 +65,27 @@
         <div id="areaDetail-content">
             <!--지역/이름-->
             <div id="areaDetail-name">
-                <h3><b>광화문</b></h3>
-                <p>경복궁 별빛야행</p>
+                <h3><b>${areaMap.get(area.sigungu)}</b></h3>
+                <p>${area.name}</p>
             </div>
 
             <hr style="width: 1200px; color: #495c75; "/>
 
             <!--사진-->
             <div id="areaDetail-img">
-                <img src="_image/areaListData/y1.png" width="550" height="500">
+                <c:choose>
+                    <c:when test="${area.image1 ne null}">
+                        <img src="${area.image1}" width="550" height="500" alt="area_image">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="_image/area/areaListData/default.png" width="550" height="500" alt="area_image"/>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <!--정보-->
+            <!--정보 : append -->
             <div id="areaDetail-info">
-                <p>
-                    경복궁 소주방에서 전통국악공연을 즐기며 임금님의 수라상을 맛보고,
-                    전문가의 해설을 들으며 경복궁 후원으로의 아름다운 야행을 시작한다.
-                    경복궁 소주방에서 전통국악공연을 즐기며 임금님의 수라상을 맛보고,
-                    전문가의 해설을 들으며 경복궁 후원으로의 아름다운 야행을 시작한다.
-                    경복궁 소주방에서 전통국악공연을 즐기며 임금님의 수라상을 맛보고,
-                    전문가의 해설을 들으며 경복궁 후원으로의 아름다운 야행을 시작한다.
-
+                <p id="areaD-overview">
                 </p>
             </div>
 
@@ -79,7 +100,7 @@
                 <script>
                     var container = document.getElementById('map');
                     var options = {
-                        center: new kakao.maps.LatLng(37.5776087901, 126.9938137563),
+                        center: new kakao.maps.LatLng(${area.y}, ${area.x}),
                         level: 3
                     };
                     var map = new kakao.maps.Map(container, options);
@@ -91,11 +112,11 @@
                 <table style="color: white;">
                     <tr style="text-align: left">
                         <th style="width: 140px">주소</th>
-                        <td>서울특별시 종로구 사직로 161</td>
+                        <td>${area.address}</td>
                     </tr>
                     <tr style="text-align: left">
                         <th>전화번호</th>
-                        <td>02-3210-4806</td>
+                        <td>${area.tel}</td>
                     </tr>
                 </table>
             </div>

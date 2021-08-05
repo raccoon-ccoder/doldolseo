@@ -1,5 +1,15 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="com.finalprj.doldolseo.util.CodeMappingUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+
+    Map<Integer, String> areaMap = CodeMappingUtil.getAreaMap();
+    Map<Integer, String> contentTypeMap = CodeMappingUtil.getContentTypeMap();
+    pageContext.setAttribute("areaMap", areaMap);
+    pageContext.setAttribute("contentTypeMap", contentTypeMap);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +28,17 @@
         <!--지역별 배경사진-->
         <div id="areaList-img">
             <img src="_image/area/areaBanner/areaImage_${sigungu}.png" width="1500" height="550px">
+        </div>
+
+        <!-- 게시판 드릴 다운 메뉴 -->
+        <div id="areaL-drilldownBox">
+            <span class="common-top__drilldownbox">
+                        <a href="/areaL?sigungu=1}" style="color: #5882FA">지역게시판</a>
+                <span> > </span>
+                        <a href="/areaL?sigungu=${sigungu}" style="color: #0080c0">${areaMap.get(sigungu)}</a>
+                <span> > </span>
+                        <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}">${contentTypeMap.get(contentType)}</a>
+            </span>
         </div>
 
         <!--네비(카테고리/검색창)-->
@@ -46,25 +67,41 @@
             </div>
         </div>
 
+
         <!-- 지역 게시글 목록 -->
         <div id="areaList-dataContainer">
             <div id="areaList-dataBox">
 
                 <c:forEach items="${areaList.content}" var="areaList" varStatus="status">
-                    <!-- 게시글 1개 -->
+                    <!-- 항목 -->
                     <div class="areaList-data">
                         <div id="areaList-dataImg" style="display: inline-block;margin: 20px;">
-                            <a href="/areaD">
+
+                            <!-- 상세보기로 이동 -->
+                            <a href="javascript:encodeAndLink('${areaList.name}');">
+
+                                <!-- url 예약문자 처리  -->
+                                <script>
+                                    function encodeAndLink(name) {
+                                        name = encodeURIComponent(name);
+                                        location.href = '/areaD?name=' + name;
+                                    }
+                                </script>
+
+                                <!-- 이미지 default 처리 -->
                                 <c:choose>
                                     <c:when test="${areaList.image1 ne null}">
-                                        <img src="${areaList.image1}" width="250" height="250">
+                                        <img src="${areaList.image1}" width="250" height="250" alt="area image">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="_image/area/areaListData/default.png" width="250" height="250">
+                                        <img src="_image/area/areaListData/default.png" width="250" height="250"
+                                             alt="area image">
                                     </c:otherwise>
                                 </c:choose>
+
                             </a>
                         </div>
+
                         <div id="areaList-dataName" style="margin: 0 auto;">
                             <b>${areaList.name}</b>
                         </div>
@@ -85,7 +122,8 @@
                         <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
                         <c:if test="${startBlockPage ne 1}">
                             <td>
-                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${startBlockPage-2}"> < </a>
+                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${startBlockPage-2}">
+                                    < </a>
                             </td>
                         </c:if>
 
@@ -100,13 +138,15 @@
                         <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
                         <c:if test="${endBlockPage ne areaList.totalPages}">
                             <td>
-                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}"> > </a>
+                                <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}">
+                                    > </a>
                             </td>
                         </c:if>
 
                         <!-- 마지막 페이지로 이동 -->
                         <td>
-                            <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}"> >> </a>
+                            <a href="/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}">
+                                >> </a>
                         </td>
                     </tr>
                 </table>
