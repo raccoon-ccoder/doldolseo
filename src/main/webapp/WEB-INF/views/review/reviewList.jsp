@@ -4,7 +4,11 @@
 페이지설명: 후기게시판 글목록
 페이지 생성일: 21/07/20
 -->
+<%@ page import="com.finalprj.doldolseo.util.CodeMapFactory" %>
+<%@ page import="java.util.Map" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +16,7 @@
     <title>후기게시판</title>
 
     <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css?bz" rel="stylesheet" type="text/css">
+    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -41,9 +45,9 @@
 
                 <%-- 게시판 드릴다운 --%>
                 <span class="common-top__drilldownbox">
-                    <a href="#" style="color: #F78181">후기게시판</a>
+                    <a href="${pageContext.request.contextPath}/reviewL" style="color: #F78181">후기게시판</a>
                     <span> > </span>
-                    <a href="#">전체</a>
+                    <a>${mapFactory.areaMap.get(areaNo)}</a>
                 </span>
 
                 <%-- 글쓰기 버튼 --%>
@@ -55,35 +59,22 @@
             <%-- 글 목록--%>
             <table id="reviewL-list">
                 <tr class="list--header">
-                    <td>지역</td>
-                    <td>제목</td>
-                    <td>닉네임</td>
-                    <td>등록일</td>
-                    <td>조회수</td>
+                    <td style="width: 100px">지역</td>
+                    <td >제목</td>
+                    <td style="width: 100px">닉네임</td>
+                    <td style="width: 140px">등록일</td>
+                    <td style="width: 100px">조회수</td>
                 </tr>
-                <%-- 샘플 데이터 - 추후 반복 처리 --%>
-                <tr class="list--item">
-                    <td>명동</td>
-                    <td>학원 탈주하고 명동 조지고왔습니다</td>
-                    <td>명동돌고래</td>
-                    <td>2021-07-21</td>
-                    <td>1234</td>
-                </tr>
-                <tr class="list--item">
-                    <td>홍대</td>
-                    <td>청바지20장 플렉스 후기</td>
-                    <td>청바지맨</td>
-                    <td>2021-07-21</td>
-                    <td>1244</td>
-                </tr>
-                <tr class="list--item">
-                    <td>광화문</td>
-                    <td>테스트11</td>
-                    <td>테스트111</td>
-                    <td>2021-07-21</td>
-                    <td>1244</td>
-                </tr>
-                <%-- 샘플 데이터 - 추후 반복 처리 --%>
+                <c:forEach items="${reviewList.content}" var="reviewList" begin="1" end="40">
+
+                    <tr class="list--item">
+                        <td>${mapFactory.areaMap.get(reviewList.areaNo)}</td>
+                        <td>${reviewList.title}</td>
+                        <td>${reviewList.id}</td>
+                        <td>${reviewList.WDate}</td>
+                        <td>${reviewList.hit}</td>
+                    </tr>
+                </c:forEach>
             </table>
 
             <%-- 페이지네이션 및 검색창--%>
@@ -93,19 +84,44 @@
                 <div id="reviewL-bottom__pagination">
                     <table class="pagination">
                         <tr>
-                            <td><<</td>
-                            <td><</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>></td>
-                            <td>>></td>
+                            <!-- 첫 페이지로 이동 -->
+                            <td>
+                                <a href="${pageContext.request.contextPath}/reviewL?page=0">
+                                    << </a>
+                            </td>
+
+                            <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
+                            <c:if test="${startBlockPage ne 1}">
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/reviewL?page=${startBlockPage-2}">
+                                        < </a>
+                                </td>
+                            </c:if>
+
+                            <!-- 페이징 블록 1 ~ 10 -->
+                            <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/reviewL?page=${idx-1}">${idx}</a>
+                                    <!-- 이거 현재 URL 로 반영되게 바꿀것 -->
+                                </td>
+                            </c:forEach>
+
+                            <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
+                            <c:if test="${endBlockPage ne reviewList.totalPages}">
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/reviewL?page=${endBlockPage}">
+                                        > </a>
+                                </td>
+                            </c:if>
+
+                            <!-- 마지막 페이지로 이동 -->
+                            <td>
+                                <a href="${pageContext.request.contextPath}/reviewL?page=${reviewList.totalPages-1}">
+                                    >> </a>
+                            </td>
                         </tr>
                     </table>
                 </div>
-
                 <%-- 검색창 --%>
                 <div id="reviewL-bottom_search" class="common-searchbar">
                     <select name="search"><%-- 검색 조건 --%>

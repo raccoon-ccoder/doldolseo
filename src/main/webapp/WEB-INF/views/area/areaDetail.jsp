@@ -1,11 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.finalprj.doldolseo.util.CodeMappingUtil" %>
-<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%
-    Map<Integer, String> areaMap = CodeMappingUtil.getAreaMap();
-    pageContext.setAttribute("areaMap", areaMap);
-%>
+<jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +16,7 @@
         $(function () {
             var key = "P3TbC5uJmBCIyJ5XyNE96Iggnml%2FE7YpEPLGKNQAG6P1Pg36WbbyZPeOkl%2BjZa9JsjLoIwO0saCVPxy48P5nMQ%3D%3D";
             $.ajax({
-                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=" + key + "&contentTypeId=&contentId=" + "${area.contentid}" +
+                url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=" + key + "&contentTypeId=&contentId=" + "${area.contentId}" +
                     "&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y",
                 dataType: "json",
                 type: "GET",
@@ -57,7 +52,7 @@
             <span class="common-top__drilldownbox">
                     <a href="#" style="color: #495c75;">지역게시판</a>
                     <span> > </span>
-                    <a href="#">${areaMap.get(area.sigungu)}</a>
+                    <a href="#">${mapFactory.areaMap.get(area.sigungu)}</a>
             </span>
         </div>
 
@@ -65,7 +60,7 @@
         <div id="areaDetail-content">
             <!--지역/이름-->
             <div id="areaDetail-name">
-                <h3><b>${areaMap.get(area.sigungu)}</b></h3>
+                <h3><b>${mapFactory.areaMap.get(area.sigungu)}</b></h3>
                 <p>${area.name}</p>
             </div>
 

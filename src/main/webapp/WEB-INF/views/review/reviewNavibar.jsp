@@ -16,42 +16,47 @@
     <%-- 네비게이션 리스트 : 광화문, 명동, 홍대, 여의도, 강남, 잠실, 용산, 기타 --%>
     <ul class="nav-list">
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL">
+                전체
+            </a>
+        </li>
+        <li class="nav-list__item">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=1">
                 강남
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=2">
                 강북
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=3">
                 광화문
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=4">
                 명동
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=5">
                 여의도
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=6">
                 잠실
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=7">
                 홍대
             </a>
         </li>
         <li class="nav-list__item">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/reviewL?areaNo=0">
                 ETC
             </a>
         </li>

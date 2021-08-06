@@ -107,7 +107,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/reviewL">
                         <span onmouseover="this.style.color='#F4B7B4';"
                               onmouseout="this.style.color='white';">REVIEW</span>
                 </a>
