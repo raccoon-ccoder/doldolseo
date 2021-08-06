@@ -90,7 +90,7 @@
 
     <!--로고2-->
     <div id="header-img__logo2">
-        <a href="main">
+        <a href="${pageContext.request.contextPath}/main">
             <img src="_image/logo/002-7.png" width="160px" height="85">
         </a>
     </div>
@@ -121,14 +121,7 @@
         </ul>
     </div>
 
-    <!--로그인 전(login, join)버튼
-    <div id="header-button">
-        <button id="header-button__b1" type="button">LOGIN</button>
-        <button id="header-button__b2" type="button">JOIN</button>
-    </div>
-    -->
-
-    <!--미니프로필-->
+    <!--미니프로필 -->
     <jsp:include page="mypage/mypageIntro.jsp"/>
 
     <!--지역 네비바(AREA에 마우스 오버시 출력)-->
