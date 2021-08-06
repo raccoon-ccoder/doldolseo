@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.vo;
+package com.finalprj.doldolseo.entity;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /*
- * 지역게시판 VO클래스
+ * 지역게시판 Entity
  *
  * @Author 김경일
  * @Date 2021/08/04
@@ -18,11 +18,11 @@ import javax.persistence.Table;
 @Table(name = "SEOUL_AREA_TBL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
-public class AreaVO {
+public class Area {
 
     @Id
     private String name;
+
     private String address;
     private Integer sigungu;
     private Integer zipcode;
@@ -31,6 +31,11 @@ public class AreaVO {
     private Float y;
     private String image1;
     private String image2;
+
+    @Column(name = "contenttype")
     private Integer contentType;
+
+    @Column(name = "contentid")
     private Long contentId;
+
 }

@@ -64,7 +64,6 @@
             </div>
         </div>
 
-
         <!-- 지역 게시글 목록 -->
         <div id="areaList-dataContainer">
             <div id="areaList-dataBox">

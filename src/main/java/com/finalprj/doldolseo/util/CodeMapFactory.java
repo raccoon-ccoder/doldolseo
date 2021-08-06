@@ -4,41 +4,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
+ * 코드 매핑 유틸
  * 지역및 컨텐츠타입 코드-이름 매핑 유틸
+ *
+ * @Author 김경일
+ * @Date 2021/08/06
  */
 public class CodeMapFactory {
 
-    private Map<Integer, String> areaMap;
-    private Map<Integer, String> contentTypeMap;
-
     public Map<Integer, String> getAreaMap() {
+        Map<Integer, String> areaMap = new HashMap<>();
 
-        this.areaMap = new HashMap<>();
+        areaMap.put(1, "강남");
+        areaMap.put(2, "강북");
+        areaMap.put(3, "광화문");
+        areaMap.put(4, "명동");
+        areaMap.put(5, "여의도");
+        areaMap.put(6, "잠실");
+        areaMap.put(7, "홍대");
+        areaMap.put(0, "etc");
+        areaMap.put(null, "전체");
 
-        this.areaMap.put(1, "강남");
-        this.areaMap.put(2, "강북");
-        this.areaMap.put(3, "광화문");
-        this. areaMap.put(4, "명동");
-        this.areaMap.put(5, "여의도");
-        this.areaMap.put(6, "잠실");
-        this.areaMap.put(7, "홍대");
-        this.areaMap.put(0, "etc");
-        this.areaMap.put(null, "전체");
-
-        return this.areaMap;
+        return areaMap;
     }
 
     public Map<Integer, String> getContentTypeMap() {
-        this.contentTypeMap = new HashMap<>();
+        Map<Integer, String> contentTypeMap = new HashMap<>();
 
-        this.contentTypeMap.put(1, "축제&행사");
-        this.contentTypeMap.put(2, "음식");
-        this.contentTypeMap.put(3, "쇼핑");
-        this.contentTypeMap.put(4, "문화&관광");
-        this.contentTypeMap.put(0, "etc");
-        this.contentTypeMap.put(null, "전체");
+        contentTypeMap.put(1, "축제&행사");
+        contentTypeMap.put(2, "음식");
+        contentTypeMap.put(3, "쇼핑");
+        contentTypeMap.put(4, "문화&관광");
+        contentTypeMap.put(0, "etc");
+        contentTypeMap.put(null, "전체");
 
-        return this.contentTypeMap;
+        return contentTypeMap;
     }
 
 }
