@@ -1,16 +1,6 @@
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="com.finalprj.doldolseo.util.CodeMappingUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-
-    Map<Integer, String> areaMap = CodeMappingUtil.getAreaMap();
-    Map<Integer, String> contentTypeMap = CodeMappingUtil.getContentTypeMap();
-    pageContext.setAttribute("areaMap", areaMap);
-    pageContext.setAttribute("contentTypeMap", contentTypeMap);
-
-%>
+<jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,9 +27,9 @@
                         <a href="${pageContext.request.contextPath}/areaL?sigungu=1}" style="color: #5882FA">지역게시판</a>
                 <span> > </span>
                         <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}"
-                           style="color: #0080c0">${areaMap.get(sigungu)}</a>
+                           style="color: #0080c0">${mapFactory.areaMap.get(sigungu)}</a>
                 <span> > </span>
-                        <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}">${contentTypeMap.get(contentType)}</a>
+                        <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}">${mapFactory.contentTypeMap.get(contentType)}</a>
             </span>
         </div>
 

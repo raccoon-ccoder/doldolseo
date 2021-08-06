@@ -22,30 +22,31 @@ import java.util.List;
 public class AreaService {
 
     @Autowired
-    private AreaRepository areaRepository;
+    private AreaRepository repository;
 
     //지역명으로 지역정보 상세 조회
     public AreaVO getArea(String name) {
-        return areaRepository.findFirstByName(name);
+        return repository.findFirstByName(name);
     }
 
 
     //지역 목록 조회(시군구코드 + 페이징 처리)
     public Page<AreaVO> getAreaList(Integer sigungu, Integer contentType, Pageable pageable) {
-        if(contentType == null){
-            return areaRepository.findBySigungu(sigungu, pageable);
+        if (contentType == null) {
+            return repository.findBySigungu(sigungu, pageable);
+        } else {
+            return repository.findBySigunguAndContentType(sigungu, contentType, pageable);
         }
-        return areaRepository.findBySigunguAndContentType(sigungu, contentType, pageable);
     }
 
     //검색어 입력시 검색결과 조회
-    public Page<AreaVO> getAreaListBySearch(Integer sigungu, String searchKeyword, Pageable pageable){
-        return areaRepository.findBySigunguAndNameContaining(sigungu,searchKeyword,pageable);
+    public Page<AreaVO> getAreaListBySearch(Integer sigungu, String searchKeyword, Pageable pageable) {
+        return repository.findBySigunguAndNameContaining(sigungu, searchKeyword, pageable);
     }
 
     //지역 목록 조회 (전체)
     public List<AreaVO> getAreaList() {
-        return areaRepository.findAll();
+        return repository.findAll();
     }
 
 

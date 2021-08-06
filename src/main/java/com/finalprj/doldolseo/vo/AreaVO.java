@@ -22,37 +22,15 @@ import javax.persistence.Table;
 public class AreaVO {
 
     @Id
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "address")
     private String address;
-
-    @Column(name = "sigungu", nullable = false)
     private Integer sigungu;
-
-    @Column(name = "zipcode")
     private Integer zipcode;
-
-    @Column(name = "tel")
     private String tel;
-
-    @Column(name = "x")
     private Float x;
-
-    @Column(name = "y")
     private Float y;
-
-    @Column(name = "image1")
     private String image1;
-
-    @Column(name = "image2")
     private String image2;
-
-    @Column(name = "contenttype", nullable = false)
     private Integer contentType;
-
-    @Column(name = "contentid", nullable = false)
-    private Long contentid;
-
+    private Long contentId;
 }

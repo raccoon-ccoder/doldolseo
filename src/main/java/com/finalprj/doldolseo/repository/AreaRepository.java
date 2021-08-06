@@ -1,5 +1,4 @@
 package com.finalprj.doldolseo.repository;
-
 import com.finalprj.doldolseo.vo.AreaVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
