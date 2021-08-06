@@ -37,7 +37,7 @@
             보다 좋은 서비스를 받을 수 있도록 노력하겠습니다.<br />
             감사합니다 :D
         </p>
-        <button class="memberJR-container__button-blue" onclick="location.href='${pageContext.request.contextPath}/memberL'">로그인</button>
+        <button class="memberJR-container__button-blue" onclick="location.href='${pageContext.request.contextPath}/main'">메인으로</button>
     </div>
     <!-- // 회원가입 완료 안내 container -->
 

@@ -19,7 +19,11 @@
     </style>
     <script type="text/javascript" src="_js/mainJs.js"></script>
     <script>
-        window.onload = function () {
+        $(document).ready(function() {
+            if(${result == "false"}){
+                alert("아이디와 비밀번호가 일치하지 않습니다.");
+            }
+
             if (getCookie("id")) {
                 document.getElementById('login_id').value = getCookie("id");
                 document.getElementById('remember_id').checked = true;
@@ -39,7 +43,7 @@
                 }
             }
 
-        }
+        });
     </script>
 </head>
 <body>
@@ -55,7 +59,7 @@
     <div id="memberL-container">
         <img id="memberL-container__image--small" src="_image/logo.png">
 
-        <form action="#" method="post" name="loginForm" onsubmit="return loginCheck()">
+        <form action="/login" method="post" name="loginForm" onsubmit="return loginCheck()">
             <div>
                 <input id="login_id" class="memberL-container__input--big" type="text" name="id" size="30"
                        placeholder="아이디"> <br/>
@@ -70,7 +74,7 @@
             <div id="memberL-btncontainer">
                 <input type="submit" class="memberL-btncontainer__input-big" value="로그인">
                 <input type="button" class="memberL-btncontainer__input-big" value="회원가입"
-                       onclick="location.href='http://localhost:8080/memberJ'">
+                       onclick="location.href='${pageContext.request.contextPath}/memberJ'">
             </div>
         </form>
     </div>
