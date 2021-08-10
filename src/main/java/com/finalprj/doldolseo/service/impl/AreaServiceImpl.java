@@ -1,7 +1,7 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.dto.AreaDTO;
-import com.finalprj.doldolseo.entity.Area;
+import com.finalprj.doldolseo.domain.Area;
 import com.finalprj.doldolseo.repository.AreaRepository;
 import com.finalprj.doldolseo.service.AreaService;
 import org.modelmapper.ModelMapper;

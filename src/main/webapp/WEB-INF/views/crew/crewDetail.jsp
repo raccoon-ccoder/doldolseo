@@ -14,6 +14,8 @@
 
     <%-- 메인 스타일 시트 --%>
     <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+
+    <%-- 크루가입 팝업 --%>
     <script>
         function popupCrewJoin() {
             window.open("/crewJ", "크루가입", "width = 900, height = 770");

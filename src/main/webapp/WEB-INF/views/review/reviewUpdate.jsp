@@ -6,6 +6,7 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,10 @@
     <title>후기게시판 - 글수정</title>
 
     <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css?ch2axa" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css?ch2axa" rel="stylesheet" type="text/css">
 
     <%-- 코스 그리기 --%>
-    <script src="_js/draw_course.js"></script>
+    <script src="${pageContext.request.contextPath}/_js/draw_course.js"></script>
 
     <!-- include summernote css -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -25,6 +26,12 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+    <script>
+        <%-- select box 지역 선택 --%>
+        $(function () {
+            $('#reviewU-select--area').val(2).prop("selected", true);
+        });
+    </script>
 </head>
 <body>
     <%-- 헤더 --%>
@@ -40,16 +47,23 @@
             글수정
         </div>
 
-        <%-- 글쓰기 폼 지역/제목/내용/코스추가/코스/ --%>
-        <form action="#" method="post">
+        <%-- 글 수정 폼 지역/제목/내용/코스추가/코스/ --%>
+        <form:form action="/review/${reviewNo}" method="put">
+            <input type="hidden" name="_method" value="put"/>
             <table class="common-iuContainer--writeform">
-                <%-- 지역 : select --%>
+
+                    <%-- id : hidden --%>
+                <input name="id" type="hidden" value="kki7823"/><%-- 추후 세션처리 --%>
+                <input name="uploadImg" type="hidden" value="${review.uploadImg}"/><%-- 추후 세션처리 --%>
+
+                    <%-- 지역 : select --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
                         <b>지역</b>
                     </td>
+
                     <td>
-                        <select name="area_no" class="writeform__component">
+                        <select id="reviewU-select--area" name="areaNo" class="writeform__component">
                             <option value="1">강남</option>
                             <option value="2">광화문</option>
                             <option value="3">명동</option>
@@ -62,25 +76,27 @@
                     </td>
                 </tr>
 
-                <%-- 제목 : text --%>
+                    <%-- 제목 : text --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
                         제목
                     </td>
                     <td>
-                        <input style="width: 600px" type="text"/>
+                        <input value="${review.title}" name="title" style="width: 600px" type="text"/>
                     </td>
                 </tr>
 
-                <%-- 내용 : summernote --%>
+                    <%-- 내용 : summernote --%>
                 <tr class="common-tbl__item">
                     <td style="width: 170px">
                         내용
                     </td>
                     <td>
-                        <textarea id="summernote"></textarea>
+                        <textarea name="content" id="summernote">${review.content}</textarea>
+                        <div id="reviewU-imageAppend"></div>
                     </td>
-                    <%-- summernote 실행 --%>
+
+                        <%-- summernote 실행 --%>
                     <script>
                         $(function () {
                             $('#summernote').summernote({
@@ -91,66 +107,56 @@
                                 maxHeight: null,
                                 focus: true,
                                 lang: "ko-KR",
-                                placeholder: '최대 2048자까지 쓸 수 있습니다'
+                                placeholder: '최대 2048자까지 쓸 수 있습니다',
+                                //이미지 업로드시 콜백 호출 :
+                                callbacks: {
+                                    onImageUpload: function (files, editor, welEditable) {
+                                        for (var i = 0; i < files.length; i++) {
+                                            sendFile(files[i], this, i);
+                                        }
+                                    }
+                                }
                             });
                         });
+
+                        //Base64 mulipart file로 이미지 컨트롤러에 전달
+                        function sendFile(file, el, i) {
+                            var formData = new FormData();
+                            formData.append('file', file);
+                            $j1124.ajax({
+                                data: formData,
+                                type: "POST",
+                                url: '/image',
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                enctype: 'multipart/form-data',
+                                success: function (url) {
+                                    $(el).summernote('insertImage', "${pageContext.request.contextPath}" + url, function ($image) {
+                                        $image.css('width', "60%");
+                                    });
+                                    //업로드된 이미지 파일명 input태그 저장
+                                    $('#reviewU-imageAppend').after('<input name="uploadImgs" type="hidden"/>');
+                                    document.getElementsByName('uploadImgs')[i].value = url;
+                                }
+                            });
+                        }
+                    </script>
+                    <script>
+
                     </script>
                 </tr>
 
-                <%-- 코스 그리기 추가 : select (선택시 코스 이름, 코스그리기 항목 추가) --%>
-                <tr class="common-tbl__item">
-                    <td style="width: 170px">
-                        여행 코스 추가
-                    </td>
-                    <td>
-                        <select name="addCourse">
-                            <option value="yes">추가 안함</option>
-                            <option value="no">추가</option>
-                        </select>
-                    </td>
-                </tr>
-
-                <%-- 코스 이름 추가 : select --%>
-                <tr class="common-tbl__item">
-                    <td style="width: 170px">
-                        코스 이름
-                    </td>
-                    <td>
-                        <input style="width: 400px;" id="placeTitle" type="text"/>
-                        <button type="button" class="button--exceptionboot" onclick="addTitle();">적용</button>
-                    </td>
-                </tr>
-
-                <%-- 코스 그리기 : canvas --%>
-                <tr class="common-tbl__item">
-                    <td style="width: 180px">
-                        여행 코스 그리기
-                    </td>
-                    <td>
-                        <div id="writeform__item--course">
-                            <input id="placeName" type="text"/>
-                            <!-- 여행지 타입 체크 : 노드 색상 결정 *1개 checked 되어있어야 함 *-->
-                            <input type="radio" name="placeType" value="1" checked="checked"/>음식점
-                            <input type="radio" name="placeType" value="2"/>쇼핑
-                            <input type="radio" name="placeType" value="3"/>문화
-                            <button type="button" class="button--exceptionboot" onclick="drawNodeAndLine();">여행지 추가
-                            </button>
-                            <button type="button" class="button--exceptionboot" onclick="clearNode();">초기화</button>
-
-                            <canvas id="canvas" width="1100" height="550"></canvas>
-                            <script>
-                                [x, y] = drawDefaultNode(x, y) //출발 노드
-                            </script>
-                        </div>
-                    </td>
-                </tr>
+                    <%-- 코스 수정 기능 : 미구현 --%>
+                    <%-- 저장 버튼 --%>
+                <div id="reviewIU-container--bottom">
+                    <button class="button--exceptionboot"
+                            type="submit"
+                            style="width: 130px; height: 40px; font-size: 23px">저장
+                    </button>
+                </div>
             </table>
-
-            <%-- 저장 버튼 --%>
-            <div id="reviewIU-container--bottom">
-                <button class="button--exceptionboot" style="width: 130px; height: 40px; font-size: 23px">저장</button>
-            </div>
-        </form>
+        </form:form>
     </section>
 
 

@@ -30,7 +30,7 @@
     <!--로그인 후 화면-->
     <div id="header-miniprofileBox">
         <div id="header-miniprofile__photo">
-            <img src="_image/profile/${member.member_img}">
+            <img src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
         </div>
         <div id="header-miniprofile__info">
             <span style="color:#37FFEB;" id="header-miniprofile__span--nickname">${member.nickname}</span><span id="header-miniprofile__span--white">님</span>

@@ -12,11 +12,13 @@
     </style>
 </head>
 <body>
-        <div id="reviewL-container" style="border: 1pt solid;">
-            123
-            <div class="navibar" style="border: 1pt solid">
-                    123
-            </div>
-        </div>
+
+    <input type="hidden" name="abc"/>
+    <input type="hidden" name="abc"/>
+    <script>
+        document.getElementsByName("abc")[0].value = "1234";
+        document.getElementsByName("abc")[1].value = "12324";
+    </script>
+
 </body>
 </html>
