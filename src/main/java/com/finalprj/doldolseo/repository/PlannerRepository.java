@@ -18,7 +18,6 @@ import java.util.List;
 public interface PlannerRepository extends JpaRepository<Planner, Long> {
     List<Planner> findAllByIdOrderByPlannerNoDesc(String id);
     Planner findByPlannerNo(Long plannerNo);
-    Long countByPlannerNo(Long plannerNo);
     @Transactional
     void deleteByPlannerNo(Long plannerNo);
 }

@@ -225,8 +225,8 @@ function showPopup(){
 함수 설명 : 팝업창에서 플래너 만들기 버튼 클릭시 입력한 내용을 controller에게 넘겨주는 함수
  */
 function popupCheck(){
-    var f_date = new Date(document.popupFrm.f_date.value);
-    var l_date = new Date(document.popupFrm.l_date.value);
+    var f_date = new Date(document.popupFrm.fDate.value);
+    var l_date = new Date(document.popupFrm.lDate.value);
 
     if(l_date<f_date){
         alert("도착 날짜가 출발 날짜보다 빠릅니다.");

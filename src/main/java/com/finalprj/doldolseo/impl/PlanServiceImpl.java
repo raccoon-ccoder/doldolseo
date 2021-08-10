@@ -7,6 +7,8 @@ package com.finalprj.doldolseo.impl;
  * @Date 2021/08/06
  */
 
+import com.finalprj.doldolseo.dto.PlanDTO;
+import com.finalprj.doldolseo.dto.PlannerDTO;
 import com.finalprj.doldolseo.entity.Planner;
 import com.finalprj.doldolseo.repository.PlanRepository;
 import com.finalprj.doldolseo.entity.Plan;
@@ -14,7 +16,6 @@ import com.finalprj.doldolseo.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,14 +25,19 @@ public class PlanServiceImpl implements PlanService {
     @Autowired
     private PlanRepository repository;
 
-    public void insertPlan(List<Plan> plans){ repository.saveAll(plans); }
+    public void insertPlan(List<PlanDTO> planDTOS){
+        List<Plan> plans = new ArrayList<Plan>();
+        for(PlanDTO dto : planDTOS){
+            plans.add(dtoToEntity(dto));
+        }
+        repository.saveAll(plans); }
 
     /* plnaInsert.jsp에서 받은 값들을 List<Plan>으로 반환 */
-    public List<Plan> returnPlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y, Long planner_no){
-        List<Plan> plans = new ArrayList<Plan>();
+    public List<PlanDTO> returnPlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y, Long planner_no){
+        List<PlanDTO> plans = new ArrayList<PlanDTO>();
         for(int i=0;i<days.size();i++){
             if((days.size()==1) && place_intro.size() == 0){ // 여행 날짜 1일, 일정 1개일때 일정 설명이 null일경우
-                Plan plan = Plan.builder()
+                PlanDTO plan = PlanDTO.builder()
                         .plannerNo(planner_no)
                         .day(days.get(i))
                         .name(place.get(i))
@@ -42,7 +48,7 @@ public class PlanServiceImpl implements PlanService {
                 plans.add(plan);
                 System.out.println(place_intro.size());
             }else{
-                Plan plan = Plan.builder()
+                PlanDTO plan = PlanDTO.builder()
                         .plannerNo(planner_no)
                         .day(days.get(i))
                         .name(place.get(i))
@@ -58,13 +64,13 @@ public class PlanServiceImpl implements PlanService {
     }
 
     /* planUpdate.jsp에서 받은 값들을 List<Plan>으로 반환 */
-    public List<Plan> returnUpdatePlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
-        List<Plan> plans = new ArrayList<Plan>();
+    public List<PlanDTO> returnUpdatePlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
+        List<PlanDTO> plans = new ArrayList<PlanDTO>();
 
         for(int i=0;i<days.size();i++){
             if((days.size()==1) && place_intro.size() == 0){  // 여행 날짜 1일, 일정 1개일때 일정 설명이 null일경우
                 if(planNo.size() == 0){                       // DB에 이미 저장된 plan이 아닐경우
-                    Plan plan = Plan.builder()
+                    PlanDTO plan = PlanDTO.builder()
                             .plannerNo(planner_no)
                             .day(days.get(i))
                             .name(place.get(i))
@@ -74,7 +80,7 @@ public class PlanServiceImpl implements PlanService {
                             .build();
                     plans.add(plan);
                 }else{                                        // DB에 이미 저장된 plan일 경우
-                    Plan plan = Plan.builder()
+                    PlanDTO plan = PlanDTO.builder()
                             .plannerNo(planner_no)
                             .planNo(planNo.get(i))
                             .day(days.get(i))
@@ -87,7 +93,7 @@ public class PlanServiceImpl implements PlanService {
                 }
             }else{
                 if(planNo.size() ==0){                  // DB에 이미 저장된 plan이 아닐경우
-                    Plan plan = Plan.builder()
+                    PlanDTO plan = PlanDTO.builder()
                             .plannerNo(planner_no)
                             .day(days.get(i))
                             .name(place.get(i))
@@ -97,7 +103,7 @@ public class PlanServiceImpl implements PlanService {
                             .build();
                     plans.add(plan);
                 }else{                                      // DB에 이미 저장된 plan일 경우
-                    Plan plan = Plan.builder()
+                    PlanDTO plan = PlanDTO.builder()
                             .plannerNo(planner_no)
                             .planNo(planNo.get(i))
                             .day(days.get(i))
@@ -114,17 +120,17 @@ public class PlanServiceImpl implements PlanService {
         return  plans;
     }
 
-    public void updatePlans(List<Plan> plans, Long plannerNo){
-        List<Plan> origin_plans = selectPlan(plannerNo);
+    public void updatePlans(List<PlanDTO> plans, Long plannerNo){
+        List<PlanDTO> origin_plans = selectPlan(plannerNo);
         List<Long> origin_planNo = new ArrayList<Long>();
 
-        for(Plan plan : origin_plans){
+        for(PlanDTO plan : origin_plans){
                 origin_planNo.add(plan.getPlanNo());
         }
 
         List<Long> update_planNo = new ArrayList<Long>();
 
-        for(Plan plan : plans){
+        for(PlanDTO plan : plans){
             if(plan.getPlanNo() != null){       // 이미 저장된 plan이 아닌 새로 추가된 plan이라면 제외
                 update_planNo.add(plan.getPlanNo());
             }
@@ -225,30 +231,38 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     /* 각 플래너의 첫번째 날짜 일정들을 반환하는 메소드 (planList.jsp로 이동시 사용) */
-    public List<Plan> selectPlans(Planner planner) {
+    public List<PlanDTO> selectPlans(PlannerDTO planner) {
         Date now = planner.getFDate();
         Date start = planner.getFDate();
         Date last = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59,59);
 
         List<Plan> result = repository.findAllByPlannerNoAndDayBetweenOrderByPlanNo(planner.getPlannerNo(), start, last);
-        return result;
+        List<PlanDTO> dto = new ArrayList<PlanDTO>();
+        for(Plan plan : result){
+            dto.add(entityToDto(plan));
+        }
+        return dto;
     }
 
     @Override
     /* 사용자가 작성한 각 플래너마다 플랜들을 구한 후 join하여 1개의 List 타입으로 반환하는 메소드  */
-    public List<Plan> joinPlans(List<Planner> planners) {
-        List<Plan> allPlans = new ArrayList<Plan>();
+    public List<PlanDTO> joinPlans(List<PlannerDTO> planners) {
+        List<PlanDTO> allPlans = new ArrayList<PlanDTO>();
         for(int i=0;i<planners.size();i++){
-            List<Plan> plans = selectPlans(planners.get(i));
+            List<PlanDTO> plans = selectPlans(planners.get(i));
             allPlans.addAll(plans);
         }
         return allPlans;
     }
 
     @Override
-    public List<Plan> selectPlan(Long plannerNo) {
+    public List<PlanDTO> selectPlan(Long plannerNo) {
         List<Plan> plans = repository.findAllByPlannerNoOrderByPlanNo(plannerNo);
-        return plans;
+        List<PlanDTO> planDTOS = new ArrayList<PlanDTO>();
+        for(Plan plan : plans){
+            planDTOS.add(entityToDto(plan));
+        }
+        return planDTOS;
     }
 
     @Override

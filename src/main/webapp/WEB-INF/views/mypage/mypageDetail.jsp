@@ -18,7 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function (){
-            var gender = '<c:out value="${gender}" />';
+            var gender = '<c:out value="${member.gender}" />';
 
             if(gender == "M"){
                 $('#gender').val('M').prop("selected", true);
@@ -30,7 +30,7 @@
 
             var img = '${member.member_img}';
             if(img == null){
-                $('#my_img').attr("src","../_image/sample.png");
+                $('#my_img').attr("src","_image/profile/sample.png");
             }
         });
     </script>
@@ -72,7 +72,7 @@
 
                     <div class="mypageD-imgbox">
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
-                        <img id="my_img" class="mypageD-imgbox__img--small" src="_image/sample.png">
+                        <img id="my_img" class="mypageD-imgbox__img--small" src="_image/profile/${member.member_img}">
                         <!-- 백엔드 작업시 src 속성값 변경 -->
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
                         <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="member_img" onchange="setImg(event);">

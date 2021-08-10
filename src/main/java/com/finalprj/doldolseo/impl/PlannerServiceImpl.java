@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /*
  * 플래너 Service 구현 클래스
@@ -24,22 +26,28 @@ public class PlannerServiceImpl implements PlannerService {
     private PlannerRepository repository;
 
     @Override
-    public Planner insertPlanner(PlannerDTO dto) throws ParseException {
+    public PlannerDTO insertPlanner(PlannerDTO dto) throws ParseException {
         Planner entity = dtoToEntity(dto);
         Planner planner = repository.save(entity);
-        return planner;
+        PlannerDTO plannerDTO = entityToDto(planner);
+        return plannerDTO;
     }
 
     @Override
-    public List<Planner> selectPlanners(String id) {
+    public List<PlannerDTO> selectPlanners(String id) {
         List<Planner> planners = repository.findAllByIdOrderByPlannerNoDesc(id);
-        return planners;
+        List<PlannerDTO> dto = new ArrayList<PlannerDTO>();
+        for(Planner planner : planners){
+            dto.add(entityToDto(planner));
+        }
+        return dto;
     }
 
     @Override
-    public Planner selectPlanner(Long plannerNo) {
+    public PlannerDTO selectPlanner(Long plannerNo) {
         Planner planner = repository.findByPlannerNo(plannerNo);
-        return  planner;
+        PlannerDTO dto = entityToDto(planner);
+        return  dto;
     }
 
     @Override
@@ -47,9 +55,4 @@ public class PlannerServiceImpl implements PlannerService {
         repository.deleteByPlannerNo(plannerNo);
     }
 
-    @Override
-    public Long countPlanner(Long plannerNo) {
-        Long result = repository.countByPlannerNo(plannerNo);
-        return result;
-    }
 }
