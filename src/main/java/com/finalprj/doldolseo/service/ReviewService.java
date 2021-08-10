@@ -26,4 +26,7 @@ public interface ReviewService {
 
     //글번호로 해당 게시글 삭제
     public void deleteReview(Long reviewNo);
+
+    //해당 게시글 수정
+    public void updateReview(Long reviewNo, ReviewDTO dto);
 }

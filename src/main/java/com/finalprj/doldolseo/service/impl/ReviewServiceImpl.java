@@ -58,10 +58,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public ReviewDTO getReview(Long reviewNo) {
-        Review reviewEntity = repository.findByReviewNo(reviewNo);
+        Review review = repository.findByReviewNo(reviewNo);
+        review.setHit(review.getHit()+1); //조회수 1증가
 
-        return modelMapper.map(reviewEntity, ReviewDTO.class);
+        return modelMapper.map(review, ReviewDTO.class);
     }
 
     @Override
@@ -70,6 +72,7 @@ public class ReviewServiceImpl implements ReviewService {
         System.out.println(reviewNo + "번 게시글 삭제");
     }
 
+    @Override
     @Transactional
     public void updateReview(Long reviewNo, ReviewDTO dto) {
         Review review = repository.findByReviewNo(reviewNo);
