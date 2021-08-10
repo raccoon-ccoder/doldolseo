@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 public interface PlannerService {
-    Planner insertPlanner(PlannerDTO dto) throws ParseException;
+    PlannerDTO insertPlanner(PlannerDTO dto) throws ParseException;
 
     default Planner dtoToEntity(PlannerDTO dto) throws ParseException {
         Planner entity = null;
@@ -43,11 +43,23 @@ public interface PlannerService {
         return entity;
     }
 
-    List<Planner> selectPlanners(String id);
+    default PlannerDTO entityToDto(Planner planner) {
+        PlannerDTO dto = PlannerDTO.builder()
+                .plannerNo(planner.getPlannerNo())
+                .id(planner.getId())
+                .title(planner.getTitle())
+                .intro(planner.getIntro())
+                .fDate(planner.getFDate())
+                .lDate(planner.getLDate())
+                .wDate(planner.getWDate())
+                .build();
+        return dto;
+    }
 
-    Planner selectPlanner(Long plannerNo);
+    List<PlannerDTO> selectPlanners(String id);
+
+    PlannerDTO selectPlanner(Long plannerNo);
 
     void deletePlanner(Long plannerNo);
 
-    Long countPlanner(Long plannerNo);
 }
