@@ -1,8 +1,9 @@
-package com.finalprj.doldolseo.service;
+package com.finalprj.doldolseo.impl;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.repository.MemberRepository;
-import com.finalprj.doldolseo.vo.MemberVO;
+import com.finalprj.doldolseo.service.MemberService;
+import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
  */
 
 @Service
-public class MemberServiceImpl implements  MemberService{
+public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepository repository;

@@ -1,6 +1,6 @@
 package com.finalprj.doldolseo.repository;
 
-import com.finalprj.doldolseo.vo.MemberVO;
+import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

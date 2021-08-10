@@ -7,6 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +46,8 @@
     <div class="planL-navbox">
         <ul class="planL-navbox__ul--blue">
             <li class="planL-navbox__li--big">마이 페이지</li>
-            <li class="planL-navbox__li--small"><a href="#" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;  개인 정보</a></li>
-            <li class="planL-navbox__li--small"><a href="#" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;&nbsp;내 플래너</a></li>
+            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;  개인 정보</a></li>
+            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/planL?id=${member.id}" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;&nbsp;내 플래너</a></li>
         </ul>
     </div>
     <!-- // 마이페이지 네비바-->
@@ -66,17 +67,17 @@
         <div class="planL-listbox">
 
             <!-- varitems로 변경 후 데이터 가져와서 뿌릴 예정, 플래너 각 고유 id 필요하기에 플래너 번호 필수 ! -->
-            <c:forEach begin="1" end="9" var="i">
+            <c:forEach items="${planners}" var="planner" varStatus="status">
                 <div class="planL-detailbox">
 
                     <div class="planL-detailmap" >
-                        <div class="planL-map" id="map${i}" onclick="location.href='#'" ></div> <!-- 플래너 상세 페이지로 이동하는 경로 -->
+                        <div class="planL-map" id="map${status.count}" onclick="location.href='${pageContext.request.contextPath}/planD?plannerNo=${planner.plannerNo}'" ></div> <!-- 플래너 상세 페이지로 이동하는 경로 -->
                     </div>
 
                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb0b3988eb15f5d9ee7b535c89c89b5c"></script>
                     <script>
                         /* 지도 생성 */
-                        var container = document.getElementById('map${i}');
+                        var container = document.getElementById('map${status.count}');
 
                         var options = {
                             center: new kakao.maps.LatLng(37.5354902, 126.976431),
@@ -96,54 +97,35 @@
                         });
 
                         /*for문 생성 */
+                        <c:forEach items="${plans}" var="plan" varStatus="plan_status">
+                            <c:if test="${planner.plannerNo eq plan.plannerNo}">
+                                /* 지도에 마커 생성 */
+                                /* 서울역 마커 */
+                                var markerPosition  = new kakao.maps.LatLng(${plan.y}, ${plan.x});
+                                var marker = new kakao.maps.Marker({
+                                    position: markerPosition
+                                });
+                                marker.setMap(map);
 
-                        /* 지도에 마커 생성 */
-                        /* 서울역 마커 */
-                        var markerPosition  = new kakao.maps.LatLng(37.5536472, 126.9678003);
-                        var marker = new kakao.maps.Marker({
-                            position: markerPosition
-                        });
-                        marker.setMap(map);
-
-                        /* 서울역 경로 추가  */
-                        var point =  new kakao.maps.LatLng(37.5536472, 126.9678003);
-                        var path = polyline.getPath();
-                        path.push(point);
-                        polyline.setPath(path);
-
-                        /* 강남역 마커 */
-                        var markerPosition  = new kakao.maps.LatLng(37.5461497, 126.9112244);
-                        var marker = new kakao.maps.Marker({
-                            position: markerPosition
-                        });
-                        marker.setMap(map);
-
-                        /* 강남역역 경로 추가 */
-                       var point =  new kakao.maps.LatLng(37.5461497, 126.9112244);
-                        var path = polyline.getPath();
-                        path.push(point);
-                        polyline.setPath(path);
-
-                        /* 여의도역 마커 */
-                        var markerPosition  = new kakao.maps.LatLng(37.5215737, 126.9221282);
-                        var marker = new kakao.maps.Marker({
-                            position: markerPosition
-                        });
-                        marker.setMap(map);
-
-                        /* 여의도역 경로 추가 */
-                        var point =  new kakao.maps.LatLng(37.5215737, 126.9221282);
-                        var path = polyline.getPath();
-                        path.push(point);
-                        polyline.setPath(path);
+                                /* 서울역 경로 추가  */
+                                var point =  new kakao.maps.LatLng(${plan.y}, ${plan.x});
+                                var path = polyline.getPath();
+                                path.push(point);
+                                polyline.setPath(path);
+                            </c:if>
+                        </c:forEach>
 
                     </script>
 
                     <div class="planL-detailinfo">
-                        <span class="planL-detailinfo__span--date">2021.07.10</span>
-                        <span class="planL-detailinfo__span--dday">맛집 다 부셔 !!!</span>
-                        <span class="planL-detailinfo__span--days">3DAYS</span>
-                        <button onclick="window.location.href='#'" class="planL-detailinfo__button--blue">삭제</button>
+                        <span class="planL-detailinfo__span--date">
+                                <fmt:formatDate value="${planner.getFDate()}" pattern="yyyy-MM-dd" />
+                                </span>
+                        <span class="planL-detailinfo__span--dday" title="${planner.title}">${planner.title}</span>
+                        <fmt:parseNumber value="${planner.getFDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="first"/>
+                        <fmt:parseNumber value="${planner.getLDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="last"/>
+                        <span class="planL-detailinfo__span--days">${last - first + 1}DAYS</span>
+                        <button onclick="window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo=${planner.plannerNo}&id=${planner.id}'" class="planL-detailinfo__button--blue">삭제</button>
                     </div>
 
                 </div>
@@ -172,7 +154,7 @@
 
         <!-- 플래너 팝업창 입력 부분 -->
         <div class="planL-popcontentbox">
-            <form action="#" method="post" name="popupFrm" onsubmit="return popupCheck()">
+            <form action="/goPlanI?id=${member.id}" method="post" name="popupFrm" onsubmit="return popupCheck()">
 
                 <div class="planL-popdetailbox">
                     <span class="planL-popdetailbox__span--big">여행제목</span>
@@ -181,9 +163,9 @@
 
                 <div class="planL-popdetailbox">
                     <span class="planL-popdetailbox__span--big">여행기간</span>
-                    <input type="date" name="f_date" class="planL-popdetailbox__input--date" required>
+                    <input type="date" name="fDate" class="planL-popdetailbox__input--date" required>
                     <span class="planL-popdetailbox__span--small">~</span>
-                    <input type="date" name="l_date" class="planL-popdetailbox__input--date" required>
+                    <input type="date" name="lDate" class="planL-popdetailbox__input--date" required>
                 </div>
 
                 <div class="planL-popdetailbox">

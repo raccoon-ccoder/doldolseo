@@ -17,8 +17,7 @@
     <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-
+    $(document).ready(function() {
             $('.planI-daybox').click(function(e) {
                 e.preventDefault();
                 $('.planI-daybox').css("background-color","#1b3067");
@@ -32,9 +31,10 @@
                 var y = [];
                 var x = [];
                 var time = [];
+                var planNo = [];
                 var title = document.getElementById('title').value;
-                var f_date = document.getElementById('f_date').value;
-                var l_date = document.getElementById('l_date').value;
+                var fDate = document.getElementById('fDate').value;
+                var lDate = document.getElementById('lDate').value;
                 var planner_intro = document.getElementById('intro').value;
 
                 var isValid = true;
@@ -48,6 +48,9 @@
                 if(isValid == true){
                     $('.planI-planbox').each(function (i){
                         date.push($(this).attr("data-date"));
+                        y.push($(this).attr("data-y"));
+                        x.push($(this).attr("data-x"));
+                        planNo.push($(this).attr("data-planNo"));
                     });
 
                     $('.planI-plandetail__span--place').each(function (i){
@@ -55,20 +58,18 @@
                     });
 
                     $('.planI-plandetail__input--intro').each(function (i){
-                        plan_intro.push($(this).val());
-                    });
-
-                    $('.planI-planbox').each(function (i){
-                        y.push($(this).attr("data-y"));
-                    });
-
-                    $('.planI-planbox').each(function (i){
-                        x.push($(this).attr("data-x"));
+                        if($(this).val() == null){
+                            plan_intro.push(" ");
+                        }else{
+                            plan_intro.push($(this).val());
+                        }
                     });
 
                     $('.planI-plandetail__input--time').each(function (i){
                         time.push($(this).val());
                     });
+
+
 
                     for(var i=0;i<time.length;i++){
                         if(time[i] == ""){
@@ -78,7 +79,7 @@
                     }
 
                     $.ajax({
-                        url:"plantest.do",
+                        url:"plannerUpdate?id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
                         data:{
                             date : date,
                             place : place,
@@ -86,13 +87,18 @@
                             y : y,
                             x : x,
                             time : time,
+                            planNo : planNo,
 
+                            plannerNo : ${planner_user.plannerNo},
                             title : title,
-                            f_date : f_date,
-                            l_date : l_date,
-                            planner_intro : planner_intro
+                            fDate : fDate,
+                            lDate : lDate,
+                            intro : planner_intro
                         },
-                        type:"post"
+                        type:"post",
+                        success: function (data) {
+                            location.href="${pageContext.request.contextPath}/" + data;
+                        }
                     });
                 }
 
@@ -106,18 +112,18 @@
 </head>
 <body>
 <!-- 사용자가 입력한 여행 제목, 여행 출발일,도착일, 여행 설명 정보-->
-<input type="hidden" name="title" id="title" value="서울여행" />
-<input type="hidden" name="f_date" id="f_date" value="2021.07.01" />
-<input type="hidden" name="l_date" id="l_date" value="2021.07.03" />
-<input type="hidden" name="intro" id="intro" value="휴가 내서 가는 여행" />
+<input type="hidden" name="title" id="title" value="${planner_user.title}" />
+<input type="hidden" name="fDate" id="fDate" value="<fmt:formatDate value="${planner_user.getFDate()}" pattern="yyyy-MM-dd" />" />
+<input type="hidden" name="lDate" id="lDate" value="<fmt:formatDate value="${planner_user.getLDate()}" pattern="yyyy-MM-dd" />" />
+<input type="hidden" name="intro" id="intro" value="${planner_user.intro}" />
 <!-- // 사용자가 입력한 여행 제목, 여행 출발일,도착일, 여행 설명 정보-->
 
 <!-- header -->
 <div class="planI-header">
-    <a href="#"><img src="_image/logo.png"></a>
+    <a href="${pageContext.request.contextPath}/main"><img src="_image/logo.png"></a>
 
     <button class="planI-header__button--sumbit">저장</button>
-    <button class="planI-header__button--close">닫기</button>
+    <button class="planI-header__button--close" onclick="location.href='${pageContext.request.contextPath}/planL?id=${member.id}'">닫기</button>
 </div>
 <!-- // header -->
 
@@ -131,7 +137,7 @@
         <c:forEach items="${days}" var="day" varStatus="status">
             <div class="planI-daybox" onclick="plansChange(${status.count})">
                 <span class="planI-day">DAY${status.count}</span>
-                <span class="planI-date">${day}</span>
+                <span class="planI-date"><fmt:formatDate value="${day}" pattern="MM.dd (E)" /></span>
             </div>
         </c:forEach>
 
@@ -142,15 +148,19 @@
     <div class="planI-planscontainer">
 
         <c:forEach items="${days}" var="day" varStatus="status">
-            <div class="planI-plansbox" data-date="${day}">
-                <div class="planI-plansboxtitle">DAY${status.count} | ${day}</div>
+            <div class="planI-plansbox" data-date="<fmt:formatDate value="${day}" pattern="yyyy-MM-dd" />">
+                <div class="planI-plansboxtitle">DAY${status.count} | <fmt:formatDate value="${day}" pattern="MM.dd E요일" /></div>
 
                 <% int i = 1;%>
                 <c:forEach items="${plans}" var="plan" varStatus="plan_status">
-                    <c:if test="${plan.date eq day}">
-                        <div class="planI-planbox" data-date="${plan.date}" data-y="${plan.y}" data-x="${plan.x}">
+
+                    <fmt:formatDate value="${day}" pattern="yyyy-MM-dd" var="nowDate" />
+                    <fmt:formatDate value="${plan.day}" pattern="yyyy-MM-dd" var="openDate" />
+
+                    <c:if test="${nowDate eq openDate}">
+                        <div class="planI-planbox" data-date="<fmt:formatDate value="${plan.day}" pattern="yyyy-MM-dd" />" data-y="${plan.y}" data-x="${plan.x}" data-planNo="${plan.planNo}">
                             <div class="planI-plannum">
-                                <img src="_img/num/number<%=i%>.png" class="planI-plannum__img-navy">
+                                <img src="_image/num/number<%=i%>.png" class="planI-plannum__img-navy">
 
                                 <span class="planI-plannum__span--time">시간</span>
 
@@ -160,11 +170,11 @@
                             <div class="planI-plandetail">
                                 <span class="planI-plandetail__span--place" title="${plan.name}">${plan.name}</span>
 
-                                <input type="time" name="time" class="planI-plandetail__input--time" value="<fmt:formatDate value="${plan.date}" pattern="HH:mm" />" required >
+                                <input type="time" name="time" class="planI-plandetail__input--time" value="<fmt:formatDate value="${plan.day}" pattern="HH:mm" />" required >
 
                                 <input type="text" name="intro" class="planI-plandetail__input--intro" value="${plan.intro}" placeholder="20자 내로 메모를 입력해주세요." maxlength="20">
 
-                                <button class="planI-plandetail__button--blue" onclick="planDelete(<%=i%>)">&times;</button>
+                                <button class="planI-plandetail__button--blue" onclick="planDelete(<%=i%>); planDeleteOnDB();">&times;</button>
                             </div>
 
                         </div>

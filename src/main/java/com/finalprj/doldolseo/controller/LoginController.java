@@ -2,7 +2,7 @@ package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.service.LoginService;
-import com.finalprj.doldolseo.vo.MemberVO;
+import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +49,7 @@ public class LoginController {
     public String logoutUser(HttpServletRequest request) throws Exception{
         HttpSession session = request.getSession();
         session.invalidate();
+        request.setAttribute("result","true");
         return "/main";
     }
 }

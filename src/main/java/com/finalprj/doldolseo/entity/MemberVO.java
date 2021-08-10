@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.vo;
+package com.finalprj.doldolseo.entity;
 
 import lombok.*;
 import javax.persistence.*;

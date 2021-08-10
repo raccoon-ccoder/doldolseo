@@ -2651,11 +2651,12 @@ table {
 .planL-detailinfo {
     width: 100%;
     height: 74px;
+    position: relative;
 }
 
 .planL-detailinfo__span--date {
     font-size: 17px;
-    position: relative;
+    position: absolute;
     top: 9px;
     left: 15px;
     font-family: 'Nanum Gothic', sans-serif;
@@ -2665,17 +2666,21 @@ table {
 .planL-detailinfo__span--dday {
     font-size: 14px;
     font-weight: bolder;
-    position: relative;
-    top: 40px;
-    right: 82px;
-
+    position: absolute;
+    bottom: 17px;
+    left: 16px;
+    display:inline-block;
+    max-width:190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .planL-detailinfo__span--days { /*days*/
     font-size: 17px;
-    position: relative;
+    position: absolute;
     top: 8px;
-    left: 28px;
+    right:20px;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: 600;
 }
@@ -2683,9 +2688,9 @@ table {
 .planL-detailinfo__button--blue {
     width: 55px;
     height: 25px;
-    position: relative;
-    top: 20px;
-    left: 225px;
+    position: absolute;
+    top: 37px;
+    right: 20px;
     background-color: #49b2e9;
     color: white;
     border: none;
@@ -2888,7 +2893,7 @@ table {
 
 .planD-titledetail {
     position: absolute;
-    top: 220px;
+    top: 210px;
     left: 30px;
     color: white;
     font-size: 30px;
@@ -2897,10 +2902,19 @@ table {
 
 .planD-titledays {
     position: absolute;
-    top: 260px;
+    top: 255px;
     left: 30px;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.planD-titleIntro{
+    position:absolute;
+    top:280px;
+    left:30px;
+    color:white;
+    font-weight: bold;
 }
 
 .planD-btnbox {
@@ -3020,14 +3034,19 @@ table {
     font-size: 32px;
     font-weight: 600;
     position: absolute;
-    top: 55px;
+    top: 60px;
     left: -5px;
+    display:inline-block;
+    max-width:270px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .planD-detailinfo__span--small {
     position: absolute;
     top: 120px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     color: #bdbdbd;
 }

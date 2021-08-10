@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
-import com.finalprj.doldolseo.vo.MemberVO;
+import com.finalprj.doldolseo.entity.MemberVO;
 
 import java.io.IOException;
 

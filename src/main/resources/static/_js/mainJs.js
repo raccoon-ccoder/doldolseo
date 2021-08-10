@@ -245,6 +245,8 @@ function popupCheck(){
 function mapChange(){
     var select = document.getElementById("select_day");
     var current = select.options[select.selectedIndex].value;
+    var slide = document.querySelectorAll(".planD-map");
+    var listslides = document.querySelectorAll(".planD-placelist");
 
     for(var k=0;k<slide.length;k++){
         slide[k].style.display = "none";
@@ -302,7 +304,7 @@ function planInsert(place_name,place_y,place_x){
 함수 설명 : 일정 추가시 일정 관련 <div> 코드 생성해주는 함수
  */
 function getHtml(place_name,place_y,place_x,num, data_date){
-    var div = "<div class=\"planI-planbox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\">";
+    var div = "<div class=\"planI-planbox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\" data-planNo=\"\">";
     div += "<div class=\"planI-plannum\">";
     div += "<img src=\"_image/num/number" + num + ".png\" class=\"planI-plannum__img-navy\">";
     div += "<span class=\"planI-plannum__span--time\">시간</span>";
@@ -310,7 +312,7 @@ function getHtml(place_name,place_y,place_x,num, data_date){
     div += " <div class=\"planI-plandetail\">";
     div += " <span class=\"planI-plandetail__span--place\" title=\"" + place_name + "\">" + place_name + "</span>";
     div += "<input type=\"time\" name=\"time\" class=\"planI-plandetail__input--time\" required >";
-    div += "<input type=\"text\" name=\"intro\" class=\"planI-plandetail__input--intro\" placeholder=\"20자 내로 메모를 입력해주세요.\" maxlength=\"20\">";
+    div += "<input type=\"text\" name=\"intro\" class=\"planI-plandetail__input--intro\" placeholder=\"20자 내로 메모를 입력해주세요.\"  maxlength=\"20\">";
     div += "<button class=\"planI-plandetail__button--blue\" onclick=\"planDelete(" + num + ")\">&times;</button></div> </div>";
 
     return div;
@@ -337,10 +339,4 @@ function planDelete(num){
         $(this).find('button').attr("onclick", btn);
         ++ num;
     });
-
-    // for(var i=0;i<next_kids.length;i++){
-    //     var url = "img/num/number" + num + ".png";
-    //     next_kids[i].find('img').attr("src", url);
-    //     ++num;
-    // }
 }

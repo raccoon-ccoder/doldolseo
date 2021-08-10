@@ -1,6 +1,5 @@
 package com.finalprj.doldolseo.controller;
 
-import com.finalprj.doldolseo.vo.Plan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
