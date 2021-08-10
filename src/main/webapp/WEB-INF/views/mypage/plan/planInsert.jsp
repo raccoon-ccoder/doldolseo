@@ -7,6 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +55,11 @@
                     });
 
                     $('.planI-plandetail__input--intro').each(function (i){
-                        plan_intro.push($(this).val());
+                        if($(this).val() == null){
+                            plan_intro.push(" ");
+                        }else{
+                            plan_intro.push($(this).val());
+                        }
                     });
 
                     $('.planI-planbox').each(function (i){
@@ -77,7 +82,7 @@
                     }
 
                     $.ajax({
-                        url:"plantest.do",
+                        url:"plannerInsert?id=${member.id}",
                         data:{
                             date : date,
                             place : place,
@@ -86,12 +91,15 @@
                             x : x,
                             time : time,
 
-                             title : title,
-                             f_date : f_date,
-                             l_date : l_date,
-                             planner_intro : planner_intro
+                            title : title,
+                            fDate : f_date,
+                            lDate : l_date,
+                            intro : planner_intro
                         },
-                        type:"post"
+                        type:"post",
+                        success: function (data) {
+                            location.href="${pageContext.request.contextPath}/" + data;
+                        }
                     });
                 }
 
@@ -105,18 +113,20 @@
 </head>
 <body>
     <!-- 사용자가 입력한 여행 제목, 여행 출발일,도착일, 여행 설명 정보-->
-        <input type="hidden" name="title" id="title" value="서울여행" />
-        <input type="hidden" name="f_date" id="f_date" value="2021.07.01" />
-        <input type="hidden" name="l_date" id="l_date" value="2021.07.03" />
-        <input type="hidden" name="intro" id="intro" value="휴가 내서 가는 여행" />
+        <input type="hidden" name="title" id="title" value="${planner_user.title}" />
+<%--        <input type="hidden" name="f_date" id="f_date" value="${planner_user.f_date}" />--%>
+<%--        <input type="hidden" name="l_date" id="l_date" value="${planner_user.l_date}" />--%>
+    <input type="hidden" name="fDate" id="f_date" value="<fmt:formatDate value="${planner_user.getFDate()}" pattern="yyyy-MM-dd" />" />
+    <input type="hidden" name="lDate" id="l_date" value="<fmt:formatDate value="${planner_user.getLDate()}" pattern="yyyy-MM-dd" />" />
+        <input type="hidden" name="intro" id="intro" value="${planner_user.intro}" />
     <!-- 사용자가 입력한 여행 제목, 여행 출발일,도착일, 여행 설명 정보-->
 
     <!-- header -->
     <div class="planI-header">
-        <a href="#"><img src="_image/logo.png"></a>
+        <a href="${pageContext.request.contextPath}/main"><img src="_image/logo.png"></a>
 
         <button class="planI-header__button--sumbit">저장</button>
-        <button class="planI-header__button--close">닫기</button>
+        <button class="planI-header__button--close" onclick="location.href='${pageContext.request.contextPath}/planL?id=${member.id}'">닫기</button>
     </div>
     <!-- // header -->
 
@@ -127,10 +137,10 @@
 
             <div class="planI-daysboxtitle">일정</div>
 
-            <c:forEach begin="1" end="3" var="i">
-                <div class="planI-daybox" onclick="plansChange(${i})">
-                    <span class="planI-day">DAY${i}</span>
-                    <span class="planI-date">07.0${i} (화)</span>
+            <c:forEach items="${days}" var="day" varStatus="status">
+                <div class="planI-daybox" onclick="plansChange(${status.count})">
+                    <span class="planI-day">DAY${status.count}</span>
+                    <span class="planI-date"><fmt:formatDate value="${day}" pattern="MM.dd (E)" /></span>
                 </div>
             </c:forEach>
 
@@ -140,9 +150,9 @@
         <!-- 해당 날짜에 대한 일정들 나타나는 div -->
         <div class="planI-planscontainer">
 
-            <c:forEach begin="1" end="3" var="i">
-                <div class="planI-plansbox" data-date="2021.07.0${i}">
-                    <div class="planI-plansboxtitle">DAY${i} | 07.0${i} (화요일)</div>
+            <c:forEach items="${days}" var="day" varStatus="status">
+                <div class="planI-plansbox" data-date="${day}">
+                    <div class="planI-plansboxtitle">DAY${status.count} | <fmt:formatDate value="${day}" pattern="MM.dd E요일" /></div>
 
                     <!-- 아마도 여기에 x,y 값 저장해야 할듯
                     <div class="planI-planbox" data-date="2021.07.01" data-y="30" data-x="120">
