@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>미니프로필</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--%>
     <script>
         window.onload = function () {
             if(${member != null}){
@@ -31,7 +31,7 @@
     <!--로그인 후 화면-->
     <div id="header-miniprofileBox">
         <div id="header-miniprofile__photo">
-            <img src="_image/profile/${member.member_img}">
+            <img src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
         </div>
         <div id="header-miniprofile__info">
             <span style="color:#37FFEB;" id="header-miniprofile__span--nickname">${member.nickname}</span><span id="header-miniprofile__span--white">님</span>

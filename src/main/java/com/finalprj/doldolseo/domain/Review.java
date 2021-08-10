@@ -1,9 +1,11 @@
-package com.finalprj.doldolseo.entity;
+package com.finalprj.doldolseo.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /*
  * 후기게시판 Entity
@@ -16,9 +18,14 @@ import java.util.Date;
 @Table(name = "REVIEW_BOARD_TBL")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SequenceGenerator(
+        name="REVIEW_BOARD_SEQ_GEN",
+        sequenceName="REVIEW_BOARD_SEQ",
+        allocationSize=1)
+@Setter
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REVIEW_BOARD_SEQ_GEN")
     @Column(name = "REVIEW_NO")
     private Long reviewNo;
 
@@ -27,14 +34,13 @@ public class Review {
     private String content;
 
     @Column(name = "COURSE_IMG")
-    private String coureImg;
+    private String courseImg;
 
     @Column(name = "UPLOAD_IMG")
     private String uploadImg;
 
     @Column(name = "W_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date wDate;
+    private LocalDateTime wDate;
 
     private int hit;
 

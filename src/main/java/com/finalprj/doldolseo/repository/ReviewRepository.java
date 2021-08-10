@@ -1,6 +1,6 @@
 package com.finalprj.doldolseo.repository;
 
-import com.finalprj.doldolseo.entity.Review;
+import com.finalprj.doldolseo.domain.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +20,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     //지역별 글 목록 조회
     Page<Review> findAllByAreaNo(Integer areaNo, Pageable pageable);
+
+    //글 상세 조회
+    Review findByReviewNo(Long reviewNo);
+
+
 }

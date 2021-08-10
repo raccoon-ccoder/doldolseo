@@ -16,7 +16,7 @@
     <title>후기게시판</title>
 
     <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -45,14 +45,14 @@
 
                 <%-- 게시판 드릴다운 --%>
                 <span class="common-top__drilldownbox">
-                    <a href="${pageContext.request.contextPath}/reviewL" style="color: #F78181">후기게시판</a>
+                    <a href="${pageContext.request.contextPath}/review" style="color: #F78181">후기게시판</a>
                     <span> > </span>
                     <a>${mapFactory.areaMap.get(areaNo)}</a>
                 </span>
 
                 <%-- 글쓰기 버튼 --%>
                 <div id="reviewL-top__buttonbox">
-                    <button class="review-button">글쓰기</button>
+                    <button class="review-button" onclick="location.href='/review/new'">글쓰기</button>
                 </div>
             </div>
 
@@ -60,16 +60,16 @@
             <table id="reviewL-list">
                 <tr class="list--header">
                     <td style="width: 100px">지역</td>
-                    <td >제목</td>
+                    <td>제목</td>
                     <td style="width: 100px">닉네임</td>
-                    <td style="width: 140px">등록일</td>
+                    <td style="width: 240px">등록일</td>
                     <td style="width: 100px">조회수</td>
                 </tr>
-                <c:forEach items="${reviewList.content}" var="reviewList" begin="1" end="40">
+                <c:forEach items="${reviewList.content}" var="reviewList" begin="0" end="40">
 
                     <tr class="list--item">
                         <td>${mapFactory.areaMap.get(reviewList.areaNo)}</td>
-                        <td>${reviewList.title}</td>
+                        <td><a href="review/${reviewList.reviewNo}">${reviewList.title}</a></td>
                         <td>${reviewList.id}</td>
                         <td>${reviewList.WDate}</td>
                         <td>${reviewList.hit}</td>
@@ -86,14 +86,14 @@
                         <tr>
                             <!-- 첫 페이지로 이동 -->
                             <td>
-                                <a href="${pageContext.request.contextPath}/reviewL?page=0">
+                                <a href="${pageContext.request.contextPath}/review?page=0">
                                     << </a>
                             </td>
 
                             <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
                             <c:if test="${startBlockPage ne 1}">
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/reviewL?page=${startBlockPage-2}">
+                                    <a href="${pageContext.request.contextPath}/review?page=${startBlockPage-2}">
                                         < </a>
                                 </td>
                             </c:if>
@@ -101,22 +101,21 @@
                             <!-- 페이징 블록 1 ~ 10 -->
                             <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/reviewL?page=${idx-1}">${idx}</a>
-                                    <!-- 이거 현재 URL 로 반영되게 바꿀것 -->
+                                    <a href="${pageContext.request.contextPath}/review?page=${idx-1}">${idx}</a>
                                 </td>
                             </c:forEach>
 
                             <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
                             <c:if test="${endBlockPage ne reviewList.totalPages}">
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/reviewL?page=${endBlockPage}">
+                                    <a href="${pageContext.request.contextPath}/review?page=${endBlockPage}">
                                         > </a>
                                 </td>
                             </c:if>
 
                             <!-- 마지막 페이지로 이동 -->
                             <td>
-                                <a href="${pageContext.request.contextPath}/reviewL?page=${reviewList.totalPages-1}">
+                                <a href="${pageContext.request.contextPath}/review?page=${reviewList.totalPages-1}">
                                     >> </a>
                             </td>
                         </tr>

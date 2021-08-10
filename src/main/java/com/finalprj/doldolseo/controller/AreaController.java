@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.AreaDTO;
-import com.finalprj.doldolseo.impl.AreaServiceImpl;
+import com.finalprj.doldolseo.service.impl.AreaServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

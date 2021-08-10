@@ -6,6 +6,7 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
     <title>후기게시판 - 상세</title>
 
     <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css?" rel="stylesheet" type="text/css">
+    <link href=" ${pageContext.request.contextPath}/_css/mainStyle.css?" rel="stylesheet" type="text/css">
 
     <%-- jQuery--%>
     <script
@@ -23,7 +24,7 @@
     </script>
 
     <%-- 댓글 이벤트 처리 --%>
-    <script src="_js/comment.js"></script>
+    <script src="${pageContext.request.contextPath}/_js/comment.js"></script>
 </head>
 <body>
     <%-- 헤더 --%>
@@ -56,6 +57,16 @@
                 </span>
             </div>
 
+            <div class="review-btnBox--reviewEdit">
+                <button class="review-button" onclick="location.href='/review/${review.reviewNo}/edit'" style="margin-right: 10px;">수정 하기</button>
+
+                <form:form method="delete">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" name="reviewNo" value="${review.reviewNo}">
+                    <button type="submit" class="review-button">글 삭제</button>
+                </form:form>
+            </div>
+
             <%-- 상세 글 목록  --%>
             <table id="reviewD-tablelayout">
                 <%-- 글상단 : 프로필 박스 + 댓글 및 조회수 --%>
@@ -65,17 +76,17 @@
                         <div class="profilebox">
                             <%-- 회원사진 --%>
                             <div class="profilebox--photo">
-                                <img src="_image/sample1.png">
+                                <img src="${pageContext.request.contextPath}/_image/sample1.png">
                             </div>
                             <%-- 닉네임 + 작성날짜 컨테이너 --%>
                             <div class="profilebox--container--sub">
                                 <%-- 닉네임 --%>
                                 <div class="profilebox--nickname">
-                                    박소은
+                                    ${review.id}
                                 </div>
                                 <%-- 작성날짜 --%>
                                 <div class="profilebox--wdate">
-                                    2020-07-21
+                                    ${review.WDate}
                                 </div>
                             </div>
                         </div>
@@ -101,7 +112,7 @@
                                 </svg>
                             </div>
                             <div class="iconbox__hitcount">
-                                1234
+                                ${review.hit}
                             </div>
                         </div>
                     </td>
@@ -110,7 +121,7 @@
                 <%-- 글 제목 --%>
                 <tr class="common-tbl__item">
                     <td>
-                        <span id="reviewD__title">눈을맞춰 술잔을 채워</span>
+                        <span id="reviewD__title">${review.title}</span>
                     </td>
                 </tr>
 
@@ -118,7 +129,8 @@
                 <tr class="common-tbl__item">
                     <td>
                         <div id="reviewD-coursebox">
-                            <img src="_image/samplecourse1.png" alt="여행코스">
+                            <img src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/${review.courseImg}"
+                                 alt="여행코스">
                         </div>
                     </td>
                 </tr>
@@ -127,11 +139,7 @@
                 <tr class="common-tbl__item">
                     <td>
                         <p id="reviewD-content">
-                            뭐가 어때 나는 어리고 또 자유로운 건데<br/>
-                            나쁜 거니 그런 기준은 어디서 배워 온 거니<br/>
-                            뭐가 어때 나는 취할거고 사랑도 할 건데<br/>
-                            못된 거면 욕이라도 해줘<br/>
-                            넌 그런게 귀여우니~<br/>
+                            ${review.content}
                         </p>
                     </td>
                 </tr>
@@ -157,7 +165,7 @@
                         <div class="profilebox" style="margin-top: 7px">
                             <%-- 회원사진 --%>
                             <div class="profilebox--photo">
-                                <img src="_image/sample2.png">
+                                <img src="${pageContext.request.contextPath}/_image/sample2.png">
                             </div>
                             <%-- 닉네임 + 작성날짜 컨테이너 --%>
                             <div class="profilebox--container--sub">
@@ -202,7 +210,7 @@
                         <div class="profilebox" style="margin-top: 7px">
                             <%-- 회원사진 --%>
                             <div class="profilebox--photo">
-                                <img src="_image/sample3.png">
+                                <img src="${pageContext.request.contextPath}/_image/sample3.png">
                             </div>
                             <%-- 닉네임 + 작성날짜 컨테이너 --%>
                             <div class="profilebox--container--sub">
