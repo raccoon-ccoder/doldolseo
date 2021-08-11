@@ -7,7 +7,7 @@ package com.finalprj.doldolseo.repository;
  * @Date 2021/08/06
  */
 
-import com.finalprj.doldolseo.entity.Plan;
+import com.finalprj.doldolseo.domain.Plan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

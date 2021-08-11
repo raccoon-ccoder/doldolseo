@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
-import com.finalprj.doldolseo.entity.MemberVO;
+import com.finalprj.doldolseo.domain.Member;
 
 import java.io.IOException;
 
@@ -13,13 +13,13 @@ import java.io.IOException;
  */
 
 public interface MemberService {
-    MemberVO join(MemberDTO memberDTO) throws IOException;
+    Member join(MemberDTO memberDTO) throws IOException;
 
     int checkId(String id);
 
     int checkNickname(String nickname);
 
-    default MemberVO dtoToEntity(MemberDTO dto){
+    default Member dtoToEntity(MemberDTO dto){
         String fileName = "";
         if(dto.getMember_img().getOriginalFilename().length() > 0){
             String file = dto.getMember_img().getOriginalFilename();
@@ -28,7 +28,7 @@ public interface MemberService {
             fileName = "sample.png";
         }
 
-        MemberVO entity = MemberVO.builder()
+        Member entity = Member.builder()
                 .id(dto.getId())
                 .password(dto.getPassword())
                 .name(dto.getName())

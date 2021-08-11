@@ -1,9 +1,9 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.repository.LoginRepository;
 import com.finalprj.doldolseo.service.LoginService;
-import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,8 @@ public class LoginServiceImpl implements LoginService {
     private LoginRepository repository;
 
     @Override
-    public MemberVO login(MemberDTO dto) {
-        Optional<MemberVO> result = repository.findByIdAndPassword(dto.getId(), dto.getPassword());
+    public Member login(MemberDTO dto) {
+        Optional<Member> result = repository.findByIdAndPassword(dto.getId(), dto.getPassword());
         return result.isPresent()? result.get() : null;
     }
 }

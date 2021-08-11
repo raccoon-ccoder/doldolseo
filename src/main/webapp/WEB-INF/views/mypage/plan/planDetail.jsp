@@ -13,9 +13,9 @@
 <head>
     <meta charset="UTF-8">
     <title>플래너 상세 목록</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script>
         // 여러 대표 이미지 중 랜덤으로 1개를 뽑아줌
         $(document).ready(function () {
@@ -28,7 +28,7 @@
             });
 
             let randomNum = Math.floor(Math.random() * 5) + 1;
-            $('.planD-imgbox').children('img').attr('src', '_image/tour/tour' + randomNum + '.jpg');
+            $('.planD-imgbox').children('img').attr('src', '${pageContext.request.contextPath}/_image/tour/tour' + randomNum + '.jpg');
 
             var slide = document.querySelectorAll(".planD-map");
             var listslides = document.querySelectorAll(".planD-placelist");
@@ -79,7 +79,7 @@
             <!-- 플래너 상단 (제목)-->
             <div class="planD-titlebox">
                 <div class="planD-imgbox">
-                    <img src="_image/tour/tour1.jpg" class="planD-imgbox--img__big">
+                    <img src="${pageContext.request.contextPath}/_image/tour/tour1.jpg" class="planD-imgbox--img__big">
                         <span class="planD-titledetail">${planner.title}</span>
 
                         <fmt:parseNumber value="${planner.getFDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="first"/>
@@ -130,7 +130,7 @@
 
                                 <div class="planD-detail">
                                     <div class="planD-detailnumber">
-                                        <img class="planD-detailnumber__img--navy" src="_image/num/number<%=i%>.png">
+                                        <img class="planD-detailnumber__img--navy" src="${pageContext.request.contextPath}/_image/num/number<%=i%>.png">
                                     </div>
 
                                     <div class="planD-detailplace">
@@ -230,71 +230,7 @@
                                         </c:if>
 
                                 </c:forEach>
-                                // /* 지도에 마커 생성 */
-                                // /* 서울역 마커 */
-                                // var markerPosition  = new kakao.maps.LatLng(37.5536472, 126.9678003);
-                                // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-                                //     imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-                                //     imgOptions =  {
-                                //         spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-                                //         spriteOrigin : new kakao.maps.Point(0, (0*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-                                //         offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-                                //     },
-                                //     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-                                //     marker = new kakao.maps.Marker({
-                                //         position: markerPosition, // 마커의 위치
-                                //         image: markerImage
-                                //     });
-                                // marker.setMap(map);
-                                //
-                                // /* 서울역 경로 추가  */
-                                // var point =  new kakao.maps.LatLng(37.5536472, 126.9678003);
-                                // var path = polyline.getPath();
-                                // path.push(point);
-                                // polyline.setPath(path);
-                                //
-                                // /* 강남역 마커 */
-                                // var markerPosition  = new kakao.maps.LatLng(37.5461497, 126.9112244);
-                                // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-                                //     imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-                                //     imgOptions =  {
-                                //         spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-                                //         spriteOrigin : new kakao.maps.Point(0, (1*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-                                //         offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-                                //     },
-                                //     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-                                //     marker = new kakao.maps.Marker({
-                                //         position: markerPosition, // 마커의 위치
-                                //         image: markerImage
-                                //     });
-                                // marker.setMap(map);
-                                //
-                                // /* 강남역역 경로 추가 */
-                                // var point =  new kakao.maps.LatLng(37.5461497, 126.9112244);
-                                // var path = polyline.getPath();
-                                // path.push(point);
-                                // polyline.setPath(path);
-                                //
-                                // /* 여의도역 마커 */
-                                // var markerPosition  = new kakao.maps.LatLng(37.5215737, 126.9221282);
-                                // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-                                //     imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-                                //     imgOptions =  {
-                                //         spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-                                //         spriteOrigin : new kakao.maps.Point(0, (2*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-                                //         offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-                                //     },
-                                //     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-                                //     marker = new kakao.maps.Marker({
-                                //         position: markerPosition, // 마커의 위치
-                                //         image: markerImage
-                                //     });
-                                // marker.setMap(map);
-                                // /* 여의도역 경로 추가 */
-                                // var point =  new kakao.maps.LatLng(37.5215737, 126.9221282);
-                                // var path = polyline.getPath();
-                                // path.push(point);
-                                // polyline.setPath(path);
+
                             </script>
                         </c:forEach>
 
@@ -321,7 +257,7 @@
 
                                         <c:if test="${nowDate eq openDate}">
                                             <div class="planD-placedetail">
-                                                <img src="_image/num/number<%=j%>.png" class="planD-placedetail__img--navy">
+                                                <img src="${pageContext.request.contextPath}/_image/num/number<%=j%>.png" class="planD-placedetail__img--navy">
                                                 <span class="planD-placedetail__span--small" title="${plan.name}">${plan.name}</span>
                                             </div>
                                             <% ++j;%>
@@ -363,7 +299,7 @@
 
             <!-- 플래너 팝업창 입력 부분 -->
             <div class="planD-popcontentbox">
-                <form action="/goPlanU?plannerNo=${planner.plannerNo}&wDate=${planner.getWDate()}" method="post" name="popupFrm" onsubmit="return popupCheck()">
+                <form action="${pageContext.request.contextPath}/goPlanU?plannerNo=${planner.plannerNo}&wDate=${planner.getWDate()}" method="post" name="popupFrm" onsubmit="return popupCheck()">
 
                     <div class="planD-popdetailbox">
                         <span class="planD-popdetailbox__span--big">여행제목</span>

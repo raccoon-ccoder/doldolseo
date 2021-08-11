@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl;
 
 /*
  * 플랜 Service 구현 클래스
@@ -9,9 +9,8 @@ package com.finalprj.doldolseo.impl;
 
 import com.finalprj.doldolseo.dto.PlanDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
-import com.finalprj.doldolseo.entity.Planner;
 import com.finalprj.doldolseo.repository.PlanRepository;
-import com.finalprj.doldolseo.entity.Plan;
+import com.finalprj.doldolseo.domain.Plan;
 import com.finalprj.doldolseo.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,49 @@ public class PlanServiceImpl implements PlanService {
         }
         repository.saveAll(plans); }
 
-    /* plnaInsert.jsp에서 받은 값들을 List<Plan>으로 반환 */
+    /* 플래너 번호에 따른 플랜들을 List 타입으로 반환하는 메소드 */
+    @Override
+    public List<PlanDTO> selectPlan(Long plannerNo) {
+        List<Plan> plans = repository.findAllByPlannerNoOrderByPlanNo(plannerNo);
+        List<PlanDTO> planDTOS = new ArrayList<PlanDTO>();
+        for(Plan plan : plans){
+            planDTOS.add(entityToDto(plan));
+        }
+        return planDTOS;
+    }
+
+    /* 플래너의 첫번째 날짜 일정들을 반환하는 메소드 (planList.jsp로 이동시 사용) */
+    @Override
+    public List<PlanDTO> selectPlans(PlannerDTO planner) {
+        Date now = planner.getFDate();
+        Date start = planner.getFDate();
+        Date last = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59,59);
+
+        List<Plan> result = repository.findAllByPlannerNoAndDayBetweenOrderByPlanNo(planner.getPlannerNo(), start, last);
+        List<PlanDTO> dto = new ArrayList<PlanDTO>();
+        for(Plan plan : result){
+            dto.add(entityToDto(plan));
+        }
+        return dto;
+    }
+
+    /* 사용자가 작성한 각 플래너마다 플랜들을 구한 후 join하여 1개의 List 타입으로 반환하는 메소드  */
+    @Override
+    public List<PlanDTO> joinPlans(List<PlannerDTO> planners) {
+        List<PlanDTO> allPlans = new ArrayList<PlanDTO>();
+        for(int i=0;i<planners.size();i++){
+            List<PlanDTO> plans = selectPlans(planners.get(i));
+            allPlans.addAll(plans);
+        }
+        return allPlans;
+    }
+
+    @Override
+    public void deletePlans(Long plannerNo) {
+        repository.deleteAllByPlannerNo(plannerNo);
+    }
+
+    /* plnaInsert.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
     public List<PlanDTO> returnPlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y, Long planner_no){
         List<PlanDTO> plans = new ArrayList<PlanDTO>();
         for(int i=0;i<days.size();i++){
@@ -63,7 +104,7 @@ public class PlanServiceImpl implements PlanService {
         return  plans;
     }
 
-    /* planUpdate.jsp에서 받은 값들을 List<Plan>으로 반환 */
+    /* planUpdate.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
     public List<PlanDTO> returnUpdatePlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
         List<PlanDTO> plans = new ArrayList<PlanDTO>();
 
@@ -228,52 +269,4 @@ public class PlanServiceImpl implements PlanService {
         }
         return result;
     }
-
-    @Override
-    /* 각 플래너의 첫번째 날짜 일정들을 반환하는 메소드 (planList.jsp로 이동시 사용) */
-    public List<PlanDTO> selectPlans(PlannerDTO planner) {
-        Date now = planner.getFDate();
-        Date start = planner.getFDate();
-        Date last = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59,59);
-
-        List<Plan> result = repository.findAllByPlannerNoAndDayBetweenOrderByPlanNo(planner.getPlannerNo(), start, last);
-        List<PlanDTO> dto = new ArrayList<PlanDTO>();
-        for(Plan plan : result){
-            dto.add(entityToDto(plan));
-        }
-        return dto;
-    }
-
-    @Override
-    /* 사용자가 작성한 각 플래너마다 플랜들을 구한 후 join하여 1개의 List 타입으로 반환하는 메소드  */
-    public List<PlanDTO> joinPlans(List<PlannerDTO> planners) {
-        List<PlanDTO> allPlans = new ArrayList<PlanDTO>();
-        for(int i=0;i<planners.size();i++){
-            List<PlanDTO> plans = selectPlans(planners.get(i));
-            allPlans.addAll(plans);
-        }
-        return allPlans;
-    }
-
-    @Override
-    public List<PlanDTO> selectPlan(Long plannerNo) {
-        List<Plan> plans = repository.findAllByPlannerNoOrderByPlanNo(plannerNo);
-        List<PlanDTO> planDTOS = new ArrayList<PlanDTO>();
-        for(Plan plan : plans){
-            planDTOS.add(entityToDto(plan));
-        }
-        return planDTOS;
-    }
-
-    @Override
-    public void deletePlans(Long plannerNo) {
-        repository.deleteAllByPlannerNo(plannerNo);
-    }
-
-    @Override
-    public void deletePlan(Long planNo) {
-        repository.deleteByPlanNo(planNo);
-    }
-
-
 }

@@ -1,8 +1,8 @@
 package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.service.MemberService;
-import com.finalprj.doldolseo.entity.MemberVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +30,7 @@ public class MemberController {
 
     @RequestMapping("/register")
     public String register(MemberDTO memberDTO,Model model) throws Exception{
-        MemberVO member = service.join(memberDTO);
+        Member member = service.join(memberDTO);
         model.addAttribute("member",member);
         return "/member/memberJoinResult";
     }
@@ -52,7 +52,6 @@ public class MemberController {
         map.put("result", result);
         return map;
     }
-
 
     @RequestMapping("/memberJ")
     public String memberJoin() throws Exception{

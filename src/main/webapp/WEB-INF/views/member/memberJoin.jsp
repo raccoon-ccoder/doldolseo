@@ -11,12 +11,12 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
     </style>
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -26,7 +26,7 @@
                 var id = $('#id').val();
                 $.ajax({
                     async: true,
-                    url: "member/checkId", /* requestMapping*/
+                    url: "${pageContext.request.contextPath}/member/checkId", /* requestMapping*/
                     type: "post",
                     data: id,
                     dataType : "json",
@@ -49,7 +49,7 @@
                 var nickname = $('#nickname').val();
                 $.ajax({
                     async: true,
-                    url: "member/checkNickname", /* requestMapping*/
+                    url: "${pageContext.request.contextPath}/member/checkNickname", /* requestMapping*/
                     type: "post",
                     data: nickname,
                     dataType : "json",
@@ -72,13 +72,13 @@
     <!-- header -->
     <div id="header" class="memberJ-header">
         <a href="${pageContext.request.contextPath}/main" id="memberJ-header__a">
-            <img id="logoImg" class="memberJ-header__img--small" src="_image/logo.png">
+            <img id="logoImg" class="memberJ-header__img--small" src="${pageContext.request.contextPath}/_image/logo.png">
         </a>
     </div>
     <!-- header -->
 
     <!-- container -->
-    <form action="/register" method="post" enctype="multipart/form-data" name="joinFrm" onsubmit="return joinCheck()">
+    <form action="${pageContext.request.contextPath}/register" method="post" enctype="multipart/form-data" name="joinFrm" onsubmit="return joinCheck()">
     <div id="memberJ-container">
 
         <!-- 아아디, 비밀번호 입력 -->
@@ -182,7 +182,7 @@
         <!-- 프로필 사진 등록 -->
         <div class="memberJ-imgcontainer">
             <h4 class="memberJ-container__h4--big">프로필 사진 (선택)</h4>
-            <img id="my_img" class="memberJ-imgcontainer__img-small" src="_image/sample.png">
+            <img id="my_img" class="memberJ-imgcontainer__img-small" src="${pageContext.request.contextPath}/_image/sample.png">
             <label id="my_img_label" class="memberJ-imgcontainer__label-blue" for="member_img">업로드</label>
             <input type="file" name="member_img" id="member_img" class="memberJ-imgcontainer__input-disappear" value="" onchange="setImg(event);">
         </div>
@@ -195,7 +195,7 @@
             <div class="msg" id="validate_email"></div>
 
             <h4 class="memberJ-container__h4--big">전화번호 (선택)</h4>
-            <input type="tel" class="memberJ-container__input--big" name="phone" maxlength="30" value="">
+            <input type="tel" class="memberJ-container__input--big" name="phone" maxlength="30" value="" pattern="[0-9]{11}">
         </div>
         <!-- // 이메일, 전화번호 입력 -->
 
