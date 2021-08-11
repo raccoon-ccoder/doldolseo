@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.AreaDTO;
-import com.finalprj.doldolseo.service.impl.AreaServiceImpl;
+import com.finalprj.doldolseo.impl.AreaServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,7 +51,8 @@ public class AreaController {
 
     //지역게시판 - 지역명으로 지역정보 상세조회
     @GetMapping(value = "/areaD")
-    public String areaDetail(Model model, @RequestParam(value = "name") String name) {
+    public String areaDetail(Model model,
+                             @RequestParam(value = "name") String name) {
 
         AreaDTO area = service.getArea(name);
         model.addAttribute("area", area);

@@ -7,6 +7,9 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(review.WDate)}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +51,6 @@
                 <div class="common-top__title" style="color: #F6CECE;">
                     지역게시판
                 </div>
-
                 <%-- 게시판 드릴다운 --%>
                 <span class="common-top__drilldownbox">
                     <a href="#" style="color: #F78181;">후기게시판</a>
@@ -58,9 +60,9 @@
             </div>
 
             <div class="review-btnBox--reviewEdit">
-                <button class="review-button" onclick="location.href='/review/${review.reviewNo}/edit'" style="margin-right: 10px;">수정 하기</button>
+                <button class="review-button" onclick="location.href='${pageContext.request.contextPath}/review/${review.reviewNo}/edit'" style="margin-right: 10px;">수정 하기</button>
 
-                <form:form method="delete">
+                <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="delete">
                     <input type="hidden" name="_method" value="delete"/>
                     <input type="hidden" name="reviewNo" value="${review.reviewNo}">
                     <button type="submit" class="review-button">글 삭제</button>
@@ -86,7 +88,7 @@
                                 </div>
                                 <%-- 작성날짜 --%>
                                 <div class="profilebox--wdate">
-                                    ${review.WDate}
+                                    ${dateYMD}
                                 </div>
                             </div>
                         </div>

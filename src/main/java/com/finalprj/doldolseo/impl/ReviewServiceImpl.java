@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.service.impl;
+package com.finalprj.doldolseo.impl;
 
 import com.finalprj.doldolseo.dto.ReviewDTO;
 import com.finalprj.doldolseo.repository.ReviewRepository;

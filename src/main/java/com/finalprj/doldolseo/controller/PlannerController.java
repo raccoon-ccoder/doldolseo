@@ -29,29 +29,29 @@ public class PlannerController {
     private PlanServiceImpl planService;
 
     @RequestMapping("/planD")
-    public String planDetail(PlannerDTO dto,Model model) throws Exception{
+    public String planDetail(PlannerDTO dto, Model model) throws Exception {
         PlannerDTO planner = plannerService.selectPlanner(dto.getPlannerNo());
-        List<Date> dates = planService.getDiffDays(planner.getFDate(),planner.getLDate());
+        List<Date> dates = planService.getDiffDays(planner.getFDate(), planner.getLDate());
         List<PlanDTO> plans = planService.selectPlan(dto.getPlannerNo());
-        model.addAttribute("planner",planner);
-        model.addAttribute("dates",dates);
-        model.addAttribute("plans",plans);
+        model.addAttribute("planner", planner);
+        model.addAttribute("dates", dates);
+        model.addAttribute("plans", plans);
 
         return "/mypage/plan/planDetail";
     }
 
 
     @RequestMapping("/planL")
-    public String planList(MemberDTO dto,Model model) throws Exception{
+    public String planList(MemberDTO dto, Model model) throws Exception {
         List<PlannerDTO> planners = plannerService.selectPlanners(dto.getId());
         List<PlanDTO> plans = planService.joinPlans(planners);
-        model.addAttribute("planners",planners);
-        model.addAttribute("plans",plans);
+        model.addAttribute("planners", planners);
+        model.addAttribute("plans", plans);
 
         return "/mypage/plan/planList";
     }
 
-    @RequestMapping(value="/plannerInsert", method = RequestMethod.POST)
+    @RequestMapping(value = "/plannerInsert", method = RequestMethod.POST)
     @ResponseBody
     public String planInsertTest(@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
         PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
@@ -65,9 +65,9 @@ public class PlannerController {
         return "planL?id=" + dto.getId();
     }
 
-    @RequestMapping(value="/plannerUpdate", method = RequestMethod.POST)
+    @RequestMapping(value = "/plannerUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String plannerUpdate(@RequestParam(value = "planNo[]") List<String> planNo,@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
+    public String plannerUpdate(@RequestParam(value = "planNo[]") List<String> planNo, @RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
         PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
 
         List<Date> days = planService.changeDateListForUpdate(date, time);
@@ -75,7 +75,7 @@ public class PlannerController {
         List<Float> float_y = planService.changeFloatList(y);
         List<Long> long_planNo = planService.changeLongList(planNo);
 
-        List<PlanDTO> plans = planService.returnUpdatePlan(days, place, plan_intro, float_x, float_y,long_planNo, plannerDTO.getPlannerNo());
+        List<PlanDTO> plans = planService.returnUpdatePlan(days, place, plan_intro, float_x, float_y, long_planNo, plannerDTO.getPlannerNo());
         planService.updatePlans(plans, dto.getPlannerNo());
         planService.insertPlan(plans);
 
@@ -83,7 +83,7 @@ public class PlannerController {
     }
 
     @RequestMapping("plannerDelete")
-    public String deletePlanner(PlannerDTO dto,Model model){
+    public String deletePlanner(PlannerDTO dto, Model model) {
         planService.deletePlans(dto.getPlannerNo());
         plannerService.deletePlanner(dto.getPlannerNo());
 
@@ -91,20 +91,20 @@ public class PlannerController {
     }
 
     @RequestMapping("/goPlanI")
-    public String goIsertPage(PlannerDTO dto,Model model) throws Exception{
+    public String goIsertPage(PlannerDTO dto, Model model) throws Exception {
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());
         model.addAttribute("days", days);
-        model.addAttribute("planner_user",dto);
+        model.addAttribute("planner_user", dto);
 
         return "/mypage/plan/planInsert";
     }
 
     @RequestMapping("/goPlanU")
-    public String goUpdatePage(PlannerDTO dto,Model model) throws Exception{
+    public String goUpdatePage(PlannerDTO dto, Model model) throws Exception {
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());
         List<PlanDTO> plans = planService.selectPlan(dto.getPlannerNo());
         model.addAttribute("days", days);
-        model.addAttribute("planner_user",dto);
+        model.addAttribute("planner_user", dto);
         model.addAttribute("plans", plans);
 
         return "/mypage/plan/planUpdate";

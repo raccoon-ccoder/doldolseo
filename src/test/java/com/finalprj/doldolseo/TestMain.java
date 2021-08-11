@@ -1,7 +1,13 @@
 package com.finalprj.doldolseo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,19 +15,10 @@ import java.util.Optional;
 
 public class TestMain {
     public static void main(String[] args) {
-        File saveFile = new File("/Users/gimgyeong-il/IdeaProjects/doldolseo/src/main/resources/static/_image/review/90");
-        File[] fileLists = saveFile.listFiles();
+        LocalDateTime time = LocalDateTime.now();
 
-        File[] fileNameList = saveFile.listFiles(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String name) {
-                return !name.equals("course.png");
-            }
-        });
-
-        Arrays.stream(fileLists).forEach(file -> System.out.println(file.getName()));
-        Arrays.stream(fileNameList).forEach(file -> System.out.println(file.getName()));
-
+        SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        System.out.println(time.format( DateTimeFormatter.ISO_DATE_TIME));
+        System.out.println(time.format( DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm ")));
     }
 }

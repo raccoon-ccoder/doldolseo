@@ -844,7 +844,7 @@ table {
 .profilebox {
     display: inline-block;
     float: left;
-    width: 300px;
+    width: 230px;
     height: 90px;
     /*border: 1pt solid;*/
 }
@@ -870,7 +870,7 @@ table {
 /* 프로필 박스 : 닉네임 + 작성시간 */
 .profilebox--container--sub {
     display: inline-block;
-    width: 200px;
+    width: 130px;
     height: 80px;
     margin: 3px;
     text-align: left;
