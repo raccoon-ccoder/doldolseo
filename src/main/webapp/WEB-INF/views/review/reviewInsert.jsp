@@ -112,14 +112,14 @@
                                 formData.append('file', file);
                                 $j1124.ajax({
                                     data: formData,
-                                    type: "POST",
-                                    url: '/image',
+                                    type: 'POST',
+                                    url: '${pageContext.request.contextPath}/image',
                                     cache: false,
                                     contentType: false,
                                     processData: false,
                                     enctype: 'multipart/form-data',
                                     success: function (url) {
-                                        $(el).summernote('insertImage', "${pageContext.request.contextPath}"+url, function ($image) {
+                                        $(el).summernote("insertImage", '${pageContext.request.contextPath}'+url, function ($image) {
                                             $image.css('width', "60%");
                                         });
                                         //업로드된 이미지 파일명 input태그 저장

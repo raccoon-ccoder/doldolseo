@@ -48,7 +48,7 @@
         </div>
 
         <%-- 글 수정 폼 지역/제목/내용/코스추가/코스/ --%>
-        <form:form action="/review/${reviewNo}" method="put">
+        <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="put">
             <input type="hidden" name="_method" value="put"/>
             <table class="common-iuContainer--writeform">
 
@@ -126,7 +126,7 @@
                             $j1124.ajax({
                                 data: formData,
                                 type: "POST",
-                                url: '/image',
+                                url: '${pageContext.request.contextPath}/image',
                                 cache: false,
                                 contentType: false,
                                 processData: false,
