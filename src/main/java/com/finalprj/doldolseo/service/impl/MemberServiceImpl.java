@@ -1,9 +1,9 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.repository.MemberRepository;
 import com.finalprj.doldolseo.service.MemberService;
-import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository repository;
 
     @Override
-    public MemberVO join(MemberDTO memberDTO) throws IOException {
-        MemberVO memberVO = dtoToEntity(memberDTO);
+    public Member join(MemberDTO memberDTO) throws IOException {
+        Member memberVO = dtoToEntity(memberDTO);
 
         if(memberDTO.getMember_img().getOriginalFilename() != null){
             String rootPath = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile/";
@@ -40,14 +40,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int checkId(String id) {
-        Optional<MemberVO> result = repository.findById(id);
+        Optional<Member> result = repository.findById(id);
         return result.isPresent()? 0 : 1;
         // 중복된 아이디가 있으면 0, 없다면 1
     }
 
     @Override
     public int checkNickname(String nickname) {
-        Optional<MemberVO> result = repository.findByNickname(nickname);
+        Optional<Member> result = repository.findByNickname(nickname);
         return result.isPresent()? 0 : 1;
         // 중복된 닉네임이 있으면 0, 없다면 1
     }

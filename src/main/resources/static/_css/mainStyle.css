@@ -403,6 +403,7 @@
     font-size: 1.4em;
     border: 3px solid #4b8de9;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #header-button__b2 {
@@ -417,6 +418,7 @@
     font-size: 1.4em;
     border: 3px solid #4b8de9;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #header-miniprofile__span--nickname{
@@ -478,6 +480,7 @@
     font-size: 17px;
     border: 3px solid #1b3067;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 /**footer**/
@@ -2263,6 +2266,7 @@ table {
     font-size: 18px;
     border-radius: 5px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .mypageD-imgbox__input--disapear {
@@ -2376,7 +2380,7 @@ table {
     border-radius: 5px;
     font-size: 19px;
     font-family: 'Jua', sans-serif;
-
+    cursor: pointer;
 }
 
 .mypageD-crewcontainer {
@@ -2433,6 +2437,7 @@ table {
     right: 140px;
     font-size: 16px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .mypageD-boardcontainer {
@@ -2707,6 +2712,7 @@ table {
     font-family: 'Jua', sans-serif;
     font-weight: bolder;
     line-height:25px;
+    cursor: pointer;
 }
 
 .planL-popupcontainer {
@@ -2759,6 +2765,7 @@ table {
     border-radius: 5px;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .planL-popcontentbox {
@@ -2823,6 +2830,7 @@ table {
     font-size: 20px;
     font-family: 'Jua', sans-serif;
     margin: 30px auto;
+    cursor: pointer;
 }
 
 
@@ -3206,6 +3214,7 @@ table {
     border-radius: 5px;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .planD-popcontentbox {
@@ -3270,6 +3279,7 @@ table {
     font-size: 20px;
     font-family: 'Jua', sans-serif;
     margin: 30px auto;
+    cursor: pointer;
 }
 
 .planD-footer {
@@ -3515,6 +3525,7 @@ table {
     line-height: 10px;
     text-align: center;
     padding: 0;
+    cursor: pointer;
 }
 
 
@@ -3547,6 +3558,7 @@ table {
     color: #757575;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #planI-searchbox__ul--gray {

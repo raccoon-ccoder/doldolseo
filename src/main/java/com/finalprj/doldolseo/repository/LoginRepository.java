@@ -1,6 +1,6 @@
 package com.finalprj.doldolseo.repository;
 
-import com.finalprj.doldolseo.entity.MemberVO;
+import com.finalprj.doldolseo.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import java.util.Optional;
  */
 
 @Repository
-public interface LoginRepository extends JpaRepository<MemberVO, String> {
-    Optional<MemberVO> findByIdAndPassword(String id,String password);
+public interface LoginRepository extends JpaRepository<Member, String> {
+    Optional<Member> findByIdAndPassword(String id, String password);
 }

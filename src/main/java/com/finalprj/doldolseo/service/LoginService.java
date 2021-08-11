@@ -10,8 +10,8 @@ package com.finalprj.doldolseo.service;
 
 
 import com.finalprj.doldolseo.dto.MemberDTO;
-import com.finalprj.doldolseo.entity.MemberVO;
+import com.finalprj.doldolseo.domain.Member;
 
 public interface LoginService {
-    MemberVO login(MemberDTO dto);
+    Member login(MemberDTO dto);
 }

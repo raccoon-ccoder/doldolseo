@@ -13,8 +13,8 @@
 <head>
     <meta charset="UTF-8">
     <title>내프로필</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function (){
@@ -30,7 +30,7 @@
 
             var img = '${member.member_img}';
             if(img == null){
-                $('#my_img').attr("src","_image/profile/sample.png");
+                $('#my_img').attr("src","${pageContext.request.contextPath}/_image/profile/sample.png");
             }
         });
     </script>
@@ -66,13 +66,13 @@
         </div>
 
         <!-- 개인 정보 수정-->
-        <form action="#" method="post" onsubmit="return myinfoCheck()" name="myinfoFrm" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/updateMember" method="post" onsubmit="return myinfoCheck()" name="myinfoFrm" enctype="multipart/form-data">
             <div class="mypageD-infocontainer">
                 <div class="mypageD-userbox">
 
                     <div class="mypageD-imgbox">
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
-                        <img id="my_img" class="mypageD-imgbox__img--small" src="_image/profile/${member.member_img}">
+                        <img id="my_img" class="mypageD-imgbox__img--small" src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
                         <!-- 백엔드 작업시 src 속성값 변경 -->
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
                         <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="member_img" onchange="setImg(event);">
@@ -112,13 +112,12 @@
                        <input type="password" class="mypageD-infocontainer__input--big" name="password2" value="${member.password}">
                    </div>
 
-
-
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--down">생년월일</span>
                        <input type="text" name="yy" class="mypageD-infobox__input-big" value="<fmt:formatDate value="${member.birth}" pattern="yyyy" />" readonly>
                        <input type="text" name="mm" class="mypageD-infobox__input-big" value="<fmt:formatDate value="${member.birth}" pattern="MM" />" readonly>
                        <input type="text" name="dd" class="mypageD-infobox__input-big" value="<fmt:formatDate value="${member.birth}" pattern="dd" />" readonly>
+                       <input type="hidden" name="birth" value="<fmt:formatDate value="${member.birth}" pattern="yyyy-MM-dd" />">
                    </div>
 
                    <div class="mypageD-infobox">
@@ -134,7 +133,7 @@
 
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--down">전화번호 (선택)</span>
-                       <input type="tel" name="phone" class="mypageD-infocontainer__input--big" value="${member.phone}" >
+                       <input type="tel" name="phone" class="mypageD-infocontainer__input--big" value="${member.phone}" pattern="[0-9]{11}">
                    </div>
 
                    <div class="mypageD-buttonbox">

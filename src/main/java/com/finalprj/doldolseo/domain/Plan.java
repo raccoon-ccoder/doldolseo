@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.entity;
+package com.finalprj.doldolseo.domain;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입 완료</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
