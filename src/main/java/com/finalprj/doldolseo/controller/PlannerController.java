@@ -17,6 +17,14 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+/*
+ *  플래너 Controller
+ *
+ * @Author 백정연
+ * @Date 2021/08/03
+ */
+
+
 @Controller
 public class PlannerController {
 

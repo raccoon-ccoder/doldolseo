@@ -6,6 +6,13 @@ import com.finalprj.doldolseo.domain.Plan;
 
 import java.util.List;
 
+/*
+ * 플랜 Service
+ *
+ * @Author 백정연
+ * @Date 2021/08/07
+ */
+
 public interface PlanService {
     List<PlanDTO> selectPlans(PlannerDTO planner);
     List<PlanDTO> joinPlans(List<PlannerDTO> planners);

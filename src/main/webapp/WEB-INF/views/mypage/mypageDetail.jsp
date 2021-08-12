@@ -73,9 +73,8 @@
                     <div class="mypageD-imgbox">
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
                         <img id="my_img" class="mypageD-imgbox__img--small" src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
-                        <!-- 백엔드 작업시 src 속성값 변경 -->
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
-                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="member_img" onchange="setImg(event);">
+                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg(event);">
                     </div>
 
                     <div class="mypageD-infobox">
@@ -170,47 +169,54 @@
             <div class="mypageD-boardbox">
                 <table class="mypageD-boardbox__table--big">
                     <tr class="mypageD-boardbox__tr--blue">
-                        <th class="mypageD-boardbox__td--blue">번호</th>
-                        <th class="mypageD-boardbox__td--blue">제목</th>
-                        <th class="mypageD-boardbox__td--blue">날짜</th>
+                        <th class="mypageD-boardbox__td--num">번호</th>
+                        <th class="mypageD-boardbox__td--title">제목</th>
+                        <th class="mypageD-boardbox__td--date">날짜</th>
                     </tr>
 
-                    <!-- 백엔드 작업 후 코드 수정 -->
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
+                    <c:if test="${reviewList.hasContent() == false}">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td colspan="3" class="mypageD-boardbox__td--none">작성한 글이 존재하지 않습니다.</td>
+                        </tr>
+                    </c:if>
 
-
+                    <c:forEach items="${reviewList.content}" var="reviewList" varStatus="status">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td class="mypageD-boardbox__td--white">${status.count}</td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}" class="mypageD-boardbox__a--white">${reviewList.title}</a></td>
+                            <td class="mypageD-boardbox__td--white">
+                                    <fmt:parseDate value="${reviewList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
+                                    <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
 
                 <ul class="mypageD-boardpage">
                     <li class="mypageD-boardpage__li--link">
-                            <a href="#" class="mypageD-boardpage__a--num">&laquo;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
                     </li>
+
+                    <c:if test="${startBlockPage ne 1}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="status">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${endBlockPage ne reviewList.totalPages}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                        </li>
+                    </c:if>
+
                     <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&lt;</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">1</a>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">2</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">3</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">4</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">5</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&gt;</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&raquo;</a>
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
             </div>

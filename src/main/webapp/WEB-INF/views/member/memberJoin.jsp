@@ -184,7 +184,7 @@
             <h4 class="memberJ-container__h4--big">프로필 사진 (선택)</h4>
             <img id="my_img" class="memberJ-imgcontainer__img-small" src="${pageContext.request.contextPath}/_image/sample.png">
             <label id="my_img_label" class="memberJ-imgcontainer__label-blue" for="member_img">업로드</label>
-            <input type="file" name="member_img" id="member_img" class="memberJ-imgcontainer__input-disappear" value="" onchange="setImg(event);">
+            <input type="file" name="memberimg" id="member_img" class="memberJ-imgcontainer__input-disappear" value="" onchange="setImg(event);">
         </div>
         <!-- // 프로필 사진 등록 -->
 

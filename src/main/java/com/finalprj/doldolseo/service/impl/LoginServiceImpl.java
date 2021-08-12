@@ -4,9 +4,11 @@ import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.repository.LoginRepository;
 import com.finalprj.doldolseo.service.LoginService;
+import com.finalprj.doldolseo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /*
@@ -17,14 +19,15 @@ import java.util.Optional;
  */
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements LoginService{
 
     @Autowired
     private LoginRepository repository;
 
     @Override
-    public Member login(MemberDTO dto) {
+    public MemberDTO login(MemberDTO dto) {
         Optional<Member> result = repository.findByIdAndPassword(dto.getId(), dto.getPassword());
-        return result.isPresent()? result.get() : null;
+        return result.isPresent()? entityToDto(result.get()) : null;
     }
+
 }
