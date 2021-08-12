@@ -24,6 +24,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     //글 상세 조회
     Review findByReviewNo(Long reviewNo);
 
-
-
+    // 사용자 작성 글 목록 조회
+    // @Author 백정연, @Date 2021/08/11
+    Page<Review> findAllById(String id,Pageable pageable);
 }
