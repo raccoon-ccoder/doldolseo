@@ -166,7 +166,7 @@
             <%-- RestController 에서 댓글 가져오기 --%>
             <script>
                 $j1124.ajax({
-                    url: '/review/${reviewNo}/comment',
+                    url: '${pageContext.request.contextPath}/review/${reviewNo}/comment',
                     dataType: 'json',
                     type: 'GET',
                     success: function (data) {
