@@ -1,11 +1,11 @@
 package com.finalprj.doldolseo.service.impl;
 
-import com.finalprj.doldolseo.domain.Review;
+import com.finalprj.doldolseo.domain.review.Review;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
-import com.finalprj.doldolseo.dto.ReviewDTO;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.repository.MemberRepository;
-import com.finalprj.doldolseo.repository.ReviewRepository;
+import com.finalprj.doldolseo.repository.review.ReviewRepository;
 import com.finalprj.doldolseo.service.MemberService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

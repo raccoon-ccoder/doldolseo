@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
-import com.finalprj.doldolseo.dto.ReviewDTO;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.service.MemberService;
 import com.finalprj.doldolseo.util.PagingUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;

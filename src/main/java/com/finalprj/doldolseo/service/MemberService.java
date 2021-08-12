@@ -2,7 +2,7 @@ package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
-import com.finalprj.doldolseo.dto.ReviewDTO;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,7 +19,7 @@ public interface MemberService {
     MemberDTO join(MemberDTO memberDTO) throws IOException;
     MemberDTO update(MemberDTO memberDTO) throws IOException;
     MemberDTO selectMember(String id);
-    Page<ReviewDTO> getReviewListByUser(String id,Pageable pageable);
+    Page<ReviewDTO> getReviewListByUser(String id, Pageable pageable);
     int checkId(String id);
 
     int checkNickname(String nickname);
