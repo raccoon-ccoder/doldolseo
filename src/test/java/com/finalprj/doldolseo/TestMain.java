@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.servlet.ServletContext;
@@ -15,10 +16,6 @@ import java.util.Optional;
 
 public class TestMain {
     public static void main(String[] args) {
-        LocalDateTime time = LocalDateTime.now();
-
-        SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        System.out.println(time.format( DateTimeFormatter.ISO_DATE_TIME));
-        System.out.println(time.format( DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm ")));
+        ObjectMapper om = new ObjectMapper();
     }
 }

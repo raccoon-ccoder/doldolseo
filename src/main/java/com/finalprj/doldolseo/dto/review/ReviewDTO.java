@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.dto;
+package com.finalprj.doldolseo.dto.review;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

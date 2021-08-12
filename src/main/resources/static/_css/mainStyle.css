@@ -1358,13 +1358,13 @@ table {
     /*border-left: 1px #CDCECF solid;*/
 }
 
-#reviewD-tablelayout {
+.reviewD-tablelayout {
     width: 1000px;
     text-align: right;
     margin: 10px auto 0;
 }
 
-#reviewD-tablelayout tr {
+.reviewD-tablelayout tr {
     /*border: 1pt solid;*/
 }
 

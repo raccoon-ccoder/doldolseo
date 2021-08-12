@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--
 작성자: 김경일
 페이지이름: reviewInsert.jsp
@@ -24,6 +25,42 @@
             crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <script>
+        <!-- 코스그리기 추가되는 부분 -->
+        $(function () {
+            $('#reviewI-select--course').change(function () {
+                var selected = $('#reviewI-select--course option:selected').val();
+
+                if (selected === 'yes') {
+                    $('#reviewI-selectBox').after(
+                        "<tr class='common-tbl__item' id='reviewI-course--title'>" +
+                        "<td style='width: 170px'>코스 이름 </td> " +
+                        "<td> <input style='width: 400px;' id='placeTitle' type='text'/> " +
+                        "<button type='button' class='button--exceptionboot' onclick='addTitle();'>적용</button> " +
+                        "</td> </tr> " +
+
+                        "<tr class='common-tbl__item' id='reviewI-course--drawcourse'>> " +
+                        "<td style='width: 180px'> 여행 코스 그리기 </td>" +
+                        "<td><div id='writeform__item--course'>" +
+                        "<input id='placeName' type='text'/> " +
+                        "<input type='radio' name='placeType' value='1' checked='checked'/>음식점 " +
+                        "<input type='radio' name='placeType' value='2'/>쇼핑 " +
+                        "<input type='radio' name='placeType' value='3'/>문화 " +
+                        "<button type='button' class='button--exceptionboot' onclick='drawNodeAndLine();'>여행지 추가 </button>" +
+                        "<button type='button' class='button--exceptionboot' onclick='clearNode();'>초기화</button> " +
+                        "<canvas id='canvas' width='1100' height='550'></canvas>" +
+                        "</div></td></tr>");
+
+                    [x, y] = drawDefaultNode(x, y);
+                } else {
+                    $('#reviewI-course--title').remove();
+                    $('#reviewI-course--drawcourse').remove();
+                }
+            });
+        });
+    </script>
+
 </head>
 <body>
     <%-- 헤더 --%>
@@ -54,10 +91,10 @@
                     <td>
                         <select name="areaNo" class="writeform__component">
                             <option value="1">강남</option>
-                            <option value="2">광화문</option>
-                            <option value="3">명동</option>
-                            <option value="4">여의도</option>
-                            <option value="5">용산</option>
+                            <option value="2">강북</option>
+                            <option value="3">광화문</option>
+                            <option value="4">명동</option>
+                            <option value="5">여의도</option>
                             <option value="6">잠실</option>
                             <option value="7">홍대</option>
                             <option value="0">기타</option>
@@ -119,7 +156,7 @@
                                     processData: false,
                                     enctype: 'multipart/form-data',
                                     success: function (url) {
-                                        $(el).summernote("insertImage", '${pageContext.request.contextPath}'+url, function ($image) {
+                                        $(el).summernote("insertImage", '${pageContext.request.contextPath}' + url, function ($image) {
                                             $image.css('width', "60%");
                                         });
                                         //업로드된 이미지 파일명 input태그 저장
@@ -136,57 +173,23 @@
                 </tr>
 
                 <%-- 코스 그리기 추가 : select (선택시 코스 이름, 코스그리기 항목 추가) --%>
-                <tr class="common-tbl__item">
+                <tr class="common-tbl__item" id="reviewI-selectBox">
                     <td style="width: 170px">
                         여행 코스 추가
                     </td>
                     <td>
-                        <select>
-                            <option value="yes">추가 안함</option>
-                            <option value="no">추가</option>
+                        <select id="reviewI-select--course">
+                            <option value="no">추가 안함</option>
+                            <option value="yes">추가</option>
                         </select>
-                    </td>
-                </tr>
-
-                <%-- 코스 이름 추가 : select --%>
-                <tr class="common-tbl__item">
-                    <td style="width: 170px">
-                        코스 이름
-                    </td>
-                    <td>
-                        <input style="width: 400px;" id="placeTitle" type="text"/>
-                        <button type="button" class="button--exceptionboot" onclick="addTitle();">적용</button>
-                    </td>
-                </tr>
-
-                <%-- 코스 그리기 : canvas --%>
-                <tr class="common-tbl__item">
-                    <td style="width: 180px">
-                        여행 코스 그리기
-                    </td>
-                    <td>
-                        <div id="writeform__item--course">
-                            <input id="placeName" type="text"/>
-                            <!-- 여행지 타입 체크 : 노드 색상 결정 *1개 checked 되어있어야 함 *-->
-                            <input type="radio" name="placeType" value="1" checked="checked"/>음식점
-                            <input type="radio" name="placeType" value="2"/>쇼핑
-                            <input type="radio" name="placeType" value="3"/>문화
-                            <button type="button" class="button--exceptionboot" onclick="drawNodeAndLine();">여행지 추가
-                            </button>
-                            <button type="button" class="button--exceptionboot" onclick="clearNode();">초기화</button>
-
-                            <canvas id="canvas" width="1100" height="550"></canvas>
-                            <script>
-                                [x, y] = drawDefaultNode(x, y) //출발 노드
-                            </script>
-                        </div>
                     </td>
                 </tr>
             </table>
 
             <%-- 저장 버튼 --%>
             <div id="reviewIU-container--bottom">
-                <button type="button" onclick="uploadCanvasData('${pageContext.request.contextPath}');" id="reviewIU-btn--submit"
+                <button type="button" onclick="uploadCanvasData('${pageContext.request.contextPath}');"
+                        id="reviewIU-btn--submit"
                         class="button--exceptionboot" style="width: 130px; height: 40px; font-size: 23px">
                     저장
                 </button>

@@ -37,6 +37,7 @@ public class DoldolSeoConfiguration {
     public String uploadPath() {
         return System.getProperty("user.dir")+"/src/main/resources/static/_image/review";
     }
+
     //파일 저장될 절대 경로(톰캣)
 //    @Bean(name = "uploadPath")
 //    public String uploadPath() {

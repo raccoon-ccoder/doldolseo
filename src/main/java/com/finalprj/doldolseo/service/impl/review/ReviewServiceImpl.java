@@ -1,9 +1,9 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl.review;
 
-import com.finalprj.doldolseo.dto.ReviewDTO;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.repository.ReviewRepository;
-import com.finalprj.doldolseo.domain.Review;
-import com.finalprj.doldolseo.service.ReviewService;
+import com.finalprj.doldolseo.domain.review.Review;
+import com.finalprj.doldolseo.service.review.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
