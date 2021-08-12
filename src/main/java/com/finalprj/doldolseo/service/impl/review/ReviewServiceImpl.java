@@ -1,7 +1,7 @@
 package com.finalprj.doldolseo.service.impl.review;
 
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
-import com.finalprj.doldolseo.repository.review.ReviewRepository;
+import com.finalprj.doldolseo.repository.ReviewRepository;
 import com.finalprj.doldolseo.domain.review.Review;
 import com.finalprj.doldolseo.service.review.ReviewService;
 import org.modelmapper.ModelMapper;

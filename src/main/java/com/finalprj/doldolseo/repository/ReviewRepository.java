@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.repository.review;
+package com.finalprj.doldolseo.repository;
 
 import com.finalprj.doldolseo.domain.review.Review;
 import org.springframework.data.domain.Page;
