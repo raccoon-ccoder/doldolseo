@@ -1,11 +1,9 @@
 package com.finalprj.doldolseo.controller;
 
-import com.finalprj.doldolseo.domain.Review;
 import com.finalprj.doldolseo.dto.ReviewDTO;
-import com.finalprj.doldolseo.service.impl.ReviewServiceImpl;
+import com.finalprj.doldolseo.impl.ReviewServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +54,8 @@ public class ReviewController {
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("reviewList", reviewList);
+
+
         return "/review/reviewList";
     }
 
@@ -67,7 +67,7 @@ public class ReviewController {
                              ReviewDTO dto) {
         if (uploadImgs != null) {
             //String배열 문자열 치환 후 문자열로 변경
-            String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("_image/review/temp/")[1].replace("_image/review/temp/", "")).collect(Collectors.joining(","));
+            String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
             dto.setUploadImg(uploadImg);
         }
 
@@ -88,7 +88,6 @@ public class ReviewController {
     //후기게시글 등록 폼
     @GetMapping(value = "/review/new")
     public String getInsertForm() {
-
         return "/review/reviewInsert";
     }
 
@@ -99,7 +98,7 @@ public class ReviewController {
         ReviewDTO review = service.getReview(reviewNo);
         String content = review.getContent();
         if (content != null) {
-            review.setContent(content.replace("/temp", "/" + review.getReviewNo()));
+            review.setContent(content.replace("temp", "" + review.getReviewNo()));
         }
         model.addAttribute("review", review);
         return "/review/reviewDetail";
@@ -133,11 +132,12 @@ public class ReviewController {
         System.out.println(Arrays.toString(uploadImgs));
         if (uploadImgs != null) {
             //String배열 문자열 치환 후 문자열로 변경
-            dto.setUploadImg(dto.getUploadImg() + "," + Arrays.stream(uploadImgs).map(s -> s = s.split("_image/review/temp/")[1].replace("_image/review/temp/", "")).collect(Collectors.joining(",")));
+            dto.setUploadImg(dto.getUploadImg() + "," + Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(",")));
         }
 
         service.updateReview(reviewNo, dto);
         fileUtil.moveImages(reviewNo, dto.getUploadImg());
+
         return "redirect:/review";
     }
 

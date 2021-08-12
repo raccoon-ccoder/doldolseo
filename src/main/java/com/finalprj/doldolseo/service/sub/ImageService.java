@@ -30,7 +30,8 @@ public class ImageService {
 
             String saveFileName = fileSave(rootLocation.toString(), file); //이미지파일 _image/review/temp/UUID+파일명 으로 저장
             System.out.println(saveFileName);
-            return "/_image" + saveFileName.split("/_image")[1]; //절대경로 -> _image/review/temp..
+
+            return "/_image" + saveFileName.split("_image")[1]; //절대경로 -> _image/review/temp..
 //            return saveFileName;
 
         } catch (IOException e) {

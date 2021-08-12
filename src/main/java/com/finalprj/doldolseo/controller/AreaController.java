@@ -51,7 +51,8 @@ public class AreaController {
 
     //지역게시판 - 지역명으로 지역정보 상세조회
     @GetMapping(value = "/areaD")
-    public String areaDetail(Model model, @RequestParam(value = "name") String name) {
+    public String areaDetail(Model model,
+                             @RequestParam(value = "name") String name) {
 
         AreaDTO area = service.getArea(name);
         model.addAttribute("area", area);

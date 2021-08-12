@@ -2,10 +2,12 @@ package com.finalprj.doldolseo.configuration;
 
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
+import javassist.bytecode.stackmap.TypeData;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -30,11 +32,16 @@ public class DoldolSeoConfiguration {
         return new UploadFileUtil(uploadPath());
     }
 
-    //파일 저장될 로컬 절대 경로
+    //파일 저장될 절대 경로(로컬)
     @Bean(name = "uploadPath")
     public String uploadPath() {
         return System.getProperty("user.dir")+"/src/main/resources/static/_image/review";
     }
+    //파일 저장될 절대 경로(톰캣)
+//    @Bean(name = "uploadPath")
+//    public String uploadPath() {
+//        return "C:/tomcat/webapps/doldolseo/WEB-INF/classes/static/_image/review";
+//    }
 
     //HTTP hidden Method : delete, put, patch ..
     @Bean

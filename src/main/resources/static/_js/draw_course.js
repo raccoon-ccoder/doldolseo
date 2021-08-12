@@ -358,7 +358,7 @@ function uploadCanvasData(contextPath) {
         cache: false,
         success: function (data) {
             alert("게시글이 등록 되었습니다.");
-            location.replace('/review');
+            location.replace(contextPath+'/review');
         },
         error: function (request, status, error) {
             alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

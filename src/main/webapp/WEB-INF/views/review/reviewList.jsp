@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +54,7 @@
 
                 <%-- 글쓰기 버튼 --%>
                 <div id="reviewL-top__buttonbox">
-                    <button class="review-button" onclick="location.href='/review/new'">글쓰기</button>
+                    <button class="review-button" onclick="location.href='${pageContext.request.contextPath}/review/new'">글쓰기</button>
                 </div>
             </div>
 
@@ -62,16 +64,17 @@
                     <td style="width: 100px">지역</td>
                     <td>제목</td>
                     <td style="width: 100px">닉네임</td>
-                    <td style="width: 240px">등록일</td>
+                    <td style="width: 150px">등록일</td>
                     <td style="width: 100px">조회수</td>
                 </tr>
                 <c:forEach items="${reviewList.content}" var="reviewList" begin="0" end="40">
+                    <c:set var="dateYMDMH" value="${DateTimeFormatUtil.changeToYMDHM(reviewList.WDate)}" />
 
                     <tr class="list--item">
                         <td>${mapFactory.areaMap.get(reviewList.areaNo)}</td>
-                        <td><a href="review/${reviewList.reviewNo}">${reviewList.title}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}">${reviewList.title}</a></td>
                         <td>${reviewList.id}</td>
-                        <td>${reviewList.WDate}</td>
+                        <td>${dateYMDMH}</td>
                         <td>${reviewList.hit}</td>
                     </tr>
                 </c:forEach>
