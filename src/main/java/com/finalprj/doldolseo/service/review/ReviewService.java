@@ -1,6 +1,6 @@
-package com.finalprj.doldolseo.service;
+package com.finalprj.doldolseo.service.review;
 
-import com.finalprj.doldolseo.dto.ReviewDTO;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

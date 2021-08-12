@@ -65,10 +65,10 @@
                     <td>
                         <select id="reviewU-select--area" name="areaNo" class="writeform__component">
                             <option value="1">강남</option>
-                            <option value="2">광화문</option>
-                            <option value="3">명동</option>
-                            <option value="4">여의도</option>
-                            <option value="5">용산</option>
+                            <option value="2">강북</option>
+                            <option value="3">광화문</option>
+                            <option value="4">명동</option>
+                            <option value="5">여의도</option>
                             <option value="6">잠실</option>
                             <option value="7">홍대</option>
                             <option value="0">기타</option>

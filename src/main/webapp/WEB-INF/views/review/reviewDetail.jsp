@@ -9,7 +9,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
-<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(review.WDate)}" />
+<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(review.WDate)}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +25,10 @@
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous">
     </script>
-
     <%-- 댓글 이벤트 처리 --%>
     <script src="${pageContext.request.contextPath}/_js/comment.js"></script>
+
+
 </head>
 <body>
     <%-- 헤더 --%>
@@ -60,7 +61,10 @@
             </div>
 
             <div class="review-btnBox--reviewEdit">
-                <button class="review-button" onclick="location.href='${pageContext.request.contextPath}/review/${review.reviewNo}/edit'" style="margin-right: 10px;">수정 하기</button>
+                <button class="review-button"
+                        onclick="location.href='${pageContext.request.contextPath}/review/${review.reviewNo}/edit'"
+                        style="margin-right: 10px;">수정 하기
+                </button>
 
                 <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="delete">
                     <input type="hidden" name="_method" value="delete"/>
@@ -70,7 +74,7 @@
             </div>
 
             <%-- 상세 글 목록  --%>
-            <table id="reviewD-tablelayout">
+            <table class="reviewD-tablelayout">
                 <%-- 글상단 : 프로필 박스 + 댓글 및 조회수 --%>
                 <tr class="common-tbl__item">
                     <td>
@@ -128,14 +132,16 @@
                 </tr>
 
                 <%-- 여행 코스 --%>
-                <tr class="common-tbl__item">
-                    <td>
-                        <div id="reviewD-coursebox">
-                            <img src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/${review.courseImg}"
-                                 alt="여행코스">
-                        </div>
-                    </td>
-                </tr>
+                <c:if test="${!empty review.courseImg}">
+                    <tr class="common-tbl__item">
+                        <td>
+                            <div id="reviewD-coursebox">
+                                <img src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/${review.courseImg}"
+                                     alt="여행코스">
+                            </div>
+                        </td>
+                    </tr>
+                </c:if>
 
                 <%-- 글 내용 --%>
                 <tr class="common-tbl__item">
@@ -156,112 +162,38 @@
 
             </div>
             <hr class="line--horizon" style="width:1000px ">
-            <%-- 댓글 보기 --%>
-            <table id="reviewD-tablelayout">
 
-                <%------ 댓글작업 : 1.반복처리, 2.첨삭버튼 로그인 시에만 활성화  ------%>
-                <%-- 댓글 1개 : 추후 반복 처리--%>
-                <tr class="comment-tablelayout">
-                    <td style="padding: 10px 10px 10px 10px;">
-                        <%-- 댓글 - 프로필 박스 : 회원사진, 닉네임, 작성날짜--%>
-                        <div class="profilebox" style="margin-top: 7px">
-                            <%-- 회원사진 --%>
-                            <div class="profilebox--photo">
-                                <img src="${pageContext.request.contextPath}/_image/sample2.png">
-                            </div>
-                            <%-- 닉네임 + 작성날짜 컨테이너 --%>
-                            <div class="profilebox--container--sub">
-                                <%-- 닉네임 --%>
-                                <div class="profilebox--nickname">
-                                    만취돌고래
-                                </div>
-                                <%-- 작성날짜 --%>
-                                <div class="profilebox--wdate">
-                                    2020-07-21
-                                </div>
-                            </div>
-                        </div>
-                        <%-- 댓글 내용 --%>
-                        <div class="commentbox">
-                            <%-- 첨삭 버튼 : 누르면 활성화 --%>
-                            <button class="comment__deleteUpdateButton"> <<</button>
-                            <%-- 수정 삭제 버튼--%>
-                            <div class="comment__deleteUpdateBox">
-                                <div class="comment__deleteUpdatelist">
-                                    <button class="comment__updateButton">수정</button>
-                                </div>
-                                <div class="comment__deleteUpdatelist">
-                                    <button>삭제</button>
-                                </div>
-                            </div>
-                            <textarea class="comment__textarea" readonly="readonly">눈을 맞춰~
-                            </textarea>
-                            <%-- 댓글수정 서브버튼 : 완료/취소--%>
-                            <div class="comment-editSubbox">
-                                <button class="comment-editSub__btn--ok">완료</button>
-                                <button class="comment-editSub__btn--cancle">취소</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <%-- 댓글 1개 --%>
-                <%-- 댓글 1개 : 추후 반복 처리--%>
-                <tr class="comment-tablelayout">
-                    <td style="padding: 10px 10px 10px 10px;">
-                        <%-- 댓글 - 프로필 박스 : 회원사진, 닉네임, 작성날짜--%>
-                        <div class="profilebox" style="margin-top: 7px">
-                            <%-- 회원사진 --%>
-                            <div class="profilebox--photo">
-                                <img src="${pageContext.request.contextPath}/_image/sample3.png">
-                            </div>
-                            <%-- 닉네임 + 작성날짜 컨테이너 --%>
-                            <div class="profilebox--container--sub">
-                                <%-- 닉네임 --%>
-                                <div class="profilebox--nickname">
-                                    3당근주세요
-                                </div>
-                                <%-- 작성날짜 --%>
-                                <div class="profilebox--wdate">
-                                    2020-07-21
-                                </div>
-                            </div>
-                        </div>
-                        <%-- 댓글 내용 --%>
-                        <div class="commentbox">
-                            <%-- 첨삭 버튼 : 누르면 활성화 --%>
-                            <button class="comment__deleteUpdateButton"> <<</button>
-                            <%-- 수정 삭제 버튼--%>
-                            <div class="comment__deleteUpdateBox">
-                                <div class="comment__deleteUpdatelist">
-                                    <button class="comment__updateButton">수정</button>
-                                </div>
-                                <div class="comment__deleteUpdatelist">
-                                    <button class="review-button">삭제</button>
-                                </div>
-                            </div>
-                            <textarea class="comment__textarea" readonly="readonly">술잔을 채워~</textarea>
-                            <%-- 댓글수정 서브버튼 : 완료/취소--%>
-                            <div class="comment-editSubbox">
-                                <button class="comment-editSub__btn--ok">완료</button>
-                                <button class="comment-editSub__btn--cancle">취소</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <%-- 댓글 1개 --%>
+            <%-- RestController 에서 댓글 가져오기 --%>
+            <script>
+                $j1124.ajax({
+                    url: '/review/${reviewNo}/comment',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function (data) {
+                        appendComment(data, '${pageContext.request.contextPath}', 'sample2.png');
+                        enableEditMode();
+                    }
+                });
+            </script>
+
+            <%-- 댓글 보기 --%>
+            <table class="reviewD-tablelayout" id="reviewD-commentLayout">
+                <%-- 댓글 목록 출력 --%>
             </table>
 
             <%-- 댓글 입력 폼 --%>
-            <%--                        <form action="#" method="post">--%>
-            <div class="comment__input" id="reviewD-comment__input">
-                <textarea id="comment__input__textarea" placeholder="댓글을 입력해 보세요" onfocusin="changeBorderOnFocus()"
-                          onfocusout="changeBorderOnFocusOut()"></textarea>
-                <div class="comment__buttonbox">
-                    <button type="submit" class="button--comment">등록</button>
+            <form id="reviewD-commentForm" method="post">
+                <div class="comment__input" id="reviewD-comment__input">
+                    <input type="hidden" name="id" value="kki7823">
+                    <input type="hidden" name="reviewNo" value=${reviewNo}>
+                    <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
+                              onfocusin="changeBorderOnFocus()"
+                              onfocusout="changeBorderOnFocusOut()"></textarea>
+                    <div class="comment__buttonbox">
+                        <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${reviewNo})" class="button--comment">등록</button>
+                    </div>
                 </div>
-            </div>
-            <%--            </form>--%>
-
+            </form>
         </section>
 
     </div>

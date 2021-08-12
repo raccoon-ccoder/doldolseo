@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.impl;
+package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.dto.AreaDTO;
 import com.finalprj.doldolseo.domain.Area;

@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .navibar {
-           background-color: orange;
-            width: 250px;
-        }
-
-    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-
-    <input type="hidden" name="abc"/>
-    <input type="hidden" name="abc"/>
     <script>
-        document.getElementsByName("abc")[0].value = "1234";
-        document.getElementsByName("abc")[1].value = "12324";
+        $.ajax({
+            url: '/review/1/comment',
+            dataType: 'json',
+            type: 'GET',
+            async: "false",
+            success: function (data) {
+                console.log(data);
+            }
+        })
     </script>
+
 
 </body>
 </html>

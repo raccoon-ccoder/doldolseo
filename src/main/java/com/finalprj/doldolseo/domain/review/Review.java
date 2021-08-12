@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.domain;
+package com.finalprj.doldolseo.domain.review;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

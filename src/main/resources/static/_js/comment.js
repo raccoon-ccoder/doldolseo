@@ -1,5 +1,40 @@
+//댓글 1개 추가 :
+function appendComment(data, contextPath, imagePath) {
 
+    for (let i = 0; i < data.length; i++) {
+        let id = data[i].id;
+        let wdate = data[i].wdate;
+        let reviewNo = data[i].reviewNo;
+        let commentNo = data[i].commentNo;
 
+        $('#reviewD-commentLayout').append(
+            "<tr class='comment-tablelayout'> " +
+            "<td style='padding: 10px 10px 10px 10px;'> " +
+            "<div class='profilebox' style='margin-top: 7px'> " +
+            "<div class='profilebox--photo'> " +
+            "<img src=" + contextPath + "/_image/" + imagePath + "/>" +
+            "</div> <div class='profilebox--container--sub'>" +
+            "<div class='profilebox--nickname'>" + id + "</div>" +
+            "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +
+            "</div> </div> " +
+            "<form id='reviewD-commentUpdateForm-" + commentNo + "' method='post'>" +
+            "<div class='commentbox'> " +
+            "<button type='button' class='comment__deleteUpdateButton'> <<</button> " +
+            "<div class='comment__deleteUpdateBox'> " +
+            "<div class='comment__deleteUpdatelist'> " +
+            "<button type='button' class='comment__updateButton'>수정</button> " +
+            "</div> <div class='comment__deleteUpdatelist'> " +
+            "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + contextPath + ")'>삭제</button> " +
+            "</div> </div> " +
+            "<input type='hidden' name='id' value='kkkkkkk'/>" +
+            "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
+            "<div class='comment-editSubbox'> " +
+            "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + contextPath + ")'>완료</button> " +
+            "<button type='button' class='comment-editSub__btn--cancle'>취소</button> " +
+            "</form>" +
+            "</div></div> </td> </tr>");
+    }
+}
 
 //댓글 입력 : textarea에 포커스in시 inputbox 테두리 강조
 function changeBorderOnFocus() {
@@ -11,7 +46,7 @@ function changeBorderOnFocusOut() {
     document.getElementById("reviewD-comment__input").style.border = "1px #CDCECF solid";
 }
 
-$(function () {
+function enableEditMode() {
     //댓글 : 선택한 인덱스의 버튼 클릭하여(버튼 인덱스 = 첨삭박스 인덱스) 첨삭박스 보이기/숨기기
     $('.comment__deleteUpdateButton').click(function () {
         var idx = $(".comment__deleteUpdateButton").index(this);  // 존재하는 모든 버튼을 기준으로 index
@@ -34,7 +69,7 @@ $(function () {
         editOkOrCancle(idx);
     });
 
-});
+}
 
 //댓글 :  첨삭박스 보이기/숨기기
 function appearDeleteUpdateBox(idx) {
@@ -63,5 +98,90 @@ function editOkOrCancle(idx) {
     document.getElementsByClassName('comment-editSubbox')[idx].style.display = "none";
     //textarea 수정불가
     var editArea = document.getElementsByClassName('comment__textarea')[idx];
-    editArea.setAttribute('readonly','readonly');
+    editArea.setAttribute('readonly', 'readonly');
+}
+
+//댓글 입력
+function insertComment(contextPath, reviewNo) {
+
+    //폼 데이터 생성
+    var form = $('#reviewD-commentForm')[0];
+    var formData = new FormData(form);
+
+    if (contextPath == null) {
+        contextPath = "";
+    }
+
+    $j1124.ajax({
+        type: 'POST',
+        url: contextPath + '/review/' + reviewNo + '/comment',
+        data: formData,
+        processData: false,	// data 파라미터 강제 string 변환 방지
+        contentType: false,	// application/x-www-form-urlencoded; 방지
+        cache: false,
+        success: function (data) {
+            location.replace(contextPath + '/review/' + reviewNo);
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+//댓글 수정
+function updateComment(commentNo, reviewNo, contextPath) {
+    //폼 데이터 생성
+    let form = $('#reviewD-commentUpdateForm-' + commentNo)[0];
+    let formData = new FormData(form);
+
+    if (contextPath == null) {
+        contextPath = "";
+    }
+    $j1124.ajax({
+        type: 'PUT',
+        url: contextPath + '/review/' + reviewNo + '/comment/' + commentNo,
+        data: formData,
+        processData: false,	// data 파라미터 강제 string 변환 방지
+        contentType: false,	// application/x-www-form-urlencoded; 방지
+        cache: false,
+        success: function (data) {
+            alert("댓글이 수정 되었습니다.");
+            location.reload();
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}
+
+//댓글 삭제
+function deleteComment(commentNo, reviewNo, contextPath) {
+    if (confirm("댓글을 삭제하시겠습니까?") == true) {
+
+        //폼 데이터 생성
+        let form = $('#reviewD-commentUpdateForm-' + commentNo)[0];
+        let formData = new FormData(form);
+
+        if (contextPath == null) {
+            contextPath = "";
+        }
+        $j1124.ajax({
+            type: 'DELETE',
+            url: contextPath + '/review/' + reviewNo + '/comment/' + commentNo,
+            data: formData,
+            processData: false,	// data 파라미터 강제 string 변환 방지
+            contentType: false,	// application/x-www-form-urlencoded; 방지
+            cache: false,
+            success: function (data) {
+                alert("댓글이 삭제 되었습니다.");
+                location.reload();
+            },
+            error: function (request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+
+    } else {   //취소
+        return false;
+    }
 }

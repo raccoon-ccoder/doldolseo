@@ -1,7 +1,7 @@
-package com.finalprj.doldolseo.controller;
+package com.finalprj.doldolseo.controller.review;
 
-import com.finalprj.doldolseo.dto.ReviewDTO;
-import com.finalprj.doldolseo.impl.ReviewServiceImpl;
+import com.finalprj.doldolseo.dto.review.ReviewDTO;
+import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +70,10 @@ public class ReviewController {
             String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
             dto.setUploadImg(uploadImg);
         }
+        if (courseImgFile != null) {
+            dto.setCourseImg(courseImgFile.getOriginalFilename());
+        }
 
-        dto.setCourseImg(courseImgFile.getOriginalFilename());
 
         ReviewDTO review = service.insertReview(dto);
         if (review.getUploadImg() != null) {
@@ -79,7 +81,9 @@ public class ReviewController {
         }
 
         try {
-            fileUtil.courseImgSave(review.getReviewNo(), courseImgFile);
+            if (courseImgFile != null) {
+                fileUtil.courseImgSave(review.getReviewNo(), courseImgFile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,7 +133,6 @@ public class ReviewController {
                                ReviewDTO dto,
                                @RequestParam(required = false) String[] uploadImgs) {
 
-        System.out.println(Arrays.toString(uploadImgs));
         if (uploadImgs != null) {
             //String배열 문자열 치환 후 문자열로 변경
             dto.setUploadImg(dto.getUploadImg() + "," + Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(",")));
