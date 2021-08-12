@@ -1,5 +1,5 @@
 package com.finalprj.doldolseo.repository;
-import com.finalprj.doldolseo.entity.Area;
+import com.finalprj.doldolseo.domain.Area;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

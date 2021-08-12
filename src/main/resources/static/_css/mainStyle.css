@@ -403,6 +403,7 @@
     font-size: 1.4em;
     border: 3px solid #4b8de9;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #header-button__b2 {
@@ -417,6 +418,7 @@
     font-size: 1.4em;
     border: 3px solid #4b8de9;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #header-miniprofile__span--nickname{
@@ -478,6 +480,7 @@
     font-size: 17px;
     border: 3px solid #1b3067;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 /**footer**/
@@ -844,7 +847,7 @@ table {
 .profilebox {
     display: inline-block;
     float: left;
-    width: 230px;
+    width: 300px;
     height: 90px;
     /*border: 1pt solid;*/
 }
@@ -870,7 +873,7 @@ table {
 /* 프로필 박스 : 닉네임 + 작성시간 */
 .profilebox--container--sub {
     display: inline-block;
-    width: 130px;
+    width: 200px;
     height: 80px;
     margin: 3px;
     text-align: left;
@@ -1136,6 +1139,15 @@ table {
     height: 100px;
     margin: 40px auto 0;
 }
+.review-btnBox--reviewEdit{
+    width: 1000px;
+    margin: 0 auto;
+    text-align: right;
+    /*border: 1px solid;*/
+}
+.review-btnBox--reviewEdit > form{
+    display: inline-block;
+}
 
 /* 상단 제목 - reviewL, reviewD */
 .common-top__title {
@@ -1349,7 +1361,7 @@ table {
 #reviewD-tablelayout {
     width: 1000px;
     text-align: right;
-    margin: 20px auto 0;
+    margin: 10px auto 0;
 }
 
 #reviewD-tablelayout tr {
@@ -2254,6 +2266,7 @@ table {
     font-size: 18px;
     border-radius: 5px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .mypageD-imgbox__input--disapear {
@@ -2367,7 +2380,7 @@ table {
     border-radius: 5px;
     font-size: 19px;
     font-family: 'Jua', sans-serif;
-
+    cursor: pointer;
 }
 
 .mypageD-crewcontainer {
@@ -2424,6 +2437,7 @@ table {
     right: 140px;
     font-size: 16px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .mypageD-boardcontainer {
@@ -2458,8 +2472,21 @@ table {
 }
 
 
+.mypageD-boardbox__td--num{
+    width: 15%;
+}
+
+.mypageD-boardbox__td--title{
+    width:60%;
+}
+
 .mypageD-boardbox__tr--white {
     height: 35px;
+}
+
+.mypageD-boardbox__td--none{
+    font-weight: 600;
+    border-bottom: 2px solid #dadce0;
 }
 
 .mypageD-boardbox__td--white {
@@ -2485,17 +2512,20 @@ table {
 .mypageD-boardpage {
     text-align: center;
     list-style-type: none;
-    margin: 20px 0 0 230px;
+    margin: 20px auto;
+    font-size: 0;
 }
 
 .mypageD-boardpage__li--link {
-    float: left;
+    display:inline-block;
     width: 30px;
     height: 22px;
     border-top: 2px solid #dadce0;
     border-bottom: 2px solid #dadce0;
     border-left: 1px solid #dadce0;
     border-right: 1px solid #dadce0;
+    font-size:16px;
+    margin:0 auto;
 }
 
 .mypageD-boardpage__a--num:link {
@@ -2698,6 +2728,7 @@ table {
     font-family: 'Jua', sans-serif;
     font-weight: bolder;
     line-height:25px;
+    cursor: pointer;
 }
 
 .planL-popupcontainer {
@@ -2750,6 +2781,7 @@ table {
     border-radius: 5px;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .planL-popcontentbox {
@@ -2814,6 +2846,7 @@ table {
     font-size: 20px;
     font-family: 'Jua', sans-serif;
     margin: 30px auto;
+    cursor: pointer;
 }
 
 
@@ -3197,6 +3230,7 @@ table {
     border-radius: 5px;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
+    cursor: pointer;
 }
 
 .planD-popcontentbox {
@@ -3261,6 +3295,7 @@ table {
     font-size: 20px;
     font-family: 'Jua', sans-serif;
     margin: 30px auto;
+    cursor: pointer;
 }
 
 .planD-footer {
@@ -3506,6 +3541,7 @@ table {
     line-height: 10px;
     text-align: center;
     padding: 0;
+    cursor: pointer;
 }
 
 
@@ -3538,6 +3574,7 @@ table {
     color: #757575;
     font-family: 'Nanum Gothic', sans-serif;
     font-weight: bold;
+    cursor: pointer;
 }
 
 #planI-searchbox__ul--gray {

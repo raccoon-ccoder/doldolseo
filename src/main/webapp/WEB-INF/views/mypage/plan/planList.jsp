@@ -13,8 +13,8 @@
 <head>
     <meta charset="UTF-8">
     <title>플래너 목록</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -51,7 +51,6 @@
         </ul>
     </div>
     <!-- // 마이페이지 네비바-->
-
 
     <!-- 플래너 목록 container -->
     <div class="planL-planbox">
@@ -154,7 +153,7 @@
 
         <!-- 플래너 팝업창 입력 부분 -->
         <div class="planL-popcontentbox">
-            <form action="/goPlanI?id=${member.id}" method="post" name="popupFrm" onsubmit="return popupCheck()">
+            <form action="${pageContext.request.contextPath}/goPlanI?id=${member.id}" method="post" name="popupFrm" onsubmit="return popupCheck()">
 
                 <div class="planL-popdetailbox">
                     <span class="planL-popdetailbox__span--big">여행제목</span>

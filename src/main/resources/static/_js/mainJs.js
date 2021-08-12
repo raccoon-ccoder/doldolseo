@@ -168,6 +168,7 @@ function joinCheck(){
         return true;
     }
 }
+
 /*
 작성자 : 백정연
 작성일 : 210722
@@ -182,25 +183,37 @@ function myinfoCheck(){
     var email = document.myinfoFrm.email;
     var gender = document.myinfoFrm.gender;
 
+    var num = /[0-9]/;
+    var eng = /[a-zA-Z]/;
+    var spe = /[~!@\#$%<>^&*]/;
+
     if(name.value.length == 0){
         alert("이름을 입력해주세요.");
         name.focus();
         return false;
-    }else if(pw.value.length == 0){
+    }else if(pw.value.length == 0) {
         alert("비밀번호를 입력해주세요.");
         pw.focus();
         return false;
-    }else if(re_pw.value.length == 0) {
-        alert("비밀번호 화인란을 입력해주세요.");
+    }else if(!(num.test(pw.value) && eng.test(pw.value) && spe.test(pw.value) && pw.value.length >7 && pw.value.length <= 20)){
+        alert("비밀번호는 8~20자 영문, 숫자, 특수문자를 사용하세요.");
         pw.focus();
+        return false;
+    }else if(re_pw.value.length == 0) {
+        alert("비밀번호 확인란을 입력해주세요.");
+        re_pw.focus();
+        return false;
+    }else if(re_pw.value != pw.value){
+        alert("비밀번호가 일치하지 않습니다.");
+        re_pw.focus();
         return false;
     }else if(email.value.length == 0) {
         alert("이메일을 입력해주세요.");
-        pw.focus();
+        email.focus();
         return false;
     }else if(gender.value.length == 0) {
         alert("성별을 선택해주세요.");
-        pw.focus();
+        gender.focus();
         return false;
     }
     return true;
@@ -313,7 +326,7 @@ function getHtml(place_name,place_y,place_x,num, data_date){
     div += " <span class=\"planI-plandetail__span--place\" title=\"" + place_name + "\">" + place_name + "</span>";
     div += "<input type=\"time\" name=\"time\" class=\"planI-plandetail__input--time\" required >";
     div += "<input type=\"text\" name=\"intro\" class=\"planI-plandetail__input--intro\" placeholder=\"20자 내로 메모를 입력해주세요.\"  maxlength=\"20\">";
-    div += "<button class=\"planI-plandetail__button--blue\" onclick=\"planDelete(" + num + ")\">&times;</button></div> </div>";
+    div += "<button class=\"planI-plandetail__button--blue\" onclick=\"planDelete(\'" + num +  "\')\">&times;</button></div> </div>";
 
     return div;
 }

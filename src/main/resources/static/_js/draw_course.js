@@ -62,6 +62,8 @@ function drawNode(x, y) {
         }
 
         return [x, y];
+
+        document.getElementById
     }
 }
 
@@ -282,7 +284,7 @@ function addText(x, y, text) {
 //클릭시 직선1 노드1 생성 , 노드4개 생성 되면 커브로 연결
 function drawNodeAndLine() {
 
-    if(btnCount === 16){
+    if (btnCount === 16) {
         alert("여행지를 15개이상 추가하실수 없습니다.");
         return;
     }
@@ -328,3 +330,38 @@ function addTitle() {
     }
 }
 
+//canvas 파일 이미지변환후 서버 업로드
+function uploadCanvasData(contextPath) {
+    var canvas = document.getElementById("canvas");
+
+    var imageBase64 = canvas.toDataURL('image/png');
+
+    //base64 to blob
+    var decodedImg = atob(imageBase64.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < decodedImg.length; i++) {
+        array.push(decodedImg.charCodeAt(i));
+    }
+    var file = new Blob([new Uint8Array(array)], {type: 'image/png'});
+
+    //폼 생성후 비동기 전송
+    var form = $('#reviewIU-form')[0];
+    var formData = new FormData(form);
+    formData.append("courseImgFile", file, "course.png");
+
+    $j1124.ajax({
+        type: 'POST',
+        url: contextPath+'/review',
+        data: formData,
+        processData: false,	// data 파라미터 강제 string 변환 방지
+        contentType: false,	// application/x-www-form-urlencoded; 방지
+        cache: false,
+        success: function (data) {
+            alert("게시글이 등록 되었습니다.");
+            location.replace('/review');
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    });
+}

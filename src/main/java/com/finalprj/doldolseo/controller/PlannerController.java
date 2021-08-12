@@ -3,10 +3,8 @@ package com.finalprj.doldolseo.controller;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.PlanDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
-import com.finalprj.doldolseo.entity.Plan;
-import com.finalprj.doldolseo.entity.Planner;
-import com.finalprj.doldolseo.impl.PlanServiceImpl;
-import com.finalprj.doldolseo.impl.PlannerServiceImpl;
+import com.finalprj.doldolseo.service.impl.PlanServiceImpl;
+import com.finalprj.doldolseo.service.impl.PlannerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+
+/*
+ *  플래너 Controller
+ *
+ * @Author 백정연
+ * @Date 2021/08/03
+ */
+
 
 @Controller
 public class PlannerController {
@@ -53,7 +59,7 @@ public class PlannerController {
 
     @RequestMapping(value="/plannerInsert", method = RequestMethod.POST)
     @ResponseBody
-    public String planInsertTest(@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
+    public String planInsert(@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
         PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
 
         List<Date> days = planService.changeDateList(date, time);

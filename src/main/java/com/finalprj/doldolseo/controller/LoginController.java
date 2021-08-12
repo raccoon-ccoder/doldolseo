@@ -2,7 +2,6 @@ package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.service.LoginService;
-import com.finalprj.doldolseo.entity.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+/*
+ *  로그인, 로그아웃 Controller
+ *
+ * @Author 백정연
+ * @Date 2021/08/03
+ */
 
 @Controller
 public class LoginController {
@@ -34,7 +40,7 @@ public class LoginController {
     public String loginUser(MemberDTO dto, HttpServletRequest request) throws Exception{
         String url = "";
         HttpSession session = request.getSession();
-        MemberVO member = service.login(dto);
+        MemberDTO member = service.login(dto);
         if(member != null){
             session.setAttribute("member",member);
             url = "/main";

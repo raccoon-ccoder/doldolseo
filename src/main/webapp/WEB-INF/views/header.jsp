@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <%-- 날씨 아이콘 css --%>
-<link href="_css/weather-icons.css" type="text/css" rel="stylesheet">
-<link href="_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/_css/weather-icons.css" type="text/css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/_css/weather-icons-wind.css" type="text/css" rel="stylesheet">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <%-- jquery 충돌 해소--%>
@@ -48,8 +48,8 @@
 
     <!--로고-->
     <div id="headerM-logoBox">
-        <img src="_image/logo/l2.png" style="width: 50px; height: 40px; margin: 4px 0 9px 0 ;">
-        <img src="_image/logo/l3-1.png" style="width: 70px; height: 40px;">
+        <img src="${pageContext.request.contextPath}/_image/logo/l2.png" style="width: 50px; height: 40px; margin: 4px 0 9px 0 ;">
+        <img src="${pageContext.request.contextPath}/_image/logo/l3-1.png" style="width: 70px; height: 40px;">
     </div>
 
     <!--검색창-->
@@ -85,13 +85,13 @@
 <div id="header_container">
     <!--로고1-->
     <div id="header-img__logo1">
-        <img src="_image/logo/001-4.png" width="145px" height="130px" alt="logo">
+        <img src="${pageContext.request.contextPath}/_image/logo/001-4.png" width="145px" height="130px" alt="logo">
     </div>
 
     <!--로고2-->
     <div id="header-img__logo2">
         <a href="${pageContext.request.contextPath}/main">
-            <img src="_image/logo/002-7.png" width="160px" height="85">
+            <img src="${pageContext.request.contextPath}/_image/logo/002-7.png" width="160px" height="85">
         </a>
     </div>
 
@@ -107,7 +107,7 @@
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/reviewL">
+                <a href="${pageContext.request.contextPath}/review">
                         <span onmouseover="this.style.color='#F4B7B4';"
                               onmouseout="this.style.color='white';">REVIEW</span>
                 </a>

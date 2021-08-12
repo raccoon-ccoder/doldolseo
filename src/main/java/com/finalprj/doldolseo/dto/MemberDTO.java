@@ -22,7 +22,7 @@ public class MemberDTO {
     private String password;
     private String name;
     private String nickname;
-    private MultipartFile member_img;
+    private String member_img;
     private Date birth;
     private String gender;
     private String email;

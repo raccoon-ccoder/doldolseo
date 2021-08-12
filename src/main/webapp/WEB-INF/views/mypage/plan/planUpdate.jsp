@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>플래너 작성</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
     $(document).ready(function() {
@@ -69,8 +69,6 @@
                         time.push($(this).val());
                     });
 
-
-
                     for(var i=0;i<time.length;i++){
                         if(time[i] == ""){
                             alert("시간은 필수 입력 항목입니다.");
@@ -79,7 +77,7 @@
                     }
 
                     $.ajax({
-                        url:"plannerUpdate?id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
+                        url:"${pageContext.request.contextPath}/plannerUpdate?id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
                         data:{
                             date : date,
                             place : place,
@@ -181,28 +179,7 @@
                         <% ++i;%>
                     </c:if>
                 </c:forEach>
-                <!-- 예시 코드
-                 <div class="planI-planbox" data-date="2021.07.01" data-y="30" data-x="120">
-                     <div class="planI-plannum">
-                         <img src="_img/num/number1.png" class="planI-plannum__img-navy">
 
-                         <span class="planI-plannum__span--time">시간</span>
-
-                         <span class="planI-plannum__span--memo">메모</span>
-                     </div>
-
-                     <div class="planI-plandetail">
-                         <span class="planI-plandetail__span--place" title="경복궁">경복궁</span>
-
-                         <input type="time" name="time" class="planI-plandetail__input--time" required >
-
-                         <input type="text" name="intro" class="planI-plandetail__input--intro" value="" placeholder="20자 내로 메모를 입력해주세요." maxlength="20">
-
-                         <button class="planI-plandetail__button--blue" onclick="planDelete(1)">&times;</button>
-                     </div>
-
-                 </div>
-                 -->
             </div>
         </c:forEach>
 
@@ -278,15 +255,11 @@
             displayPagination(pagination);
 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
             alert('검색 결과가 존재하지 않습니다.');
             return;
-
         } else if (status === kakao.maps.services.Status.ERROR) {
-
             alert('검색 결과 중 오류가 발생했습니다.');
             return;
-
         }
     }
 
@@ -335,7 +308,6 @@
 
         if (places.road_address_name) {
             itemStr += '    <span>' + places.road_address_name + '</span>';
-
         } else {
             itemStr += '    <span>' +  places.address_name  + '</span>';
         }
@@ -344,7 +316,7 @@
             '</div>';
 
         itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x + '\')">+</button></div>';
-        //<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(places.place_name, places.y ,places.x)">+</button></div>
+
         el.innerHTML = itemStr;
         el.className = 'item';
 
@@ -418,13 +390,10 @@
         }
     }
 
-
-
 </script>
 <!-- // 지도 div -->
 
-
 <!-- // 플래너 작성 container -->
-<script type="text/javascript" src="_js/mainJs.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
 </body>
 </html>

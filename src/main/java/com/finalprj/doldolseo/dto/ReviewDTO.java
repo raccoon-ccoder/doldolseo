@@ -1,7 +1,8 @@
 package com.finalprj.doldolseo.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /*
  * 후기게시판 DTO
@@ -12,14 +13,15 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReviewDTO {
         private Long reviewNo;
         private String id;
         private String title;
         private String content;
-        private String coureImg;
+        private String courseImg;
         private String uploadImg;
-        private Date wDate;
+        private LocalDateTime wDate;
         private int hit;
         private int areaNo;
 }

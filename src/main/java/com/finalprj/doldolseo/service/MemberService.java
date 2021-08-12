@@ -1,7 +1,10 @@
 package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
-import com.finalprj.doldolseo.entity.MemberVO;
+import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.ReviewDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 
@@ -13,22 +16,16 @@ import java.io.IOException;
  */
 
 public interface MemberService {
-    MemberVO join(MemberDTO memberDTO) throws IOException;
-
+    MemberDTO join(MemberDTO memberDTO) throws IOException;
+    MemberDTO update(MemberDTO memberDTO) throws IOException;
+    MemberDTO selectMember(String id);
+    Page<ReviewDTO> getReviewListByUser(String id,Pageable pageable);
     int checkId(String id);
 
     int checkNickname(String nickname);
 
-    default MemberVO dtoToEntity(MemberDTO dto){
-        String fileName = "";
-        if(dto.getMember_img().getOriginalFilename().length() > 0){
-            String file = dto.getMember_img().getOriginalFilename();
-            fileName = dto.getId() + "." + file.substring(file.lastIndexOf(".") + 1);
-        }else{
-            fileName = "sample.png";
-        }
-
-        MemberVO entity = MemberVO.builder()
+    default Member dtoToEntity(MemberDTO dto){
+        Member entity = Member.builder()
                 .id(dto.getId())
                 .password(dto.getPassword())
                 .name(dto.getName())
@@ -37,9 +34,25 @@ public interface MemberService {
                 .email(dto.getEmail())
                 .phone(dto.getPhone())
                 .birth(dto.getBirth())
-                .member_img(fileName)
+                .member_img(dto.getMember_img())
                 .crleader(dto.getCrleader())
                 .build();
         return entity;
+    }
+
+    default MemberDTO entityToDto(Member member){
+        MemberDTO dto = MemberDTO.builder()
+                .id(member.getId())
+                .password(member.getPassword())
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .gender(member.getGender())
+                .email(member.getEmail())
+                .phone(member.getPhone())
+                .birth(member.getBirth())
+                .member_img(member.getMember_img())
+                .crleader(member.getCrleader())
+                .build();
+        return dto;
     }
 }

@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <title>플래너 작성</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -82,7 +82,7 @@
                     }
 
                     $.ajax({
-                        url:"plannerInsert?id=${member.id}",
+                        url:"${pageContext.request.contextPath}/plannerInsert?id=${member.id}",
                         data:{
                             date : date,
                             place : place,
@@ -113,9 +113,7 @@
 </head>
 <body>
     <!-- 사용자가 입력한 여행 제목, 여행 출발일,도착일, 여행 설명 정보-->
-        <input type="hidden" name="title" id="title" value="${planner_user.title}" />
-<%--        <input type="hidden" name="f_date" id="f_date" value="${planner_user.f_date}" />--%>
-<%--        <input type="hidden" name="l_date" id="l_date" value="${planner_user.l_date}" />--%>
+    <input type="hidden" name="title" id="title" value="${planner_user.title}" />
     <input type="hidden" name="fDate" id="f_date" value="<fmt:formatDate value="${planner_user.getFDate()}" pattern="yyyy-MM-dd" />" />
     <input type="hidden" name="lDate" id="l_date" value="<fmt:formatDate value="${planner_user.getLDate()}" pattern="yyyy-MM-dd" />" />
         <input type="hidden" name="intro" id="intro" value="${planner_user.intro}" />
@@ -153,35 +151,10 @@
             <c:forEach items="${days}" var="day" varStatus="status">
                 <div class="planI-plansbox" data-date="${day}">
                     <div class="planI-plansboxtitle">DAY${status.count} | <fmt:formatDate value="${day}" pattern="MM.dd E요일" /></div>
-
-                    <!-- 아마도 여기에 x,y 값 저장해야 할듯
-                    <div class="planI-planbox" data-date="2021.07.01" data-y="30" data-x="120">
-                        <div class="planI-plannum">
-                            <img src="img/num/number1.png" class="planI-plannum__img-navy">
-
-                            <span class="planI-plannum__span--time">시간</span>
-
-                            <span class="planI-plannum__span--memo">메모</span>
-                        </div>
-
-                        <div class="planI-plandetail">
-                            <span class="planI-plandetail__span--place" title="경복궁">경복궁</span>
-
-                            <input type="time" name="time" class="planI-plandetail__input--time" required >
-
-                            <input type="text" name="intro" class="planI-plandetail__input--intro" value="" placeholder="20자 내로 메모를 입력해주세요." maxlength="20">
-
-                            <button class="planI-plandetail__button--blue" onclick="planDelete(1)">&times;</button>
-                        </div>
-
-                    </div>
-                    -->
                 </div>
             </c:forEach>
 
         </div>
-
-
         <!-- // 해당 날짜에 대한 일정들 나타나는 div -->
 
         <!-- 키워드로 장소 검색하는 div -->
@@ -194,9 +167,8 @@
                 </form>
             </div>
 
-            <ul id="planI-searchbox__ul--gray">
+            <ul id="planI-searchbox__ul--gray"></ul>
 
-            </ul>
             <div id="planI-pagination"></div>
         </div>
         <!-- // 키워드로 장소 검색하는 div -->
@@ -251,15 +223,11 @@
                     displayPagination(pagination);
 
                 } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
                     alert('검색 결과가 존재하지 않습니다.');
                     return;
-
                 } else if (status === kakao.maps.services.Status.ERROR) {
-
                     alert('검색 결과 중 오류가 발생했습니다.');
                     return;
-
                 }
             }
 
@@ -308,7 +276,6 @@
 
                 if (places.road_address_name) {
                     itemStr += '    <span>' + places.road_address_name + '</span>';
-
                 } else {
                     itemStr += '    <span>' +  places.address_name  + '</span>';
                 }
@@ -316,8 +283,8 @@
                 itemStr += '  <span class="tel">' + places.phone  + '</span>' +
                     '</div>';
 
-                itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x + '\')">+</button></div>';
-                //<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(places.place_name, places.y ,places.x)">+</button></div>
+                itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x +  '\')">+</button></div>';
+
                 el.innerHTML = itemStr;
                 el.className = 'item';
 
@@ -391,13 +358,10 @@
                 }
             }
 
-
-
         </script>
         <!-- // 지도 div -->
 
-
     <!-- // 플래너 작성 container -->
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
 </body>
 </html>

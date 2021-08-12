@@ -2,17 +2,22 @@ package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.PlanDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
-import com.finalprj.doldolseo.entity.Plan;
-import com.finalprj.doldolseo.entity.Planner;
+import com.finalprj.doldolseo.domain.Plan;
 
 import java.util.List;
+
+/*
+ * 플랜 Service
+ *
+ * @Author 백정연
+ * @Date 2021/08/07
+ */
 
 public interface PlanService {
     List<PlanDTO> selectPlans(PlannerDTO planner);
     List<PlanDTO> joinPlans(List<PlannerDTO> planners);
     List<PlanDTO> selectPlan(Long plannerNo);
     void deletePlans(Long plannerNo);
-    void deletePlan(Long planNo);
 
     default PlanDTO entityToDto(Plan plan){
         PlanDTO dto = PlanDTO.builder()

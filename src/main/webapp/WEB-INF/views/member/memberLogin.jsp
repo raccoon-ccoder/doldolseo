@@ -11,13 +11,13 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
-    <link rel="stylesheet" type="text/css" href="_css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
     </style>
-    <script type="text/javascript" src="_js/mainJs.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script>
         $(document).ready(function() {
             if(${result == "false"}){
@@ -48,8 +48,6 @@
 </head>
 <body>
     <!-- header  -->
-    <%--    <div class="memberL-header">--%>
-    <%--    </div>--%>
     <div class="planD-header">
         <jsp:include page="../header.jsp"/>
     </div>
@@ -57,9 +55,9 @@
 
     <!-- loginForm -->
     <div id="memberL-container">
-        <img id="memberL-container__image--small" src="_image/logo.png">
+        <img id="memberL-container__image--small" src="${pageContext.request.contextPath}/_image/logo.png">
 
-        <form action="/login" method="post" name="loginForm" onsubmit="return loginCheck()">
+        <form action="${pageContext.request.contextPath}/login" method="post" name="loginForm" onsubmit="return loginCheck()">
             <div>
                 <input id="login_id" class="memberL-container__input--big" type="text" name="id" size="30"
                        placeholder="아이디"> <br/>
