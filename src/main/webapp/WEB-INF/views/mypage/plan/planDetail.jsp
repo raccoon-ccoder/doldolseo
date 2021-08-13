@@ -19,6 +19,11 @@
     <script>
         // 여러 대표 이미지 중 랜덤으로 1개를 뽑아줌
         $(document).ready(function () {
+            // 계정 탈퇴 실패시 알림
+            if(${removeResult == 1}){
+                alert("계정 탈퇴에 실패하였습니다. 다시 해주시길 바랍니다.");
+            }
+
             $("#btn").click(function () {
                 $("#popup").fadeIn();
             });

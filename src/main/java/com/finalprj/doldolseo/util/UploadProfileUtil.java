@@ -15,8 +15,14 @@ import java.io.IOException;
 
 public class UploadProfileUtil {
 
+    // 파일 저장 절대 경로 (로컬)
+    //private String realPath = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile";
+
+    //파일 저장 절대 경로 (톰캣)
+    private String realPath = "C:/tomcat/webapps/doldolseo/WEB-INF/classes/static/_image/profile";
+
     public void makeDirectory(){
-        String path = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile";
+        String path = realPath;
         File Directory = new File(path);
         if(!Directory.exists()){
             Directory.mkdirs();
@@ -27,8 +33,8 @@ public class UploadProfileUtil {
         makeDirectory();
         String file = profile.getOriginalFilename();
         String fileName = dto.getId() + "." + file.substring(file.lastIndexOf(".") + 1);
-        String rootPath = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile/";
-        String filePath = rootPath + fileName;
+        String rootPath = realPath;
+        String filePath = rootPath + "/" + fileName;
         File dest = new File(filePath);
         profile.transferTo(dest);
         return fileName;
@@ -37,8 +43,8 @@ public class UploadProfileUtil {
     public void deleteProfile(MemberDTO dto){
         makeDirectory();
         String fileName = dto.getMember_img();
-        String rootPath = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile/";
-        String filePath = rootPath + fileName;
+        String rootPath = realPath;
+        String filePath = rootPath + "/" +  fileName;
         File file = new File(filePath);
         file.delete();
     }
