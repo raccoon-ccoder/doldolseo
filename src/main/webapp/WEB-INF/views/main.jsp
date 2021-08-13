@@ -20,6 +20,10 @@
             if(${result == "true"}){
                 alert("로그아웃되었습니다.");
             }
+
+            if(${removeResult == 0}){
+                alert("계정 탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사합니다.");
+            }
         });
 
         $(function () {

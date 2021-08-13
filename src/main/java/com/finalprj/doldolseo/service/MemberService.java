@@ -2,11 +2,13 @@ package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.util.List;
 
 /*
  * 멤버 관련 service
@@ -20,6 +22,13 @@ public interface MemberService {
     MemberDTO update(MemberDTO memberDTO) throws IOException;
     MemberDTO selectMember(String id);
     Page<ReviewDTO> getReviewListByUser(String id, Pageable pageable);
+    Page<ReviewCommentDTO> getReviewCommentListByUser(String id, Pageable pageable);
+    List<ReviewDTO> getReviewListByMember(String id);
+    void deleteCommentListByUser(String id);
+    void deleteCommentListByReviewNo(Long reviewNo);
+
+    int deleteMember(String id);
+
     int checkId(String id);
 
     int checkNickname(String nickname);

@@ -2383,6 +2383,19 @@ table {
     cursor: pointer;
 }
 
+.mypageD-buttonbox__button--gray{
+    margin: 20px auto;
+    width: 170px;
+    height: 50px;
+    color: #ffffff;
+    background-color: #909090;
+    border: none;
+    border-radius: 5px;
+    font-size: 19px;
+    font-family: 'Jua', sans-serif;
+    cursor: pointer;
+}
+
 .mypageD-crewcontainer {
     width: 900px;
     margin: 70px 0 70px 0;

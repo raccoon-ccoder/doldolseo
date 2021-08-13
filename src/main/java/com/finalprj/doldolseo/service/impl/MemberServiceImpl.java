@@ -1,10 +1,13 @@
 package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.domain.review.Review;
+import com.finalprj.doldolseo.domain.review.ReviewComment;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.repository.MemberRepository;
+import com.finalprj.doldolseo.repository.review.ReviewCommentRepository;
 import com.finalprj.doldolseo.repository.review.ReviewRepository;
 import com.finalprj.doldolseo.service.MemberService;
 import org.modelmapper.ModelMapper;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -35,7 +39,10 @@ public class MemberServiceImpl implements MemberService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private ReviewCommentRepository commentRepository;
 
     @Override
     public MemberDTO join(MemberDTO memberDTO) throws IOException {
@@ -66,6 +73,39 @@ public class MemberServiceImpl implements MemberService {
                 new TypeToken<Page<ReviewDTO>>(){}.getType());
 
         return reviewList;
+    }
+
+    @Override
+    public Page<ReviewCommentDTO> getReviewCommentListByUser(String id, Pageable pageable) {
+        Page<ReviewComment> entityPage = commentRepository.findAllById(id, pageable);
+        Page<ReviewCommentDTO> commentList = modelMapper.map(entityPage,
+                new TypeToken<Page<ReviewCommentDTO>>(){}.getType());
+        return commentList;
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewListByMember(String id) {
+        List<Review> reviews = reviewRepository.findAllById(id);
+        List<ReviewDTO> reviewList = modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>(){}.getType());
+        return reviewList;
+    }
+
+    @Override
+    public void deleteCommentListByUser(String id) {
+        commentRepository.deleteAllById(id);
+    }
+
+    @Override
+    public void deleteCommentListByReviewNo(Long reviewNo) {
+        commentRepository.deleteAllByReviewNo(reviewNo);
+    }
+
+    @Override
+    public int deleteMember(String id) {
+        repository.deleteById(id);
+        Optional<Member> result = repository.findById(id);
+        return !(result.isPresent())? 0 : 1;
+        // 계정이 삭제되었다면 0, 그렇지 않다면 1
     }
 
     @Override
