@@ -25,13 +25,13 @@ public class UploadFileUtil {
     //코스 이미지 저장
     public String courseImgSave(Long reviewNo, MultipartFile courseImg) throws IOException {
 
-        File noDirectory = new File(rootLocation.toString() + "/" + reviewNo);
+        File noDirectory = new File(rootLocation.toString() + "/review/" + reviewNo);
         if (!noDirectory.exists()) {
             noDirectory.mkdirs();
         }
 
         String fileName = courseImg.getOriginalFilename();
-        Path savePath = Paths.get(rootLocation.toString() + "/" + reviewNo + "/" + fileName);
+        Path savePath = Paths.get(rootLocation.toString() + "/review/" + reviewNo + "/" + fileName);
         File saveFile = new File(savePath.toString());
         courseImg.transferTo(saveFile);
 
@@ -44,10 +44,10 @@ public class UploadFileUtil {
         String[] uploadImgs = uploadImg.split(",");
 
         for (int i = 0; i < uploadImgs.length; i++) {
-            Path src = Paths.get(rootLocation.toString() + "/temp/" + uploadImgs[i]);
-            Path dst = Paths.get(rootLocation.toString() + "/" + reviewNo + "/" + uploadImgs[i]);
+            Path src = Paths.get(rootLocation.toString() + "/review/temp/" + uploadImgs[i]);
+            Path dst = Paths.get(rootLocation.toString() + "/review/" + reviewNo + "/" + uploadImgs[i]);
 
-            File noDirectory = new File(rootLocation.toString() + "/" + reviewNo);
+            File noDirectory = new File(rootLocation.toString() + "/review/" + reviewNo);
             if (!noDirectory.exists()) {
                 noDirectory.mkdirs();
             }
@@ -62,7 +62,7 @@ public class UploadFileUtil {
 
     //이미지폴더 이미지들 temp로 이동
     public void moveToTemp(Long reviewNo) {
-        File imageDir = new File(rootLocation.toString() + "/" + reviewNo);
+        File imageDir = new File(rootLocation.toString() + "/review/" + reviewNo);
 
         if (imageDir.exists()) {
 
@@ -79,8 +79,8 @@ public class UploadFileUtil {
             if (files != null) {
                 for (File file : files) {
 
-                    Path src = Paths.get(rootLocation.toString() + "/" + reviewNo + "/" + file.getName());
-                    Path dst = Paths.get(rootLocation.toString() + "/temp/" + file.getName());
+                    Path src = Paths.get(rootLocation.toString() + "/review/" + reviewNo + "/" + file.getName());
+                    Path dst = Paths.get(rootLocation.toString() + "/review/temp/" + file.getName());
                     try {
 
                         Files.move(src, dst, StandardCopyOption.REPLACE_EXISTING);
@@ -93,9 +93,10 @@ public class UploadFileUtil {
         }
     }
 
+    //후기글 삭제시 이미지삭제
     public void deleteImages(Long reviewNo) {
 
-        Path path = Paths.get(rootLocation.toString() + "/" + reviewNo);
+        Path path = Paths.get(rootLocation.toString() + "/review/" + reviewNo);
         File imageDir = new File(path.toString());
 
         if (imageDir.exists()) {
@@ -118,7 +119,26 @@ public class UploadFileUtil {
             System.out.println(reviewNo + "번 이미지 디렉토리 삭제 실패");
             e.printStackTrace();
         }
-
     }
+
+    //크루 이미지 저장
+    public String crewImgSave(MultipartFile crewImageFile, String crewName) throws IOException {
+
+        File crewImage;
+
+        if (crewImageFile != null) {
+            //파일 이름 : 크루이름.확장자
+            String crewImageName = crewName +"."+ crewImageFile.getOriginalFilename().split("\\.")[1];
+            String crewImagePath =  rootLocation.toString() + "/crew/logo/" + crewImageName;
+
+            crewImage = new File(crewImagePath);
+            crewImageFile.transferTo(crewImage);
+        }else {
+            return  null;
+        }
+
+        return crewImage.getName();
+    }
+
 }
 

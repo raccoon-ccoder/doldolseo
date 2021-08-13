@@ -6,13 +6,21 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>크루게시판 - 크루 목록</title>
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
+
+    <%-- jQuery--%>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <%-- 헤더 --%>
@@ -40,7 +48,9 @@
                     <span> > </span>
                     <a href="#">크루 목록</a>
             </span>
-            <button id="crew-topContainer__crewBtn">크루 생성</button>
+            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewI'">
+                크루 생성
+            </button>
         </div>
 
         <%-- 상단 정렬버튼 + 검색창 --%>
@@ -70,174 +80,98 @@
         <%-- 크루 목록 --%>
         <%-- * 크루이름 최대 8자 까지 --%>
         <div class="crew-listContainer">
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample1.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
+            <c:forEach items="${crews.content}" var="crews" begin="0" end="20">
+                <%-- 크루프로필 start --%>
+                <div class="crew-crewProfile">
+                    <div class="crew-crewProfile__logo">
+                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crews.crewImage}"
+                             alt="crew_logo">
+                    </div>
+                    <div class="crew-crewProfile__crewnameBox">
                     <span class="crew-crewProfile__crewnameBox__name">
                         <span class="crew-crewProfile__crewnameBox__grade">
-                            <img src="_image/crew/crew_grade4.png" alt="crew_logo"/>
+                            <%-- 크루등급별 등급사진 선택 --%>
+                            <c:choose>
+                                <c:when test="${crews.grade eq '돌고래'}">
+                                    <img id="crewL-img--grade"
+                                         src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png"/>
+                                </c:when>
+                                <c:when test="${crews.grade eq '동고래'}">
+                                    <img id="crewL-img--grade"
+                                         src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png"/>
+                                </c:when>
+                                <c:when test="${crews.grade eq '은고래'}">
+                                    <img id="crewL-img--grade"
+                                         src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png"/>
+                                </c:when>
+                                <c:when test="${crews.grade eq '금고래'}">
+                                    <img id="crewL-img--grade"
+                                         src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png"/>
+                                </c:when>
+                            </c:choose>
                         </span>
-                        정연맘과아이들
+                        <a href="${pageContext.request.contextPath}/crewD" style="color: white">
+                                ${crews.crewName}
+                        </a>
                     </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;좆같은보노보노
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    코딩하다 징징대고 싶은 사람들 모여라~!!
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample2.jpeg" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade3.png" alt="crew_logo">
                     </div>
-                        방탕코딩단단단단
-                    </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;만취돌고래
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 강남
-                </div>
-                <div class="crew-crewProfile__intro">
-                    다때려치자 시부랄~
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample3.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade2.png" alt="crew_logo">
+                    <div class="crew-crewProfile__master">
+                        <span class="crew-label--crewmaster">크루장</span>&nbsp;${crews.id}
                     </div>
-                        테스트
-                    </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;돌돌이
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    테스트 크루
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample3.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade1.png" alt="crew_logo">
+                    <div class="crew-crewProfile__region">
+                        <span style="color: #5882FA">지역</span> > ${crews.areaList}
                     </div>
-                        테스트
-                    </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;돌돌이
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    테스트 크루
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample3.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade1.png" alt="crew_logo">
+                    <div class="crew-crewProfile__intro">
+                            ${crews.intro}
                     </div>
-                        테스트
-                    </span>
                 </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;돌돌이
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    테스트 크루
-                </div>
+                <%-- 크루프로필 end --%>
+            </c:forEach>
+
+        </div>
+        <%-- 페이지네이션 및 검색창--%>
+        <div id="crewL-container--bottom">
+            <%-- 페이지네이션 --%>
+            <div id="crewL-bottom__pagination">
+                <table class="pagination">
+                    <tr>
+                        <!-- 첫 페이지로 이동 -->
+                        <td>
+                            <a href="${pageContext.request.contextPath}/crewL?page=0">
+                                << </a>
+                        </td>
+
+                        <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
+                        <c:if test="${startBlockPage ne 1}">
+                            <td>
+                                <a href="${pageContext.request.contextPath}/crewL?page=${startBlockPage-2}">
+                                    < </a>
+                            </td>
+                        </c:if>
+
+                        <!-- 페이징 블록 1 ~ 10 -->
+                        <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
+                            <td>
+                                <a href="${pageContext.request.contextPath}/crewL?page=${idx-1}">${idx}</a>
+                            </td>
+                        </c:forEach>
+
+                        <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
+                        <c:if test="${endBlockPage ne crews.totalPages}">
+                            <td>
+                                <a href="${pageContext.request.contextPath}/crewL?page=${endBlockPage}">
+                                    > </a>
+                            </td>
+                        </c:if>
+
+                        <!-- 마지막 페이지로 이동 -->
+                        <td>
+                            <a href="${pageContext.request.contextPath}/crewL?page=${crews.totalPages-1}">
+                                >> </a>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample3.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade1.png" alt="crew_logo">
-                    </div>
-                        테스트
-                    </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;돌돌이
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    테스트 크루
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
-            <%-- 크루프로필 start --%>
-            <div class="crew-crewProfile">
-                <div class="crew-crewProfile__logo">
-                    <img src="_image/crew/crew_sample3.png" alt="crew_logo">
-                </div>
-                <div class="crew-crewProfile__crewnameBox">
-                    <span class="crew-crewProfile__crewnameBox__name">
-                    <div class="crew-crewProfile__crewnameBox__grade">
-                        <img src="_image/crew/crew_grade1.png" alt="crew_logo">
-                    </div>
-                        테스트
-                    </span>
-                </div>
-                <div class="crew-crewProfile__master">
-                    <span class="crew-label--crewmaster">크루장</span>&nbsp;돌돌이
-                </div>
-                <div class="crew-crewProfile__region">
-                    <span style="color: #5882FA">지역</span> > 홍대
-                </div>
-                <div class="crew-crewProfile__intro">
-                    테스트 크루
-                </div>
-            </div>
-            <%-- 크루프로필 end --%>
         </div>
     </section>
 

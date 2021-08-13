@@ -14,7 +14,7 @@
 
     <%-- 메인 스타일 시트 --%>
     <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
-
+x
     <%-- 크루가입 팝업 --%>
     <script>
         function popupCrewJoin() {
