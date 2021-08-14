@@ -29,15 +29,15 @@
     <div class="memberJR-container">
         <p class="memberJR-container__p1-bold">환영합니다!</p>
         <p class="memberJR-container__p2-bold">
-            ${member.nickname}님, 회원가입을 축하합니다. <br />
-                ${member.nickname}님의 새로운 아이디는 ${member.id}입니다.
+            ${nickname}님, 회원가입을 축하합니다. <br />
+                ${nickname}님의 새로운 아이디는 ${id}입니다.
         </p>
         <p>
             돌고돌아서울은 항상 회원님들의 입장에서<br />
             보다 좋은 서비스를 받을 수 있도록 노력하겠습니다.<br />
             감사합니다 :D
         </p>
-        <button class="memberJR-container__button-blue" onclick="location.href='${pageContext.request.contextPath}/main'">메인으로</button>
+        <button class="memberJR-container__button-blue" onclick="location.href='${pageContext.request.contextPath}/memberL'">로그인하러 가기</button>
     </div>
     <!-- // 회원가입 완료 안내 container -->
 

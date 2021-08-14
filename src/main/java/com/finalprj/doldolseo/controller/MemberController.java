@@ -7,6 +7,7 @@ import com.finalprj.doldolseo.service.MemberService;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,10 @@ public class MemberController {
     @Autowired
     private UploadProfileUtil profileUtil;
 
+    // 추가 코드
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @RequestMapping("/register")
     public String register(@RequestParam(value = "memberimg") MultipartFile file, MemberDTO memberDTO, Model model, HttpServletRequest request) throws Exception{
         String profileImg = "sample.png";
@@ -43,10 +48,16 @@ public class MemberController {
             profileImg = profileUtil.uploadProfile(file, memberDTO);
         }
         memberDTO.setMember_img(profileImg);
+        // 추가 코드
+        String rawPassword = memberDTO.getPassword();
+        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        memberDTO.setPassword(encPassword);
+        // //추가 코드
+
         MemberDTO member = service.join(memberDTO);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("member",member);
+        request.setAttribute("id",member.getId());
+        request.setAttribute("nickname",member.getNickname());
         return "/member/memberJoinResult";
     }
 
