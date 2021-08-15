@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.util;
 
+import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
@@ -121,20 +122,35 @@ public class UploadFileUtil {
         }
     }
 
-    //크루 이미지 저장
-    public String crewImgSave(MultipartFile crewImageFile, String crewName) throws IOException {
+    //크루 이미지 저장 (기존 이미지 있으면 삭제하고 새로 저장)
+    public String crewImgSave(MultipartFile crewImageFile, CrewDTO dto) throws IOException {
 
         File crewImage;
 
-        if (crewImageFile != null) {
+        //기존이미지 삭제 (업데이트 시)
+        if (dto.getCrewImage() != null) {
+            Path path = Paths.get(rootLocation.toString() + "/crew/logo/" + dto.getCrewImage());
+            File oldImg = new File(path.toString());
+
+            if (oldImg.exists()) {
+                boolean isDeleteSuccess = oldImg.delete();
+                if (isDeleteSuccess) {
+                    System.out.println("기존 이미시 삭제 성공");
+                } else {
+                    System.out.println("기존 이미시 삭제 실패");
+                }
+            }
+        }
+
+        if (!crewImageFile.isEmpty()) {
             //파일 이름 : 크루이름.확장자
-            String crewImageName = crewName +"."+ crewImageFile.getOriginalFilename().split("\\.")[1];
-            String crewImagePath =  rootLocation.toString() + "/crew/logo/" + crewImageName;
+            String crewImageName = dto.getCrewName() + "." + crewImageFile.getOriginalFilename().split("\\.")[1];
+            String crewImagePath = rootLocation.toString() + "/crew/logo/" + crewImageName;
 
             crewImage = new File(crewImagePath);
             crewImageFile.transferTo(crewImage);
-        }else {
-            return  null;
+        } else {
+            return null;
         }
 
         return crewImage.getName();

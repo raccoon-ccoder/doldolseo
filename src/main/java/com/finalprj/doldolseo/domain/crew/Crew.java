@@ -38,6 +38,8 @@ public class Crew {
     @Column(name = "INTRO_DETAIL")
     private String introDetail;
     private String recruit;
+
+    @Column(name = "QUESTION1")
     private String question1;
     private String question2;
     private String question3;

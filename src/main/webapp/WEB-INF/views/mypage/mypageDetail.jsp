@@ -74,7 +74,7 @@
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
                         <img id="my_img" class="mypageD-imgbox__img--small" src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
-                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg(event);">
+                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg_i(event);">
                     </div>
 
                     <div class="mypageD-infobox">

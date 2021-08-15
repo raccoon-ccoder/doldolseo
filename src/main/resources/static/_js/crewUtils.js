@@ -2,6 +2,8 @@
 let doNameCheck = false; //크루명 중복 체크 유무
 var btnCount = 0; //질문 갯수 버튼 카운트
 
+
+/* crewInsert */
 function addQuestion() {
     $(function () {
         $('#crewI-btn--addQuestion').click(function () {
@@ -22,19 +24,17 @@ function addQuestion() {
     });
 }
 
-function setImg(event) {
+function setImg_i(event) {
     var reader = new FileReader();
 
     reader.onload = function (event) {
-        document.getElementById('crew_img').setAttribute("src", event.target.result);
+        document.getElementById('crewI_img').setAttribute("src", event.target.result);
         /*
         * document.getElementById('my_img').src = event.target.result;
         */
     }
     reader.readAsDataURL(event.target.files[0]);
 }
-
-
 
 function checkCrewName(contextPath) {
     $(function () {
@@ -126,8 +126,8 @@ function checkCrewName(contextPath) {
 
 function limitAreaList() {
     $(function () {
-        $("input[name=areaList]").on("click", function () {
-            let count = $("input:checked[name=areaList]").length;
+        $("input[name=areaListValues]").on("click", function () {
+            let count = $("input:checked[name=areaListValues]").length;
 
             if (count > 3) {
                 $(this).prop("checked", false);
@@ -145,36 +145,353 @@ function checkCrewParam() {
         let question1 = $('#question1')
 
 
-        if(!doNameCheck){
+        if (!doNameCheck) {
             alert("크루명 중복 체크는 필수 입니다.")
             $('#crewI-btn--checkName').focus();
             return false;
         }
 
-        if(intro.val() == null || intro.val() === ''){
+        if (intro.val() == null || intro.val() === '') {
             alert("크루 소개(간략)는 필수 항목 입니다.")
             intro.focus();
             return false;
         }
 
-        if(introDetail.val() == null || introDetail.val() === ''){
+        if (introDetail.val() == null || introDetail.val() === '') {
             alert("크루 소개(상세)는 필수 항목 입니다.")
             introDetail.focus();
             return false;
         }
 
-        if(recruit.val() == null || recruit.val() === ''){
+        if (recruit.val() == null || recruit.val() === '') {
             alert("모집 공고는 필수 항목 입니다.")
             recruit.focus();
             return false;
         }
 
-        if(question1.val() == null || question1.val() === ''){
+        if (question1.val() == null || question1.val() === '') {
             alert("질문은 최소 1개이상 입력 하셔야 합니다.")
             question1.focus();
             return false;
         }
 
         $('#crewI-form').submit();
+    });
+}
+
+
+/* crewManage */
+
+//크루 로고 이미지 변경 -> 파일 업로드
+function setImg_m(event, contextPath, crewNo) {
+
+
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        document.getElementById('crewM_img').setAttribute("src", event.target.result);
+        /*
+        * document.getElementById('my_img').src = event.target.result;
+        */
+    }
+    reader.readAsDataURL(event.target.files[0]);
+
+    let imgFile = $("#crewM_input--image").val();
+    let form = $("#crewM-form-img")[0];
+    var formData = new FormData(form);
+    formData.append("crewImageFile", imgFile);
+    formData.append("crewNo", crewNo);
+
+    $j1124.ajax({
+        data: formData,
+        type: 'POST',
+        url: contextPath + '/crewM/edit/img',
+        cache: false,
+        contentType: false,
+        processData: false,
+        enctype: 'multipart/form-data',
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+//라벨 보이기->안보이기 + 관심지역 선택창 생성
+function goAreaEditMode(contextPath, crewNo) {
+    $(function () {
+        let label = $("#crewM-label--area");
+        let infoArew = $("#crewM-info--area");
+        let btnModify = $("#crewM-btn--modifyArea");
+        let context = '\"' + contextPath + '\"'
+
+        if (label.css("display") === 'inline-block') {
+            label.css("display", "none");
+            btnModify.css("display", "none");
+
+            $(infoArew).append(
+                "<form id='crewM-form--area' method='post'>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='강남'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>강남</span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='강북'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>강북</span>" +
+                "<input class='crewM-checkbox--area'type='checkbox' name='areaListValues' value='광화문'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>광화문</span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='명동'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>명동</span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='여의도'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>여의도</span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='잠실'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>잠실<br/></span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='홍대'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>홍대</span>" +
+                "<input class='crewM-checkbox--area' type='checkbox' name='areaListValues' value='etc'>" +
+                "<span class='crewM-name--area' style='line-height: 26px; font-size: 13px'>etc</span>" +
+                " <button id='crewM-btn--submitArea' class='crew-button' onclick='submitAreaEdit(" + context + "," + crewNo + ")'>완료</button>" +
+                "</form>"
+            );
+        }
+    });
+}
+
+//관심지역 수정사항 비동기 전숭, 체크박스 제거 , 라벨 원복
+function submitAreaEdit(contextPath, crewNo) {
+    $(function () {
+        let form = $("#crewM-form--area")[0]
+        let formData = new FormData(form);
+        formData.append("crewNo", crewNo);
+
+        $j1124.ajax({
+            data: formData,
+            type: 'POST',
+            url: contextPath + '/crewM/edit/area',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            }
+        });
+
+        let label = $("#crewM-label--area");
+        let infoArew = $("#crewM-info--area");
+        let btnModify = $("#crewM-btn--modifyArea");
+        let areaCheckBox = $(".crewM-checkbox--area");
+        let areaName = $(".crewM-name--area");
+        let btnSubmit = $("#crewM-btn--submitArea");
+
+        if (label.css("display") === 'none') {
+            areaCheckBox.remove();
+            areaName.remove();
+            btnSubmit.remove();
+            label.css("display", "inline-block");
+            btnModify.css("display", "inline-block");
+        }
+    });
+    alert("관심지역이 변경 되었습니다.");
+    location.reload();
+}
+
+//크루 소개 수정모드 전환
+function goIntroEditMode(content, contextPath, crewNo) {
+    $(function () {
+        let context = '\"' + contextPath + '\"'
+        let introLabel = $("#crewM-label-introD");
+        let btnModify = $("#crewM-btn--modifyInfo");
+        let editBox = $("#crewM-editBox--intro");
+
+        //크루 소개란 -> disappear,수정 버튼 ->disappear
+        introLabel.css("display", "none");
+        btnModify.css("display", "none");
+
+        //summernote 추가 , 완료버튼 추가
+        editBox.append("<textarea id='crewM-editForm--introD' name='introDetail'>" + content + "</textarea>");
+        $('#crewM-editForm--introD').summernote({
+            //summernote 속성
+            width: 520,
+            height: 266,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            lang: "ko-KR",
+            placeholder: '최대 2048자까지 쓸 수 있습니다',
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']]
+            ]
+        });
+        editBox.append("<button id='crewM-btn--submitIntro' class='crew-button' onclick='submitIntroDEdit(" + context + "," + crewNo + ")'>완료</button>");
+
+    });
+}
+
+function submitIntro(contextPath, crewNo) {
+    $(function () {
+        let form = $("#crewM-form--intro")[0];
+        var formData = new FormData(form);
+        formData.append("crewNo", crewNo);
+
+        $j1124.ajax({
+            data: formData,
+            type: 'POST',
+            url: contextPath + '/crewM/edit/intro',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            }
+        });
+        location.reload();
+    });
+}
+
+//완료버튼 클릭시 수정사항 submit -> 크루 소개 수정모드 원복
+function submitIntroDEdit(contextPath, crewNo) {
+    $(function () {
+        let introLabel = $("#crewM-label-introD");
+        let editBox = $("#crewM-editBox--intro");
+        let btnModify = $("#crewM-btn--modifyInfo");
+
+        let form = $("#crewM-form--introD")[0];
+        var formData = new FormData(form);
+        formData.append("crewNo", crewNo);
+
+        $j1124.ajax({
+            data: formData,
+            type: 'POST',
+            url: contextPath + '/crewM/edit/introD',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            }
+        });
+        location.reload();
+
+        //수정 폼, 완료 버튼 삭제
+        editBox.empty();
+
+        //기존 요소 원복
+        introLabel.css("display", "block");
+        btnModify.css("display", "inline-block");
+    });
+}
+
+//모집 공고 수정모드 전환
+function goRecruitEditMode(contextPath, crewNo) {
+    $(function () {
+        let recruit = $("#crewM-recruit");
+        let recruitBox = $("#crewM-recruiutBox");
+        let recruitText = recruit.text();
+        let btnModify = $("#crewM-btn--modifyRecuit")
+        let editBox = $("#crewM-editBox--recuit");
+        let context = '\"' + contextPath + '\"'
+
+        //모집 공고, 버튼 숨기기
+        recruit.css("display", "none");
+        btnModify.css("display", "none");
+
+        //summernote 추가 , 완료버튼 추가
+        editBox.append("<textarea id='crewM-editForm--recuit' name='recruit'>" + recruitText + "</textarea>");
+        $('#crewM-editForm--recuit').summernote({
+            //summernote 속성
+            width: 530,
+            height: 200,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            lang: "ko-KR",
+            placeholder: '최대 2048자까지 쓸 수 있습니다',
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']]
+            ]
+        });
+        recruitBox.after("<button id='crewM-btn--submitRecuruit' class='crew-button' onclick='submitRecruitEdit(" + context + "," + crewNo + ")' style='float: right; margin-top: 7px'>완료</button>");
+
+    });
+}
+
+//모집 공고 수정사항 전송 -> 수정모드 원복
+function submitRecruitEdit(contextPath, crewNo) {
+    $(function () {
+        let editBox = $("#crewM-editBox--recuit");
+        let btnSubmit = $("#crewM-btn--submitRecuruit");
+        let btnModify = $("#crewM-btn--modifyRecuit")
+        let recruit = $("#crewM-recruit");
+
+        let form = $("#crewM-form--recruit")[0];
+        var formData = new FormData(form);
+        formData.append("crewNo", crewNo);
+
+        $j1124.ajax({
+            data: formData,
+            type: 'POST',
+            url: contextPath + '/crewM/edit/recruit',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+            }
+        });
+        location.reload();
+
+        //수정 폼, 완료 버튼 삭제
+        editBox.empty();
+        btnSubmit.remove();
+
+        //기존 요소 원복
+        btnModify.css("display", "inline-block");
+        recruit.css("display", "inline")
+
+    });
+}
+
+//가입 승인 클릭시
+function agreeJoin(contextPath, regNo) {
+
+    var data = {regNo: regNo};
+
+    $j1124.ajax({
+        data: JSON.stringify(data),
+        type: 'POST',
+        url: contextPath + '/crewJ/agree',
+        contentType: "application/json",
+        cache: false,
+        processData: false,
+        success: function (data) {
+            alert("success transform")
+        }
+    });
+}
+
+//크루 가입 거절 및 강퇴
+function DenyOrKick(contextPath, regNo) {
+
+    var data = {regNo: regNo};
+
+    $j1124.ajax({
+        data: JSON.stringify(data),
+        type: 'POST',
+        url: contextPath + '/crewJ/deny',
+        contentType: "application/json",
+        cache: false,
+        processData: false,
+        success: function (data) {
+            alert("success transform")
+        }
+    });
+}
+
+//크루장 위임
+function giveCrewMaster(contextPath, regNo, id) {
+
+    var param = {regNo:regNo, id:id};
+
+    $j1124.ajax({
+        data: JSON.stringify(param),
+        type: 'POST',
+        url: contextPath + '/crewJ/give',
+        contentType: "application/json",
+        cache: false,
+        processData: false,
+        success: function (data) {
+            alert("success transform")
+        }
     });
 }

@@ -1,6 +1,7 @@
 package com.finalprj.doldolseo.dto.crew;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 

@@ -110,7 +110,7 @@
                                 </c:when>
                             </c:choose>
                         </span>
-                        <a href="${pageContext.request.contextPath}/crewD" style="color: white">
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crews.crewNo}" style="color: white">
                                 ${crews.crewName}
                         </a>
                     </span>

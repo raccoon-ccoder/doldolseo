@@ -13,7 +13,7 @@
     <title>크루 활동 게시판</title>
 
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <%-- 헤더 --%>

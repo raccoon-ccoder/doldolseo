@@ -15,12 +15,14 @@
     <%-- 메인 스타일 시트 --%>
     <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 
-    <%-- jQuery--%>
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous">
-    </script>
+    <!-- include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+
+    <!-- include summernote css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <script src="${pageContext.request.contextPath}/_js/crewUtils.js"></script>
     <script>
@@ -57,11 +59,11 @@
                     </td>
                     <td rowspan="2" style="border-right: 1px solid #CDCECF;">
                         <div class="crew-logobox">
-                            <img id="crew_img"
+                            <img id="crewI_img"
                                  src="${pageContext.request.contextPath}/_image/crew/crew-logo-default.jpeg"
                                  alt="crew-logo"/><%-- 기본로고 --%>
                             <label id="crewI-label--img" class="crew-label--upload" for="crewI_input--image">변경</label>
-                            <input type="file" name="crewImageFile" id="crewI_input--image" onchange="setImg(event)">
+                            <input type="file" name="crewImageFile" id="crewI_input--image" onchange="setImg_i(event)">
                         </div>
                     </td>
                     <td>
@@ -102,15 +104,34 @@
                     <td colspan="2">
                         크루 소개 (간략)
                     <td colspan="2">
-                        <textarea id="crewI-intro" name="intro" style="width: 850px; height: 50px"></textarea>
+                        <textarea id="crewI-intro" name="intro" style="width: 845px; height: 50px"></textarea>
                     </td>
                 </tr>
-                <tr class="common-tbl__item" style="height: 100px">
+                <tr class="common-tbl__item" style="height: 200px">
                     <td colspan="2">
                         크루 소개 (상세)
                     <td colspan="2">
                         <textarea id="crewI-introDetail" name="introDetail"
                                   style="width: 850px; height: 90px"></textarea>
+                    <%-- summernote 실행 --%>
+                    <script>
+                        $(function () {
+                            $('#crewI-introDetail').summernote({
+                                //summernote 속성
+                                width: 865,
+                                height: 200,
+                                minHeight: null,
+                                maxHeight: null,
+                                focus: true,
+                                lang: "ko-KR",
+                                placeholder: '최대 2048자까지 쓸 수 있습니다',
+                                toolbar: [
+                                    // [groupName, [list of button]]
+                                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                                ]
+                            });
+                        });
+                    </script>
                     </td>
                 </tr>
             </table>
@@ -128,6 +149,25 @@
                     </td>
                     <td>
                         <textarea id="crewI-recuit" name="recruit" style='width: 850px; height: 90px'></textarea>
+                        <%-- summernote 실행 --%>
+                        <script>
+                            $(function () {
+                                $('#crewI-recuit').summernote({
+                                    //summernote 속성
+                                    width: 865,
+                                    height: 200,
+                                    minHeight: null,
+                                    maxHeight: null,
+                                    focus: true,
+                                    lang: "ko-KR",
+                                    placeholder: '최대 2048자까지 쓸 수 있습니다',
+                                    toolbar: [
+                                        // [groupName, [list of button]]
+                                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                                    ]
+                                });
+                            });
+                            </script>
                     </td>
                 </tr>
                 <tr class='common-tbl__item'>
@@ -135,7 +175,7 @@
                         가입 질문
                     </td>
                     <td>
-                        <input id="question1" name="question1" type='text' style='width: 850px'/>
+                        <input id="question1" name="question1" type='text' style='width: 847px'/>
                     </td>
                 </tr>
             </table>
