@@ -6,6 +6,7 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,25 @@
     <title>크루게시판 - 크루 관리</title>
 
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
+
+    <!-- include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+
+    <%-- 크루 유틸 js --%>
+    <script src="${pageContext.request.contextPath}/_js/crewUtils.js"></script>
+
+    <!-- include summernote css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <script>
+        function popupEditJoin() {
+            window.open('${pageContext.request.contextPath}/crewM/editJoin?crewNo=${crew.crewNo}&question1=${crew.question1}&question2=${crew.question2}&question3=${crew.question3}', "크루가입 수정", "width = 800, height = 450, top = 400, left = 1200")
+        }
+    </script>
 </head>
 <body>
     <%-- 헤더 --%>
@@ -50,33 +69,61 @@
         <%-- 크루 정보 컨테이너 --%>
         <div class="crew-infoContainer">
             <div class="crew-info__infobox">
-                <%-- 크루 로고 --%>
+
+                <%-- 크루 로고 : 수정 --%>
                 <div class="crew-info__item" style="margin-top: 20px">
                     <span>로고 :</span>
                     <div class="crew-logobox" style="width: 100px; height: 110px;">
-                        <img src="_image/crew/crew_sample4.jpeg" alt="crew-logo"/>
+                        <img id="crewM_img" src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}"
+                             alt="crew-logo"/>
+                        <form id="crewM-form-img" enctype="multipart/form-data">
+                            <label id="crewD-label--img" class="crew-label--upload" for="crewM_input--image">변경</label>
+                            <input type="file" name="crewImageFile" id="crewM_input--image"
+                                   onchange="setImg_m(event,'${pageContext.request.contextPath}',${crew.crewNo})">
+                        </form>
                     </div>
-                    <button id="crewM-btn--modifyLogo" class="crew-button">수정</button>
                 </div>
 
+                <%-- 크루 명 --%>
                 <div class="crew-info__item">
                     <span>크루명 :</span>
                     <span class="crew-namelabel">새튀단</span>
                 </div>
 
+                <%-- 크루 설립일 --%>
                 <div class="crew-info__item">
                     크루설립일 :
                     <span class="crew-namelabel">2021.07.27</span>
                 </div>
 
+                <%-- 크루 등급 --%>
                 <div class="crew-info__item">
                     크루등급 :
                     <div class="crew-info__grade">
-                        <img src="_image/crew/crew_grade3.png" alt="grade">
+                        <%-- 크루등급별 등급사진 선택 --%>
+                        <c:choose>
+                            <c:when test="${crew.grade eq '돌고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png"
+                                     alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '동고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png"
+                                     alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '은고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png"
+                                     alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '금고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png"
+                                     alt="grade">
+                            </c:when>
+                        </c:choose>
                     </div>
                     <button class="crew-button" style="height: 30px">등급안내</button>
                 </div>
 
+                <%-- 크루 포인트 --%>
                 <div class="crew-info__item">
                     크루포인트 :
                     <div class="crew-info__pointbar--holder">
@@ -85,21 +132,45 @@
                 </div>
             </div>
 
+            <%-- 관심 지역 : 수정 --%>
             <div class="crew-info__introbox">
-                <div class="crew-info__item" style="margin-top: 112px">
+
+                <div id="crewM-info--area" class="crew-info__item" style="margin-top: 40px;">
                     관심지역 :
-                    <span class="crew-namelabel">홍대, 강남</span>
-                    <button id="crewM-btn--modifyArea" class="crew-button">수정</button>
+                    <span id="crewM-label--area" class="crew-namelabel">${crew.areaList}</span>
+                    <button id="crewM-btn--modifyArea" class="crew-button"
+                            onclick="goAreaEditMode('${pageContext.request.contextPath}',${crew.crewNo})">수정
+                    </button>
                 </div>
 
-                <div class="crew-info__item" style="border: none">
-                    <span>크루소개 :</span>
-                    <span class="crew-infolabel">
-                        반갑습니다. 새우튀김을 사랑하는 모임, 새튀단 입니다. <br/>
-                        저희는 홍대와 강남을 중심으로 주1회 새튀 맛집을 찾아서 뿌시는 모임입니다. <br/>
-                        많은 가입 부탁드립니다.
+
+                <%-- 크루소개(간략) : 수정 --%>
+                <div class="crew-info__item">
+                    <span>크루소개(간략) :</span><br/>
+                    <form id="crewM-form--intro" method="post">
+                        <textarea id="crewM-textArea--intro" name="intro">${crew.intro}</textarea>
+                        <button class="crew-button"
+                                onclick="submitIntro('${pageContext.request.contextPath}',${crew.crewNo})"
+                                style="position: relative; bottom: 7px;">수정
+                        </button>
+                    </form>
+                </div>
+
+                <%-- 크루소개(상세) : 수정 --%>
+                <div id="" class="crew-info__item" style="border: none">
+                    <span>크루소개(상세) :</span>
+                    <span id="crewM-label-introD" class="crew-infolabel">
+                        ${crew.introDetail}
                     </span>
-                    <button id="crewM-btn--modifyInfo" class="crew-button">수정</button>
+                    <button id="crewM-btn--modifyInfo" class="crew-button"
+                            onclick="goIntroEditMode('${crew.introDetail}','${pageContext.request.contextPath}',${crew.crewNo})">
+                        수정
+                    </button>
+                    <form id="crewM-form--introD" method="post">
+                        <label id="crewM-editBox--intro">
+                            <%-- 수정 양식 추가 되는 곳 --%>
+                        </label>
+                    </form>
                 </div>
             </div>
         </div>
@@ -122,84 +193,46 @@
                         <td>
                             <div class="crew-master--decorate">
                                 <span class="crew-master--decotext">크루장</span>
-                                <img src="_image/crew/crew_master_crown.png" alt="crown">
+                                <img src="${pageContext.request.contextPath}/_image/crew/crew_master_crown.png"
+                                     alt="crown">
                             </div>
                         </td>
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_sample3.png" alt="profile"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                         alt="profile"/>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새우먹는돌고래</div>
+                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.id}</div>
                             </div>
                         </td>
                     </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                    <%-- 크루원 목록 --%>
+                    <c:forEach items="${crewMembers}" var="crewMember">
+                        <%-- 크루원 --%>
+                        <tr class="common-tbl__item">
+                            <td>
+                                <span class="crew-member-decotext">크루원</span>
+                            </td>
+                            <td>
+                                <div class="crew-member--idbox">
+                                    <div class="crew-member--photo">
+                                        <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
+                                    </div>
+                                    <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.id}
+                                        <button type="button" class="crew-button"
+                                                onclick="giveCrewMaster('${pageContext.request.contextPath}',${crewMember.regNo},'${crewMember.id}')">
+                                            위임
+                                        </button>
+                                        <button type="button" class="crew-button"
+                                                onclick="DenyOrKick('${pageContext.request.contextPath}',${crewMember.regNo})">
+                                            강퇴
+                                        </button>
+                                    </div>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원1
-                                    <button class="crew-button">강퇴</button>
-                                </div>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2
-                                    <button class="crew-button">강퇴</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2
-                                    <button class="crew-button">강퇴</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2
-                                    <button class="crew-button">강퇴</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>
@@ -208,14 +241,24 @@
         <div class="crew-midContainer--right">
             <div class="common-miniTitle" style="width: 550px; top:45px; left: 65px; font-size: 32px;">
                 <span>모집 공고</span>
-                <button id=crewM-btn--modifyJoin class="crew-button" style="float: right; margin-top: 2px">가입 양식
-                    수정
+                <button id=crewM-btn--modifyJoin class="crew-button" onclick="popupEditJoin()"
+                        style="float: right; margin-top: 2px">가입 양식 수정
                 </button>
             </div>
-            <div class="crew-recruitContainer">
-                모집합니다
+            <div id="crewM-recruiutBox" class="crew-recruitContainer">
+                <label id="crewM-recruit">
+                    ${crew.recruit}
+                </label>
+                <form id="crewM-form--recruit" method="post">
+                    <label id="crewM-editBox--recuit">
+                        <%-- 수정 양식 추가 되는 곳 --%>
+                    </label>
+                </form>
             </div>
-            <button id=crewM-btn--modifyRecuit class="crew-button" style="float: right; margin-top: 7px">수정</button>
+            <button id=crewM-btn--modifyRecuit class="crew-button"
+                    onclick="goRecruitEditMode('${pageContext.request.contextPath}',${crew.crewNo})"
+                    style="float: right; margin-top: 7px">수정
+            </button>
         </div>
 
 
@@ -232,120 +275,32 @@
                     </tr>
                 </table>
                 <table class="crew-memberTbl--bottom">
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            1
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_sample3.png" alt="profile"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px;">새튀가먹고싶어</div>
-                                <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            <span>2</span>
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px;">새튀단꿈나무1</div>
-                                <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
-                                </span>
 
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            3
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단꿈나무2</div>
-                                <span class="crewM-member--idbox__btnbox">
+                    <%-- 가입대기자 목록 출력 --%>
+                    <c:forEach items="${watingMembers}" var="watingMember" varStatus="i">
+                        <tr class="common-tbl__item">
+                            <td style="font-size: 20px; width: 90px">
+                                    ${i.index+1}
+                            </td>
+                            <td>
+                                <div class="crewM-member--idbox">
+                                    <div class="crew-member--photo">
+                                        <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                             alt="profile"/>
+                                    </div>
+                                    <div style="display: inline-block; position: relative; bottom: 18px;">${watingMember.id}</div>
+                                    <span class="crewM-member--idbox__btnbox">
                                         <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
+                                        <button type="button" class="crew-button"
+                                                onclick="agreeJoin('${pageContext.request.contextPath}',${watingMember.regNo})">승인</button>
+                                        <button type="button" class="crew-button"
+                                                onclick="DenyOrKick('${pageContext.request.contextPath}',${watingMember.regNo})">거절</button>
                                 </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            3
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단꿈나무2</div>
-                                <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            3
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단꿈나무2</div>
-                                <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td style="font-size: 20px; width: 90px">
-                            3
-                        </td>
-                        <td>
-                            <div class="crewM-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단꿈나무2</div>
-                                <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
-                                        <button class="crew-button">승인</button>
-                                        <button class="crew-button">거절</button>
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </c:forEach>
+
                 </table>
             </div>
         </div>

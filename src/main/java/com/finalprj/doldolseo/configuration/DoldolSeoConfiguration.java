@@ -35,13 +35,13 @@ public class DoldolSeoConfiguration {
     //파일 저장될 절대 경로(로컬)
     @Bean(name = "uploadPath")
     public String uploadPath() {
-        return System.getProperty("user.dir")+"/src/main/resources/static/_image/review";
+        return System.getProperty("user.dir")+"/src/main/resources/static/_image";
     }
 
     //파일 저장될 절대 경로(톰캣)
 //    @Bean(name = "uploadPath")
 //    public String uploadPath() {
-//        return "C:/tomcat/webapps/doldolseo/WEB-INF/classes/static/_image/review";
+//        return "C:/tomcat/webapps/doldolseo/WEB-INF/classes/static/_image";
 //    }
 
     //HTTP hidden Method : delete, put, patch ..

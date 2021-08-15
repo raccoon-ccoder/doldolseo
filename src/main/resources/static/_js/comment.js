@@ -6,30 +6,31 @@ function appendComment(data, contextPath, imagePath) {
         let wdate = data[i].wdate;
         let reviewNo = data[i].reviewNo;
         let commentNo = data[i].commentNo;
+        let context = '\"'+contextPath+'\"'
+
 
         $('#reviewD-commentLayout').append(
             "<tr class='comment-tablelayout'> " +
             "<td style='padding: 10px 10px 10px 10px;'> " +
             "<div class='profilebox' style='margin-top: 7px'> " +
-            "<div class='profilebox--photo'> " +
-            "<img src=" + contextPath + "/_image/" + imagePath + "/>" +
-            "</div> <div class='profilebox--container--sub'>" +
+            "<div class='profilebox--photo'><img src=" + contextPath + "/_image/" + imagePath + "/></div> " +
+            "<div class='profilebox--container--sub'>" +
             "<div class='profilebox--nickname'>" + id + "</div>" +
             "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +
             "</div> </div> " +
-            "<form id='reviewD-commentUpdateForm-" + commentNo + "' method='post'>" +
             "<div class='commentbox'> " +
+            "<form id='reviewD-commentUpdateForm-" + commentNo + "' method='post'>" +
             "<button type='button' class='comment__deleteUpdateButton'> <<</button> " +
             "<div class='comment__deleteUpdateBox'> " +
             "<div class='comment__deleteUpdatelist'> " +
             "<button type='button' class='comment__updateButton'>수정</button> " +
             "</div> <div class='comment__deleteUpdatelist'> " +
-            "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + contextPath + ")'>삭제</button> " +
+            "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + context + ")'>삭제</button> " +
             "</div> </div> " +
             "<input type='hidden' name='id' value='kkkkkkk'/>" +
             "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
             "<div class='comment-editSubbox'> " +
-            "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + contextPath + ")'>완료</button> " +
+            "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + context + ")'>완료</button> " +
             "<button type='button' class='comment-editSub__btn--cancle'>취소</button> " +
             "</form>" +
             "</div></div> </td> </tr>");

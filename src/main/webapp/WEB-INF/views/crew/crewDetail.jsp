@@ -6,6 +6,9 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(crew.CDate)}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,12 +16,12 @@
     <title>크루게시판 - 크루 상세</title>
 
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
-
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
+x
     <%-- 크루가입 팝업 --%>
     <script>
         function popupCrewJoin() {
-            window.open("/crewJ", "크루가입", "width = 900, height = 770");
+            window.open("${pageContext.request.contextPath}/crewJ?crewNo=${crew.crewNo}", "크루가입", "width = 900, height = 770");
         }
     </script>
 </head>
@@ -27,7 +30,6 @@
     <div>
         <jsp:include page="../header.jsp"/>
     </div>
-
 
     <%-- 크루 네이게이션 : 공통 --%>
     <nav class="crew-navi" style="width: 1115px;">
@@ -63,24 +65,38 @@
                 <div class="crew-info__item" style="margin-top: 20px">
                     <span>로고 :</span>
                     <div class="crew-logobox" style="width: 100px; height: 110px;">
-                        <img src="_image/crew/crew_sample4.jpeg" alt="crew-logo"/>
+                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}" alt="crew-logo"/>
                     </div>
                 </div>
 
                 <div class="crew-info__item">
                     <span>크루명 :</span>
-                    <span class="crew-namelabel">새튀단</span>
+                    <span class="crew-namelabel">${crew.crewName}</span>
                 </div>
 
                 <div class="crew-info__item">
                     크루설립일 :
-                    <span class="crew-namelabel">2021.07.27</span>
+                    <span class="crew-namelabel">${dateYMD}</span>
                 </div>
 
                 <div class="crew-info__item">
                     크루등급 :
                     <div class="crew-info__grade">
-                        <img src="_image/crew/crew_grade3.png" alt="grade">
+                        <%-- 크루등급별 등급사진 선택 --%>
+                        <c:choose>
+                            <c:when test="${crew.grade eq '돌고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png" alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '동고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png" alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '은고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png" alt="grade">
+                            </c:when>
+                            <c:when test="${crew.grade eq '금고래'}">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png" alt="grade">
+                            </c:when>
+                        </c:choose>
                     </div>
                     <button class="crew-button" style="height: 30px">등급안내</button>
                 </div>
@@ -88,7 +104,8 @@
                 <div class="crew-info__item">
                     크루포인트 :
                     <div class="crew-info__pointbar--holder">
-                        <div class="crew-info__pointbar--bar">85.12%</div>
+                        <%-- 크루 포인트 및 등급 --%>
+                        <div class="crew-info__pointbar--bar">${crew.crewPoint/1000 * 100}%</div>
                     </div>
                 </div>
             </div>
@@ -96,15 +113,13 @@
             <div class="crew-info__introbox">
                 <div class="crew-info__item" style="margin-top: 112px">
                     관심지역 :
-                    <span class="crew-namelabel">홍대, 강남</span>
+                    <span class="crew-namelabel">${crew.areaList}</span>
                 </div>
 
                 <div class="crew-info__item" style="border: none">
                     <span>크루소개 :</span>
                     <span class="crew-infolabel">
-                        반갑습니다. 새우튀김을 사랑하는 모임, 새튀단 입니다. <br/>
-                        저희는 홍대와 강남을 중심으로 주1회 새튀 맛집을 찾아서 뿌시는 모임입니다. <br/>
-                        많은 가입 부탁드립니다.
+                        ${crew.introDetail}
                     </span>
                 </div>
             </div>
@@ -128,15 +143,15 @@
                         <td>
                             <div class="crew-master--decorate">
                                 <span class="crew-master--decotext">크루장</span>
-                                <img src="_image/crew/crew_master_crown.png" alt="crown">
+                                <img src="${pageContext.request.contextPath}/_image/crew/crew_master_crown.png" alt="crown">
                             </div>
                         </td>
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_sample3.png" alt="profile"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png" alt="profile"/>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새우먹는돌고래</div>
+                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.id}</div>
                             </div>
                         </td>
                     </tr>
@@ -148,7 +163,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">새튀단원1</div>
                             </div>
@@ -162,7 +177,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
                             </div>
@@ -176,7 +191,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
                             </div>
@@ -190,7 +205,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
                             </div>
@@ -204,7 +219,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
                             </div>
@@ -222,14 +237,7 @@
                 </button>
             </div>
             <div class="crew-recruitContainer">
-                * 모집 공고 * <br/>
-                - 나이 제한 : 20세 이상 50세 이하<br/>
-                - 연봉 : 5000만원 이상<br/>
-                - 학벌 : 인서울<br/>
-                <br/>
-                <br/>
-                * 규칙 *<br/>
-                - 새우튀김이 아닌 튀김을 먹다 적발시 강퇴
+                ${crew.recruit}
             </div>
         </div>
     </section>

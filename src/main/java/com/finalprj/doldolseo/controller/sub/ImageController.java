@@ -15,8 +15,6 @@ public class ImageController {
     @Autowired
     ImageService service;
 
-    @Autowired
-    ResourceLoader resourceLoader;
 
     @PostMapping("/image")
     public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) {

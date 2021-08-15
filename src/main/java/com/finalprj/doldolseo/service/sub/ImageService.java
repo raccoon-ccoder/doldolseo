@@ -16,8 +16,8 @@ public class ImageService {
 
     private final Path rootLocation;
 
-    public ImageService(String uploadTempPath) {
-        this.rootLocation = Paths.get(uploadTempPath + "/temp");
+    public ImageService(String uploadPath) {
+        this.rootLocation = Paths.get(uploadPath + "/review/temp");
         System.out.println(rootLocation.toString());
     }
 

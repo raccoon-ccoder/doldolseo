@@ -113,7 +113,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/crewL">
                         <span onmouseover="this.style.color='#FF8000';"
                               onmouseout="this.style.color='white';">CREW</span>
                 </a>
