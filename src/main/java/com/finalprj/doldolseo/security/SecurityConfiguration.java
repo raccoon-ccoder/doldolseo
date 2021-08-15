@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.devtools.restart.FailureHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +27,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
@@ -35,8 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
    @Override
     protected void configure(HttpSecurity security) throws Exception {
        // antMatchers() 안에 비회원도 접속할 수 있는 url 적으심 됩니다
-        security.authorizeRequests().antMatchers("/main","/memberL","/memberJ","/memberP","/memberR","/member/**","/register" ,"/areaD","/areaL","/review").permitAll()
-                .anyRequest().authenticated()   // 위에 적은 url 제외하고 나머지 url은 비회원은 접근 금지
+        security.authorizeRequests().antMatchers("/main","/memberL","/memberJ","/memberP","/memberR","/member/**","/register" ,"/areaD","/areaL").permitAll()
+                .antMatchers(HttpMethod.GET,"/review").permitAll()
+                .antMatchers(HttpMethod.GET,"/review/{reviewNo}").permitAll()
+                .antMatchers(HttpMethod.GET,"/review/{reviewNo}/comment").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/memberL")
@@ -71,5 +78,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder enc(){
        return new BCryptPasswordEncoder();
+    }
+
+    // 회원정보 수정을 위한 Bean
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

@@ -37,10 +37,6 @@ public class MemberController {
     @Autowired
     private UploadProfileUtil profileUtil;
 
-    // 추가 코드
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @RequestMapping("/register")
     public String register(@RequestParam(value = "memberimg") MultipartFile file, MemberDTO memberDTO, Model model, HttpServletRequest request) throws Exception{
         String profileImg = "sample.png";
@@ -48,13 +44,7 @@ public class MemberController {
             profileImg = profileUtil.uploadProfile(file, memberDTO);
         }
         memberDTO.setMember_img(profileImg);
-        // 추가 코드
-        String rawPassword = memberDTO.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        memberDTO.setPassword(encPassword);
-        // //추가 코드
-
-        MemberDTO member = service.join(memberDTO);
+        MemberDTO member = service.save(memberDTO);
 
         request.setAttribute("id",member.getId());
         request.setAttribute("nickname",member.getNickname());
