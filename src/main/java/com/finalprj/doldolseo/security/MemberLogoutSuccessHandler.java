@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MemberLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        if(authentication != null && authentication.getDetails() != null){
+        if(authentication != null){
             try{
                 request.getSession().invalidate();
                 request.setAttribute("result", "true");

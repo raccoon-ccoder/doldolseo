@@ -7,6 +7,7 @@ import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,14 +19,14 @@ import java.util.List;
  */
 
 public interface MemberService {
-    MemberDTO join(MemberDTO memberDTO) throws IOException;
-    MemberDTO update(MemberDTO memberDTO) throws IOException;
+    MemberDTO save(MemberDTO memberDTO) throws IOException;
     MemberDTO selectMember(String id);
     Page<ReviewDTO> getReviewListByUser(String id, Pageable pageable);
     Page<ReviewCommentDTO> getReviewCommentListByUser(String id, Pageable pageable);
     List<ReviewDTO> getReviewListByMember(String id);
     void deleteCommentListByUser(String id);
     void deleteCommentListByReviewNo(Long reviewNo);
+    void updateMemberSecurity(MemberDTO dto, HttpSession session);
 
     int deleteMember(String id);
 

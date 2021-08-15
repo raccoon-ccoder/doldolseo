@@ -118,12 +118,12 @@
 
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--move">비밀번호</span>
-                       <input type="password" name="password" class="mypageD-infocontainer__input--big" value="${member.password}">
+                       <input type="password" name="password" class="mypageD-infocontainer__input--big">
                    </div>
 
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--move" id="mypageD-infobox__span--move">비밀번호 확인</span>
-                       <input type="password" class="mypageD-infocontainer__input--big" name="password2" value="${member.password}">
+                       <input type="password" class="mypageD-infocontainer__input--big" name="password2">
                    </div>
 
                    <div class="mypageD-infobox">
@@ -151,6 +151,7 @@
                    </div>
 
                    <div class="mypageD-buttonbox">
+                       <input type="hidden" name="crleader" value="${member.crleader}">
                        <input type="submit" value="수정 완료" class="mypageD-buttonbox__button--blue">
                        <input type="button" value="회원 탈퇴" class="mypageD-buttonbox__button--gray">
                    </div>
