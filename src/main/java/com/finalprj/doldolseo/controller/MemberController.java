@@ -7,6 +7,7 @@ import com.finalprj.doldolseo.service.MemberService;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,10 +44,10 @@ public class MemberController {
             profileImg = profileUtil.uploadProfile(file, memberDTO);
         }
         memberDTO.setMember_img(profileImg);
-        MemberDTO member = service.join(memberDTO);
+        MemberDTO member = service.save(memberDTO);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("member",member);
+        request.setAttribute("id",member.getId());
+        request.setAttribute("nickname",member.getNickname());
         return "/member/memberJoinResult";
     }
 

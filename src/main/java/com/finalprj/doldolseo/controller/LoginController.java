@@ -36,26 +36,26 @@ public class LoginController {
         return "/member/memberLogin";
     }
 
-    @RequestMapping("/login")
-    public String loginUser(MemberDTO dto, HttpServletRequest request) throws Exception{
-        String url = "";
-        HttpSession session = request.getSession();
-        MemberDTO member = service.login(dto);
-        if(member != null){
-            session.setAttribute("member",member);
-            url = "/main";
-        }else{
-            request.setAttribute("result","false");
-            url = "/member/memberLogin";
-        }
-        return url;
-    }
-
-    @RequestMapping("/logout")
-    public String logoutUser(HttpServletRequest request) throws Exception{
-        HttpSession session = request.getSession();
-        session.invalidate();
-        request.setAttribute("result","true");
-        return "/main";
-    }
+//    @RequestMapping("/login")
+//    public String loginUser(MemberDTO dto, HttpServletRequest request) throws Exception{
+//        String url = "";
+//        HttpSession session = request.getSession();
+//        MemberDTO member = service.login(dto);
+//        if(member != null){
+//            session.setAttribute("member",member);
+//            url = "/main";
+//        }else{
+//            request.setAttribute("result","false");
+//            url = "/member/memberLogin";
+//        }
+//        return url;
+//    }
+//
+//    @RequestMapping("/logout")
+//    public String logoutUser(HttpServletRequest request) throws Exception{
+//        HttpSession session = request.getSession();
+//        session.invalidate();
+//        request.setAttribute("result","true");
+//        return "/main";
+//    }
 }

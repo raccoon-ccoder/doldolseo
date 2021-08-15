@@ -32,6 +32,21 @@
             if(img == null){
                 $('#my_img').attr("src","${pageContext.request.contextPath}/_image/profile/sample.png");
             }
+
+            $(".mypageD-buttonbox__button--gray").click(function (){
+                var leader = '<c:out value="${member.crleader}" />';
+
+                if(leader == "y"){
+                    alert("크루장인 경우, 탈퇴가 불가합니다. 크루장을 위임해주시길 바랍니다.");
+                }else{
+                    if(!confirm("탈퇴하시면 복구할 수 없습니다. 정말로 탈퇴하시겠습니까?")){
+                        return false;
+                    }else{
+                        window.location.href='/removeMember?id=${member.id}';
+                    }
+                }
+            });
+
         });
     </script>
     <style>
@@ -103,12 +118,12 @@
 
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--move">비밀번호</span>
-                       <input type="password" name="password" class="mypageD-infocontainer__input--big" value="${member.password}">
+                       <input type="password" name="password" class="mypageD-infocontainer__input--big">
                    </div>
 
                    <div class="mypageD-infobox">
                        <span class="mypageD-infobox__span--move" id="mypageD-infobox__span--move">비밀번호 확인</span>
-                       <input type="password" class="mypageD-infocontainer__input--big" name="password2" value="${member.password}">
+                       <input type="password" class="mypageD-infocontainer__input--big" name="password2">
                    </div>
 
                    <div class="mypageD-infobox">
@@ -136,7 +151,9 @@
                    </div>
 
                    <div class="mypageD-buttonbox">
+                       <input type="hidden" name="crleader" value="${member.crleader}">
                        <input type="submit" value="수정 완료" class="mypageD-buttonbox__button--blue">
+                       <input type="button" value="회원 탈퇴" class="mypageD-buttonbox__button--gray">
                    </div>
 
                </div>
@@ -182,7 +199,7 @@
 
                     <c:forEach items="${reviewList.content}" var="reviewList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
-                            <td class="mypageD-boardbox__td--white">${status.count}</td>
+                            <td class="mypageD-boardbox__td--white">${reviewList.reviewNo}</td>
                             <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}" class="mypageD-boardbox__a--white">${reviewList.title}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                     <fmt:parseDate value="${reviewList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
@@ -230,12 +247,29 @@
             <div class="mypageD-boardbox">
                 <table class="mypageD-boardbox__table--big">
                     <tr class="mypageD-boardbox__tr--blue">
-                        <th class="mypageD-boardbox__td--blue">번호</th>
-                        <th class="mypageD-boardbox__td--blue">내용</th>
-                        <th class="mypageD-boardbox__td--blue">날짜</th>
+                        <th class="mypageD-boardbox__td--num">번호</th>
+                        <th class="mypageD-boardbox__td--title">제목</th>
+                        <th class="mypageD-boardbox__td--date">날짜</th>
                     </tr>
 
-                    <!-- 백엔드 작업 후 코드 수정 -->
+                    <c:if test="${commentList.hasContent() == false}">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td colspan="3" class="mypageD-boardbox__td--none">작성한 댓글이 존재하지 않습니다.</td>
+                        </tr>
+                    </c:if>
+
+                    <c:forEach items="${commentList.content}" var="commentList" varStatus="status">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td class="mypageD-boardbox__td--white">${commentList.commentNo}</td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.reviewNo}" class="mypageD-boardbox__a--white">${commentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--white">
+                                <fmt:parseDate value="${commentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
+                                <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                    <!-- 백엔드 작업 후 코드 수정
                     <tr class="mypageD-boardbox__tr--white">
                         <td class="mypageD-boardbox__td--white">1</td>
                         <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
@@ -265,8 +299,38 @@
                         <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
                         <td class="mypageD-boardbox__td--white">2021-07-25</td>
                     </tr>
+                    -->
                 </table>
 
+                <ul class="mypageD-boardpage">
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
+                    </li>
+
+                    <c:if test="${c_startBlockPage ne 1}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${c_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="${c_startBlockPage}" end="${c_endBlockPage}" var="status">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${c_endBlockPage ne commentList.totalPages}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${c_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                        </li>
+                    </c:if>
+
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${commentList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                    </li>
+                </ul>
+
+                <!--
                 <ul class="mypageD-boardpage">
                     <li class="mypageD-boardpage__li--link">
                         <a href="#" class="mypageD-boardpage__a--num">&laquo;</a>
@@ -295,6 +359,7 @@
                         <a href="#" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
+                -->
             </div>
         </div>
         <!-- // 내가 쓴 댓글 -->
