@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -75,7 +77,7 @@ public class CrewMemberController {
 
     //크루장 위임
     @RequestMapping(value = "/crewJ/give", method = RequestMethod.POST)
-    public String giveMaster(@RequestBody CrewMemberDTO dto) throws IOException {
+    public String giveMaster(@RequestBody CrewMemberDTO dto, HttpServletRequest request) throws IOException {
 
 
         CrewMemberDTO crewMemberDTO = crewMemberService.getCrewMember(dto.getRegNo());
@@ -88,7 +90,7 @@ public class CrewMemberController {
             System.out.println("해당 멤버는 이미 크루장 입니다.");
         } else {
             memberDTO.setCrleader('y');
-            memberService.update(memberDTO);
+            memberService.updateMemberSecurity(memberDTO, request.getSession());
 
             crewService.updateCrewMaster(crewMemberDTO.getCrewNo(), crewMemberDTO.getId());
         }
