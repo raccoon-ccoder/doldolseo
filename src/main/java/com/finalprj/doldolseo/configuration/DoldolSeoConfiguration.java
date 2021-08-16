@@ -2,14 +2,10 @@ package com.finalprj.doldolseo.configuration;
 
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
-import javassist.bytecode.stackmap.TypeData;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /*
  * Configuration 클래스
@@ -52,5 +48,5 @@ public class DoldolSeoConfiguration {
 
     // @Author 백정연, Date : 2021/08/11
     @Bean
-    public UploadProfileUtil uploadProfileUtil() {return  new UploadProfileUtil();}
+    public UploadProfileUtil uploadProfileUtil() {return  new UploadProfileUtil(uploadPath());}
 }
