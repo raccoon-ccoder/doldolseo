@@ -42,7 +42,7 @@
                     if(!confirm("탈퇴하시면 복구할 수 없습니다. 정말로 탈퇴하시겠습니까?")){
                         return false;
                     }else{
-                        window.location.href='/removeMember?id=${member.id}';
+                        window.location.href='${pageContext.request.contextPath}/removeMember?id=${member.id}';
                     }
                 }
             });
@@ -89,7 +89,7 @@
                         <span class="mypageD-imgbox__span--move">사진 (선택)</span>
                         <img id="my_img" class="mypageD-imgbox__img--small" src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
-                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg_i(event);">
+                        <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg(event);">
                     </div>
 
                     <div class="mypageD-infobox">

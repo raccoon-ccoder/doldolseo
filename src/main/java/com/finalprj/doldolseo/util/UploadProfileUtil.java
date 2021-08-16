@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /*
  * 멤버 프로필 관련 클래스
@@ -15,14 +17,15 @@ import java.io.IOException;
 
 public class UploadProfileUtil {
 
-    // 파일 저장 절대 경로 (로컬)
-    //private String realPath = System.getProperty("user.dir") + "/src/main/resources/static/_image/profile";
+    private final Path rootLocation;
 
-    //파일 저장 절대 경로 (톰캣)
-    private String realPath = "C:/tomcat/webapps/doldolseo/WEB-INF/classes/static/_image/profile";
+    public UploadProfileUtil(String uploadPath) {
+        this.rootLocation = Paths.get(uploadPath);
+    }
+
 
     public void makeDirectory(){
-        String path = realPath;
+        String path = rootLocation.toString() + "/profile";
         File Directory = new File(path);
         if(!Directory.exists()){
             Directory.mkdirs();
@@ -33,7 +36,7 @@ public class UploadProfileUtil {
         makeDirectory();
         String file = profile.getOriginalFilename();
         String fileName = dto.getId() + "." + file.substring(file.lastIndexOf(".") + 1);
-        String rootPath = realPath;
+        String rootPath = rootLocation.toString() + "/profile";
         String filePath = rootPath + "/" + fileName;
         File dest = new File(filePath);
         profile.transferTo(dest);
@@ -43,7 +46,7 @@ public class UploadProfileUtil {
     public void deleteProfile(MemberDTO dto){
         makeDirectory();
         String fileName = dto.getMember_img();
-        String rootPath = realPath;
+        String rootPath = rootLocation.toString() + "/profile";
         String filePath = rootPath + "/" +  fileName;
         File file = new File(filePath);
         file.delete();
