@@ -2,6 +2,7 @@ package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ public interface MemberService {
     void deleteCommentListByUser(String id);
     void deleteCommentListByReviewNo(Long reviewNo);
     void updateMemberSecurity(MemberDTO dto, HttpSession session);
+    List<CrewDTO> getCrewList(String id);
 
     int deleteMember(String id);
 

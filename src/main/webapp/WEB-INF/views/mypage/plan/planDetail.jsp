@@ -313,9 +313,9 @@
 
                     <div class="planD-popdetailbox">
                         <span class="planD-popdetailbox__span--big">여행기간</span>
-                        <input type="date" name="fDate" class="planD-popdetailbox__input--date" value="<fmt:formatDate value="${planner.getFDate()}" pattern="yyyy-MM-dd" />" readonly>
+                        <input type="date" name="fDate" class="planD-popdetailbox__input--date" value="<fmt:formatDate value="${planner.getFDate()}" pattern="yyyy-MM-dd" />">
                         <span class="planD-popdetailbox__span--small">~</span>
-                        <input type="date" name="lDate" class="planD-popdetailbox__input--date" value="<fmt:formatDate value="${planner.getLDate()}" pattern="yyyy-MM-dd" />" readonly>
+                        <input type="date" name="lDate" class="planD-popdetailbox__input--date" value="<fmt:formatDate value="${planner.getLDate()}" pattern="yyyy-MM-dd" />">
                     </div>
 
                     <div class="planD-popdetailbox">

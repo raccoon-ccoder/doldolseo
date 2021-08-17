@@ -113,6 +113,8 @@ public class ReviewController {
 
 
     //후기게시글 삭제
+    //@PreAuthorize("isAuthenticated() and #dto.id == principal.username")
+    // dto 객체 매개변수로 받아와야 할듯
     @DeleteMapping(value = "/review/{reviewNo}")
     public String deleteReview(@PathVariable("reviewNo") Long reviewNo) {
         service.deleteReview(reviewNo);
@@ -121,6 +123,8 @@ public class ReviewController {
     }
 
     //후기게시글 수정 폼
+    //@PreAuthorize("isAuthenticated() and #dto.id == principal.username")
+    // dto 객체 매개변수로 받아와야 할듯
     @GetMapping(value = "/review/{reviewNo}/edit")
     public String getUpdateForm(Model model,
                                 @PathVariable("reviewNo") Long reviewNo) {
@@ -132,6 +136,7 @@ public class ReviewController {
     }
 
     //후기게시글 수정
+    //@PreAuthorize("isAuthenticated() and #dto.id == principal.username")
     @PutMapping(value = "/review/{reviewNo}")
     public String updateReview(@PathVariable("reviewNo") Long reviewNo,
                                ReviewDTO dto,

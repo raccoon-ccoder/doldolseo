@@ -269,37 +269,6 @@
                         </tr>
                     </c:forEach>
 
-                    <!-- 백엔드 작업 후 코드 수정
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
-
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
-
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
-
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
-
-                    <tr class="mypageD-boardbox__tr--white">
-                        <td class="mypageD-boardbox__td--white">1</td>
-                        <td class="mypageD-boardbox__td--white"><a href="#" class="mypageD-boardbox__a--white">로또 당첨 후기</a></td>
-                        <td class="mypageD-boardbox__td--white">2021-07-25</td>
-                    </tr>
-                    -->
                 </table>
 
                 <ul class="mypageD-boardpage">
@@ -330,36 +299,6 @@
                     </li>
                 </ul>
 
-                <!--
-                <ul class="mypageD-boardpage">
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&laquo;</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&lt;</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">1</a>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">2</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">3</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">4</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">5</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&gt;</a>
-                    </li>
-                    <li class="mypageD-boardpage__li--link">
-                        <a href="#" class="mypageD-boardpage__a--num">&raquo;</a>
-                    </li>
-                </ul>
-                -->
             </div>
         </div>
         <!-- // 내가 쓴 댓글 -->

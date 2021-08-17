@@ -1,12 +1,16 @@
 package com.finalprj.doldolseo.service.impl;
 
+import com.finalprj.doldolseo.domain.crew.Crew;
 import com.finalprj.doldolseo.domain.review.Review;
 import com.finalprj.doldolseo.domain.review.ReviewComment;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.repository.MemberRepository;
+import com.finalprj.doldolseo.repository.crew.CrewMemberRepository;
+import com.finalprj.doldolseo.repository.crew.CrewRepository;
 import com.finalprj.doldolseo.repository.review.ReviewCommentRepository;
 import com.finalprj.doldolseo.repository.review.ReviewRepository;
 import com.finalprj.doldolseo.security.SecurityDetails;
@@ -45,6 +49,12 @@ public class MemberServiceImpl implements MemberService {
     private ReviewRepository reviewRepository;
 
     @Autowired
+    private CrewRepository crewRepository;
+
+    @Autowired
+    private CrewMemberRepository crewMemberRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -53,6 +63,12 @@ public class MemberServiceImpl implements MemberService {
     // 추가 코드
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // MemberDTO 객체를 Member 객체로 변환해서 반환해주는 메소드
+    public Member selectMemberEntity(Member entity){
+        Member member = repository.findById(entity.getId()).get();
+        return member;
+    }
 
     // 스프링 시큐리티 세션 변경 처리 메소드
     @Override
@@ -63,6 +79,12 @@ public class MemberServiceImpl implements MemberService {
         Authentication newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, null, updateUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
         session.setAttribute("SPRING_SECURITY_CONTEXT", newAuth);
+    }
+
+    @Override
+    public List<CrewDTO> getCrewList(String id) {
+
+        return null;
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.finalprj.doldolseo.controller.crew;
 
+import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
+import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +32,10 @@ public class CrewController {
 
     @Autowired
     UploadFileUtil uploadFileUtil;
+
+    //추가코드
+    @Autowired
+    MemberServiceImpl memberService;
 
     /* 크루 목록 보기 */
     @RequestMapping("/crewL")
@@ -62,6 +70,12 @@ public class CrewController {
         dto.setAreaList(String.join(",", dto.getAreaListValues()));
 
         dto.setCrewImage(crewImageName);
+
+        // 추가코드
+        Member member = memberService.selectMemberEntity(dto.getMember());
+        dto.setMember(member);
+        // end of 추가코드
+
         crewService.insertCrew(dto);
 
         return "/crew/crewList";

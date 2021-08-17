@@ -15,6 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name="MEMBER_TBL")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

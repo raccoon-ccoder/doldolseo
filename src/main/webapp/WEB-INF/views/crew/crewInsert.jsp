@@ -181,7 +181,7 @@
             </table>
 
             <%-- id --%>
-            <input type="hidden" name="id" value="kki7823">
+            <input type="hidden" name="member.id" value="${member.id}">
             <%-- 저장 버튼 --%>
             <div style="width: 1115px; margin-top: 30px">
                 <button type="button" onclick="checkCrewParam()" class="crew-button" style="position: relative; left: 510px; width: 100px">저장

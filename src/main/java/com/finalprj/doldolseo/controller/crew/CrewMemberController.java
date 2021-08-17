@@ -8,6 +8,7 @@ import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class CrewMemberController {
     @Autowired
     MemberServiceImpl memberService;
 
-
+    // crewDetail -> 크루 가입 버튼 클릭시 팝업창 생성
     @RequestMapping(value = "/crewJ", method = RequestMethod.GET)
     public String getCrewJoinForm(Model model,
                                   @RequestParam Long crewNo) {
@@ -77,6 +78,7 @@ public class CrewMemberController {
     }
 
     //크루장 위임
+    @PreAuthorize("isAuthenticated() and #dto.crew.member.id == principal.username")
     @RequestMapping(value = "/crewJ/give", method = RequestMethod.POST)
     public String giveMaster(@RequestBody CrewMemberDTO dto) throws IOException {
 

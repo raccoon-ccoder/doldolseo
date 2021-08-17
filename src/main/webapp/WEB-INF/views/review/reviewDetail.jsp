@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
 <c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(review.WDate)}"/>
 <!DOCTYPE html>
@@ -190,7 +191,9 @@
                               onfocusin="changeBorderOnFocus()"
                               onfocusout="changeBorderOnFocusOut()"></textarea>
                     <div class="comment__buttonbox">
-                        <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${reviewNo})" class="button--comment">등록</button>
+                        <sec:authorize access="isAuthenticated()">
+                            <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${reviewNo})" class="button--comment">등록</button>
+                        </sec:authorize>
                     </div>
                 </div>
             </form>

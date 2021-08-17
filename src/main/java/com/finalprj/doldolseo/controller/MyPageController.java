@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,14 +67,8 @@ public class MyPageController {
         HttpSession session = request.getSession();
         session.setAttribute("member", updatedUser);
 
-
+        // 스프링 시큐리티 세션 갱신
         service.updateMemberSecurity(updatedUser, session);
-        // 추가 코드 (세션 갱신)
-//        SecurityContextHolder.clearContext();
-//        UserDetails updateUserDetails = new SecurityDetails(updatedUser);
-//        Authentication newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, null, updateUserDetails.getAuthorities());
-//        SecurityContextHolder.getContext().setAuthentication(newAuth);
-//        session.setAttribute("SPRING_SECURITY_CONTEXT", newAuth);
 
         Page<ReviewDTO> reviewList = service.getReviewListByUser(dto.getId(), pageable);
         PagingUtil pagingUtil = new PagingUtil(5, reviewList);
