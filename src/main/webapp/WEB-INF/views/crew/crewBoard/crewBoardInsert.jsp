@@ -234,32 +234,35 @@
                         style="width: 130px; height: 40px; font-size: 23px; background-color: #FF8000">
                     저장
                 </button>
+
+                <script>
+                    function submitCrewBoard() {
+                        $(function () {
+                                let form = $("#cBoardI-form")[0];
+                                let formData = new FormData(form);
+
+                                $j1124.ajax({
+                                    type: 'POST',
+                                    url: '${pageContext.request.contextPath}/crew/board',
+                                    data: formData,
+                                    processData: false,	// data 파라미터 강제 string 변환 방지
+                                    contentType: false,	// application/x-www-form-urlencoded; 방지
+                                    cache: false,
+                                    success: function (data) {
+                                        alert("게시글이 등록 되었습니다.");
+                                        location.replace( '${pageContext.request.contextPath}/crew/board');
+                                    },
+                                    error: function (request, status, error) {
+                                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                                    }
+                                });
+                            }
+                        )
+                    }
+                </script>
             </div>
         </form>
     </section>
-
-    <script>
-        function submitCrewBoard() {
-            var form = $('#cBoardI-form')[0];
-            var formData = new FormData(form);
-
-            $j1124.ajax({
-                type: 'POST',
-                url: '${pageContext.request.contextPath}' + '/crew/board',
-                data: formData,
-                processData: false,	// data 파라미터 강제 string 변환 방지
-                contentType: false,	// application/x-www-form-urlencoded; 방지
-                cache: false,
-                success: function (data) {
-                    alert("게시글이 등록 되었습니다.");
-                    location.replace(${pageContext.request.contextPath} +'/crew/board');
-                },
-                error: function (request, status, error) {
-                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                }
-            });
-        }
-    </script>
 
     <%-- 푸터 --%>
     <footer>

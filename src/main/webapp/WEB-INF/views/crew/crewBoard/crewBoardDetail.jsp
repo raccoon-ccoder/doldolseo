@@ -7,6 +7,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(crewPost.WDate)}"/>
 <!DOCTYPE html>
 <html>
@@ -25,7 +27,7 @@
     </script>
 
     <%-- 댓글 이벤트 처리 --%>
-    <script src="${pageContext.request.contextPath}/_js/comment.js"></script>
+    <script src="${pageContext.request.contextPath}/_js/comment_crew.js"></script>
 
     <script>
         function appearCrewList() {
@@ -70,6 +72,20 @@
             <a href="${pageContext.request.contextPath}/crew/board?cat=쇼핑">쇼핑</a>
             <a href="${pageContext.request.contextPath}/crew/board?cat=문화">문화</a>
             <a href="${pageContext.request.contextPath}/crew/board?cat=자유">자유</a>
+        </div>
+
+        <%-- 글 수정 및 삭제 버튼 --%>
+        <div class="cBoardD-btnbox-edit">
+            <button class="crew-button"
+                    onclick="location.href='${pageContext.request.contextPath}/crew/board/${crewPost.postNo}/edit'"
+                    style="margin-right: 10px;">수정 하기
+            </button>
+
+            <form:form action="${pageContext.request.contextPath}/crew/board/${crewPost.postNo}" method="delete">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="hidden" name="postNo" value="${crewPost.postNo}">
+                <button type="submit" class="crew-button">글 삭제</button>
+            </form:form>
         </div>
 
         <%-- 상세 글 목록  --%>
@@ -126,7 +142,7 @@
             <%-- 글 제목 --%>
             <tr class="common-tbl__item">
                 <td style="position: relative">
-                    <span id="reviewD__title">${crewPost.hit}</span>
+                    <span id="reviewD__title">${crewPost.title}</span>
                     <div id="cBoardD-box--crewWith">
                         <button id="cBoardD-btn-crewWith" onclick="appearCrewList()"><%-- 버튼 클릭시 함께한 크루원 출력 --%>
                             <%-- 함께한 크루원 아이콘 --%>
@@ -141,26 +157,14 @@
                         <%-- 함께한 크루원 리스트 --%>
                         <div id="cBoardD-box-crewMemberList">
                             <%-- 추가된 크루원 --%>
-                            <div class="crew-withMember--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
+                            <c:forEach items="${memberList}" var="memberList">
+                                <div class="crew-withMember--idbox">
+                                    <div class="crew-member--photo">
+                                        <img src="${pageContext.request.contextPath}/_image/profile/${memberList.member_img}"/>
+                                    </div>
+                                    <div style="display: inline-block; position: relative; bottom: 18px">${memberList.nickname}</div>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원1</div>
-                            </div>
-                            <%-- 추가된 크루원 --%>
-                            <div class="crew-withMember--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
-                            </div>
-                            <%-- 추가된 크루원 --%>
-                            <div class="crew-withMember--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원3</div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </td>
@@ -170,7 +174,7 @@
             <tr class="common-tbl__item">
                 <td>
                     <p id="reviewD-content">
-                       ${crewPost.content}
+                        ${crewPost.content}
                     </p>
                 </td>
             </tr>
@@ -185,110 +189,40 @@
 
         </div>
         <hr class="line--horizon" style="width:1000px ">
+
+        <%-- RestController 에서 댓글 가져오기 --%>
+        <script>
+            $j1124.ajax({
+                url: '${pageContext.request.contextPath}/crew/board/${postNo}/comment',
+                dataType: 'json',
+                type: 'GET',
+                success: function (data) {
+                    appendComment(data, '${pageContext.request.contextPath}', 'sample2.png');
+                    enableEditMode();
+                }
+            });
+        </script>
+
         <%-- 댓글 보기 --%>
         <table id="cBoardD-tablelayout">
-
-            <%------ 댓글작업 : 1.반복처리, 2.첨삭버튼 로그인 시에만 활성화  ------%>
-            <%-- 댓글 1개 : 추후 반복 처리--%>
-            <tr class="comment-tablelayout">
-                <td style="padding: 10px 10px 10px 10px">
-                    <%-- 댓글 - 프로필 박스 : 회원사진, 닉네임, 작성날짜--%>
-                    <div class="profilebox" style="margin-top: 7px">
-                        <%-- 회원사진 --%>
-                        <div class="profilebox--photo">
-                            <img src="_image/sample2.png">
-                        </div>
-                        <%-- 닉네임 + 작성날짜 컨테이너 --%>
-                        <div class="profilebox--container--sub">
-                            <%-- 닉네임 --%>
-                            <div class="profilebox--nickname">
-                                만취돌고래
-                            </div>
-                            <%-- 작성날짜 --%>
-                            <div class="profilebox--wdate">
-                                2020-07-21
-                            </div>
-                        </div>
-                    </div>
-                    <%-- 댓글 내용 --%>
-                    <div class="commentbox">
-                        <%-- 첨삭 버튼 : 누르면 활성화 --%>
-                        <button class="comment__deleteUpdateButton"> <<</button>
-                        <%-- 수정 삭제 버튼--%>
-                        <div class="comment__deleteUpdateBox">
-                            <div class="comment__deleteUpdatelist">
-                                <button class="comment__updateButton">수정</button>
-                            </div>
-                            <div class="comment__deleteUpdatelist">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        <textarea class="comment__textarea" readonly="readonly">눈을 맞춰~~</textarea>
-                        <%-- 댓글수정 서브버튼 : 완료/취소--%>
-                        <div class="comment-editSubbox">
-                            <button class="comment-editSub__btn--ok">완료</button>
-                            <button class="comment-editSub__btn--cancle">취소</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <%-- 댓글 1개 --%>
-            <%-- 댓글 1개 : 추후 반복 처리--%>
-            <tr class="comment-tablelayout">
-                <td style="padding: 10px 10px 10px 10px;">
-                    <%-- 댓글 - 프로필 박스 : 회원사진, 닉네임, 작성날짜--%>
-                    <div class="profilebox" style="margin-top: 7px">
-                        <%-- 회원사진 --%>
-                        <div class="profilebox--photo">
-                            <img src="_image/sample3.png">
-                        </div>
-                        <%-- 닉네임 + 작성날짜 컨테이너 --%>
-                        <div class="profilebox--container--sub">
-                            <%-- 닉네임 --%>
-                            <div class="profilebox--nickname">
-                                3당근주세요
-                            </div>
-                            <%-- 작성날짜 --%>
-                            <div class="profilebox--wdate">
-                                2020-07-21
-                            </div>
-                        </div>
-                    </div>
-                    <%-- 댓글 내용 --%>
-                    <div class="commentbox">
-                        <%-- 첨삭 버튼 : 누르면 활성화 --%>
-                        <button class="comment__deleteUpdateButton"> <<</button>
-                        <%-- 수정 삭제 버튼--%>
-                        <div class="comment__deleteUpdateBox">
-                            <div class="comment__deleteUpdatelist">
-                                <button class="comment__updateButton">수정</button>
-                            </div>
-                            <div class="comment__deleteUpdatelist">
-                                <button>삭제</button>
-                            </div>
-                        </div>
-                        <textarea class="comment__textarea" readonly="readonly">술잔을 채워~</textarea>
-                        <%-- 댓글수정 서브버튼 : 완료/취소--%>
-                        <div class="comment-editSubbox">
-                            <button class="comment-editSub__btn--ok">완료</button>
-                            <button class="comment-editSub__btn--cancle">취소</button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <%-- 댓글 1개 --%>
+            <%-- 댓글 목록 출력 --%>
         </table>
 
         <%-- 댓글 입력 폼 --%>
-        <%--                        <form action="#" method="post">--%>
-        <div class="comment__input" id="reviewD-comment__input">
-                <textarea id="comment__input__textarea" placeholder="댓글을 입력해 보세요" onfocusin="changeBorderOnFocus()"
+        <form id="cBoardD-commentForm" method="post">
+            <div class="comment__input" id="cBoardD-comment__input">
+                <input type="hidden" name="member.id" value="kki7823">
+                <input type="hidden" name="crewPost.postNo" value=${postNo}>
+                <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
+                          onfocusin="changeBorderOnFocus()"
                           onfocusout="changeBorderOnFocusOut()"></textarea>
-            <div class="comment__buttonbox">
-                <button type="submit" class="button--comment">등록</button>
+                <div class="comment__buttonbox">
+                    <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${postNo})"
+                            class="button--comment">등록
+                    </button>
+                </div>
             </div>
-        </div>
-        <%--            </form>--%>
+        </form>
     </section>
 
 
