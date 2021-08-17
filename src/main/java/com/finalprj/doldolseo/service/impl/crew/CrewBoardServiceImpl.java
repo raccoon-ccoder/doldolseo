@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -64,4 +65,20 @@ public class CrewBoardServiceImpl {
 
         return modelMapper.map(post, CrewPostDTO.class);
     }
+
+    public void deletePost(Long postNo) {
+        repository.deleteById(postNo);
+        System.out.println(postNo + "번 게시글 삭제");
+    }
+
+    @Transactional
+    public void updatePost(Long postNo, CrewPostDTO dto){
+        CrewPost post = repository.findByPostNo(postNo);
+        post.setTitle(dto.getTitle());
+        post.setContent(dto.getContent());
+        post.setUploadImg(dto.getUploadImg());
+        post.setCategory(dto.getCategory());
+        //멤버 변경사항
+    }
+
 }

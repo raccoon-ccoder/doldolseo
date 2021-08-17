@@ -83,7 +83,7 @@ public class UploadFileUtil {
         }
     }
 
-    //이미지폴더 이미지들 temp로 이동
+    //이미지폴더 이미지들 temp로 이동(후기)
     public void moveToTemp(Long reviewNo) {
         File imageDir = new File(rootLocation.toString() + "/review/" + reviewNo);
 
@@ -104,6 +104,32 @@ public class UploadFileUtil {
 
                     Path src = Paths.get(rootLocation.toString() + "/review/" + reviewNo + "/" + file.getName());
                     Path dst = Paths.get(rootLocation.toString() + "/review/temp/" + file.getName());
+                    try {
+
+                        Files.move(src, dst, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println("temp로 파일 이동");
+        }
+    }
+
+    //이미지폴더 이미지들 temp로 이동 (크루)
+    public void moveToTempCrew(Long postNo) {
+        File imageDir = new File(rootLocation.toString() + "/crew/board/" + postNo);
+
+        if (imageDir.exists()) {
+
+            File[] files = imageDir.listFiles();
+
+            //Temp로 해당 파일 이동
+            if (files != null) {
+                for (File file : files) {
+
+                    Path src = Paths.get(rootLocation.toString() + "/crew/board/" + postNo + "/" + file.getName());
+                    Path dst = Paths.get(rootLocation.toString() + "/crew/board//temp/" + file.getName());
                     try {
 
                         Files.move(src, dst, StandardCopyOption.REPLACE_EXISTING);
@@ -140,6 +166,34 @@ public class UploadFileUtil {
             System.out.println(reviewNo + "번 이미지 디렉토리 삭제 됨");
         } catch (IOException e) {
             System.out.println(reviewNo + "번 이미지 디렉토리 삭제 실패");
+            e.printStackTrace();
+        }
+    }
+
+    //크루 활동글 삭제시 이미지삭제
+    public void deleteCrewImages(Long postNo) {
+
+        Path path = Paths.get(rootLocation.toString() + "/crew/board/" + postNo);
+        File imageDir = new File(path.toString());
+
+        if (imageDir.exists()) {
+            File[] files = imageDir.listFiles();
+
+            if (files != null) {
+                for (int i = 0; i < files.length; i++) {
+                    boolean isDeleted = files[i].delete();
+                    if (isDeleted) {
+                        System.out.println(i + "번 파일 삭제 성공");
+                    }
+                }
+            }
+        }
+
+        try {
+            Files.delete(path);
+            System.out.println(postNo + "번 이미지 디렉토리 삭제 됨");
+        } catch (IOException e) {
+            System.out.println(postNo + "번 이미지 디렉토리 삭제 실패");
             e.printStackTrace();
         }
     }

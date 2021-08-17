@@ -26,10 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -87,7 +84,18 @@ public class CrewBoardController {
             crewPost.setContent(content.replace("temp", "" + crewPost.getPostNo()));
         }
 
+        //멤버 리스트 전달객체
+        List<Member> memberList = new ArrayList<>();
+        String[] idList = crewPost.getMemberList().split(",");
+
+        for (int i = 0; i < idList.length; i++) {
+            MemberDTO memberDTO = memberService.selectMember(idList[i]);
+            Member member = memberService.dtoToEntity(memberDTO);
+            memberList.add(member);
+        }
+
         model.addAttribute("crewPost", crewPost);
+        model.addAttribute("memberList", memberList);
 
         return "/crew/crewBoard/crewBoardDetail";
     }
@@ -128,9 +136,9 @@ public class CrewBoardController {
         Member member = memberService.dtoToEntity(memberDTO);
 
         Crew crew = modelMapper.map(crewDTO, Crew.class);
-        String memberList = Arrays.stream(memberName).map(s -> s = s.split("/")[1].replace("\"","")).collect(Collectors.joining(","));
+        String memberList = Arrays.stream(memberName).map(s -> s = s.split("/")[1].replace("\"", "")).collect(Collectors.joining(","));
 
-        CrewPostDTO post = crewBoardService.insertPost(dto,crew,member,memberList);
+        CrewPostDTO post = crewBoardService.insertPost(dto, crew, member, memberList);
         if (post.getUploadImg() != null) {
             fileUtil.moveImagesCrew(post.getPostNo(), post.getUploadImg());
         }
@@ -141,20 +149,41 @@ public class CrewBoardController {
 
     //크루활동게사글 삭제
     @DeleteMapping("/crew/board/{postNo}")
-    public void crewBoardDelete(@PathVariable("postNo") Long boardNo) throws Exception {
+    public String crewBoardDelete(@PathVariable("postNo") Long postNo) {
+        crewBoardService.deletePost(postNo);
+        fileUtil.deleteCrewImages(postNo);
+
+        return "redirect:/crew/board";
     }
 
     //크루활동게사글 수정 폼
     @GetMapping("/crew/board/{postNo}/edit")
-    public String crewBoardUpdateForm(@PathVariable("postNo") String boardNo) throws Exception {
+    public String crewBoardUpdateForm(Model model,
+                                      @PathVariable("postNo") Long postNo) {
+        CrewPostDTO dto = crewBoardService.getCrewPost(postNo);
+        fileUtil.moveToTempCrew(postNo);
+
+        model.addAttribute("crewPost", dto);
         return "/crew/crewBoard/crewBoardUpdate";
     }
 
 
     //크루활동게사글 수정
-    @PutMapping("/crew/board/{boardNo}/")
-    public void crewBoardUpdate(@PathVariable("boardNo") String boardNo) throws Exception {
+    @PutMapping("/crew/board/{postNo}")
+    public String crewBoardUpdate(@PathVariable("postNo") Long postNo,
+                                  CrewPostDTO dto,
+                                  @RequestParam(required = false) String[] uploadImgs) {
 
+        if (uploadImgs != null) {
+            //String배열 문자열 치환 후 문자열로 변경
+            dto.setUploadImg(dto.getUploadImg() + "," + Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(",")));
+        }
+
+        crewBoardService.updatePost(postNo, dto);
+        fileUtil.moveImagesCrew(postNo, dto.getUploadImg());
+
+        System.out.println(postNo + "번 게시글 수정 완료");
+        return "redirect:/crew/board";
     }
 }
 

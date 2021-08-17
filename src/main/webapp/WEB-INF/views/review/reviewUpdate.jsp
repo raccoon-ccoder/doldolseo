@@ -29,7 +29,7 @@
     <script>
         <%-- select box 지역 선택 --%>
         $(function () {
-            $('#reviewU-select--area').val(2).prop("selected", true);
+            $('#reviewU-select--area').val(${review.areaNo}).prop("selected", true);
         });
     </script>
 </head>
