@@ -1,12 +1,64 @@
 package com.finalprj.doldolseo.service.impl.crew;
 
+import com.finalprj.doldolseo.domain.crew.Crew;
+import com.finalprj.doldolseo.domain.crew.CrewPost;
+import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
 import com.finalprj.doldolseo.repository.crew.CrewBoardRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class CrewBoardServiceImpl {
 
     @Autowired
     CrewBoardRepository repository;
+
+    @Autowired
+    ModelMapper modelMapper;
+
+    //크루활동 게시글 전체
+    public Page<CrewPostDTO> getCrewPosts(Pageable pageable) {
+        Page<CrewPost> crewPostsEntity = repository.findAll(pageable);
+        System.out.println(crewPostsEntity.getContent().get(1).getContent());
+        Page<CrewPostDTO> crewPosts = modelMapper.map(crewPostsEntity, new TypeToken<Page<CrewPostDTO>>() {
+        }.getType());
+
+        return crewPosts;
+    }
+
+    //크루활동 게시글 카테고리 조회
+    public Page<CrewPostDTO> getCrewPostsByCat(String category, Pageable pageable) {
+        Page<CrewPost> crewPostsEntity = repository.findAllByCategory(category, pageable);
+        Page<CrewPostDTO> crewPosts = modelMapper.map(crewPostsEntity, new TypeToken<Page<CrewPostDTO>>() {
+        }.getType());
+
+        return crewPosts;
+    }
+
+    //크루 게시글 조회
+    public CrewPostDTO getCrewPost(Long postNo) {
+        CrewPost crewPostEntity = repository.findByPostNo(postNo);
+        CrewPostDTO dto = modelMapper.map(crewPostEntity, CrewPostDTO.class);
+
+        return dto;
+    }
+
+    //크루게시글 등록
+    public CrewPostDTO insertPost(CrewPostDTO dto, Crew crew){
+        dto.setHit(1);
+        dto.setWDate(LocalDateTime.now());
+        dto.setCrew(crew);
+
+        CrewPost crewPostEntity = modelMapper.map(dto, CrewPost.class);
+        System.out.println(crewPostEntity);
+        CrewPost post = repository.save(crewPostEntity);
+
+        return modelMapper.map(post, CrewPostDTO.class);
+    }
 }

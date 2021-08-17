@@ -61,6 +61,28 @@ public class UploadFileUtil {
         }
     }
 
+    //temp 이미지들 후기글 이미지 폴더생성후 이동
+    public void moveImagesCrew(Long postNo, String uploadImg) {
+
+        String[] uploadImgs = uploadImg.split(",");
+
+        for (int i = 0; i < uploadImgs.length; i++) {
+            Path src = Paths.get(rootLocation.toString() + "/crew/board/temp/" + uploadImgs[i]);
+            Path dst = Paths.get(rootLocation.toString() + "crew/board/" + postNo + "/" + uploadImgs[i]);
+
+            File noDirectory = new File(rootLocation.toString() + "/review/" + postNo);
+            if (!noDirectory.exists()) {
+                noDirectory.mkdirs();
+            }
+            try {
+
+                Files.move(src, dst, StandardCopyOption.REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //이미지폴더 이미지들 temp로 이동
     public void moveToTemp(Long reviewNo) {
         File imageDir = new File(rootLocation.toString() + "/review/" + reviewNo);

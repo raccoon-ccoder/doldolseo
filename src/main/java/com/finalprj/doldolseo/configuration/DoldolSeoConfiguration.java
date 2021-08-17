@@ -15,7 +15,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
  */
 
 @Configuration
-public class DoldolSeoConfiguration {
+public class    DoldolSeoConfiguration {
 
     //Entity-DTO 간 변환
     @Bean

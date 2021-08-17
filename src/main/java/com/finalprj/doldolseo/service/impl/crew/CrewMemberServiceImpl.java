@@ -44,7 +44,7 @@ public class CrewMemberServiceImpl {
 
     //크루번호로 크루가입자 명단 조회
     public List<CrewMemberDTO> getCrewMembers(Long crewNo) {
-        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewNoAndState(crewNo,true);
+        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo,true);
         List<CrewMemberDTO> crewMember = modelMapper.map(crewMembersEntity, new TypeToken<List<CrewMemberDTO>>() {
         }.getType());
 
@@ -53,7 +53,7 @@ public class CrewMemberServiceImpl {
 
     //크루번호로 크루가입대기자 명단 조회
     public List<CrewMemberDTO> getWatingMember(Long crewNo) {
-        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewNoAndState(crewNo,false);
+        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo,false);
         List<CrewMemberDTO> WatingMember = modelMapper.map(crewMembersEntity, new TypeToken<List<CrewMemberDTO>>() {
         }.getType());
 
@@ -62,7 +62,7 @@ public class CrewMemberServiceImpl {
 
     //크루번호, 크루원id로 해당 크루 가입여부 확인
     public Boolean hasThisCrewMember(Long crewNo, String id) {
-        return crewMemberRepository.existsByCrewNoAndId(crewNo, id);
+        return crewMemberRepository.existsByCrewCrewNoAndMemberId(crewNo, id);
     }
 
     //크루 가입 승인
@@ -75,6 +75,16 @@ public class CrewMemberServiceImpl {
     //크루 가입 거절 및 회원 강퇴
     public void deleteCrew(Long regNo){
         crewMemberRepository.deleteById(regNo);
+    }
+
+    //회원id로 가입된 크루 명단 조회
+    public List<CrewMemberDTO> getMyCrewList(String id){
+
+        List<CrewMember> crewMembers = crewMemberRepository.findAllByMemberId(id);
+        List<CrewMemberDTO> crewMembersDTO = modelMapper.map(crewMembers, new TypeToken<List<CrewMemberDTO>>() {
+        }.getType());
+
+        return crewMembersDTO;
     }
 
 }

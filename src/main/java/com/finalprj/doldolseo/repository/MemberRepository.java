@@ -20,4 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     Optional<Member> findById(String id);
     @Transactional
     void deleteById(String id);
+
+
 }

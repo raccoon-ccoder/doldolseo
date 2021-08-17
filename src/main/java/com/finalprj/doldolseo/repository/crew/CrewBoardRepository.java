@@ -1,9 +1,20 @@
 package com.finalprj.doldolseo.repository.crew;
 
-import com.finalprj.doldolseo.domain.crew.CrewBoard;
+import com.finalprj.doldolseo.domain.crew.CrewPost;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
-public interface CrewBoardRepository extends JpaRepository<CrewBoard, Long> {
+public interface CrewBoardRepository extends JpaRepository<CrewPost, Long> {
+
+    //카테고리로 게시글 검색
+    Page<CrewPost> findAllByCategory(String category, Pageable pageable);
+
+    CrewPost findByPostNo(Long postNo);
 }
+

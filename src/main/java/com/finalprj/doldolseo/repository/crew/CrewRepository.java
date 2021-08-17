@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.repository.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,6 @@ public interface CrewRepository extends JpaRepository<Crew, Long> {
     Crew findByCrewNo(Long crewNo);
 
     /* 크루번호, 아이디로 해당 ID가 크루장인지 조회*/
-    boolean existsByCrewNoAndId(Long crewNo, String id);
+    boolean existsByCrewNoAndMemberId(Long crewNo, String id);
 
 }

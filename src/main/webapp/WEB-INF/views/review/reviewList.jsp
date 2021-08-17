@@ -4,8 +4,6 @@
 페이지설명: 후기게시판 글목록
 페이지 생성일: 21/07/20
 -->
-<%@ page import="com.finalprj.doldolseo.util.CodeMapFactory" %>
-<%@ page import="java.util.Map" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>

@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.domain;
 
+import com.finalprj.doldolseo.domain.crew.Crew;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;

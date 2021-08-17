@@ -1,8 +1,12 @@
 package com.finalprj.doldolseo.service.impl.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
+import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
+import com.finalprj.doldolseo.repository.MemberRepository;
 import com.finalprj.doldolseo.repository.crew.CrewRepository;
+import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,13 +87,10 @@ public class CrewServiceImpl {
 
     }
 
-    public boolean isCrewLeader(Long crewNo, String id) {
-        return repository.existsByCrewNoAndId(crewNo, id);
-    }
-
     @Transactional
-    public void updateCrewMaster(Long crewNo, String id) {
+    public void updateCrewMaster(Long crewNo, Member member) {
         Crew crew = repository.findByCrewNo(crewNo);
-        crew.setId(id);
+        System.out.println("멤버:"+member.toString());
+        crew.setMember(member);
     }
 }

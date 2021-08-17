@@ -31,8 +31,8 @@
     <section class="crew-mainContainer">
         <%-- 크루 네비게이션 : 공통 --%>
         <nav class="crew-navi">
-            <span class="crew-navi__btn">크루활동</span>
-            <span class="crew-navi__btn">크루목록</span>
+            <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crew/board">크루활동</a></span>
+            <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crewL">크루목록</a></span>
             <button id="crew-navi__btn--mycrew" class="crew-button">My Crew</button>
         </nav>
 
@@ -116,7 +116,7 @@
                     </span>
                     </div>
                     <div class="crew-crewProfile__master">
-                        <span class="crew-label--crewmaster">크루장</span>&nbsp;${crews.id}
+                        <span class="crew-label--crewmaster">크루장</span>&nbsp;${crews.member.nickname}
                     </div>
                     <div class="crew-crewProfile__region">
                         <span style="color: #5882FA">지역</span> > ${crews.areaList}
