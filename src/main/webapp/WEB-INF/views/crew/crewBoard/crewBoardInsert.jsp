@@ -37,11 +37,8 @@
         </div>
 
         <%-- 글쓰기 폼 카테고리/제목/내용/크루원 추가/코스/ --%>
-        <form id="cBoardI-form" method="post"  enctype="multipart/form-data">
+        <form id="cBoardI-form" enctype="multipart/form-data">
             <table class="common-iuContainer--writeform">
-
-                <%-- id : hidden --%>
-                <input name="id" type="hidden" value="gggg"/><%-- 추후 세션처리 --%>
 
                 <%-- 카테고리 : select --%>
                 <tr class="common-tbl__item">
@@ -50,10 +47,10 @@
                     </td>
                     <td>
                         <select name="category" class="writeform__component">
-                            <option value="1">맛집</option>
-                            <option value="2">쇼핑</option>
-                            <option value="3">문화</option>
-                            <option value="4">자유</option>
+                            <option value="맛집">맛집</option>
+                            <option value="쇼핑">쇼핑</option>
+                            <option value="문화">문화</option>
+                            <option value="자유">자유</option>
                         </select>
                     </td>
                 </tr>
@@ -141,6 +138,7 @@
                 </tr>
                 <script>
                     <%-- 선택된 크루 번호로 크루원 명단 조회 --%>
+
                     function selectCrew() {
                         let crewNo = $("#cBoardI-select--crew option:selected").val();
                         let param = {crewNo: crewNo};
@@ -165,7 +163,7 @@
                                         " <option value=''>선택</option>");
                                     $.each(data, function (index, item) { // 데이터 =item
                                         $("#cBoardI-select--crewMember").append(
-                                            "<option value='" + item.member.member_img + "'>" + item.member.nickname + "</option>"
+                                            "<option value='" + item.member.member_img + "'>" + item.member.nickname + "/" + item.member.id + "</option>"
                                         );
 
                                     });
@@ -196,10 +194,10 @@
                                         $("#cBoardI-addMemberBox").append(
                                             "<div class='crew-addedMember--idbox'> " +
                                             "<div class='crew-member--photo'> " +
-                                            "<img src='" + context + "/_image/profile/"+img+"'/>" +
+                                            "<img src='" + context + "/_image/profile/" + img + "'/>" +
                                             "</div> " +
                                             "<div style='display: inline-block; position: relative; bottom: 18px'>" + member + "</div> " +
-                                            "<input type='hidden' name='memberName' value='"+memberName+"'>"+
+                                            "<input type='hidden' name='memberName' value='" + memberName + "'>" +
                                             "<span class='common-deleteMark--x' onclick='deleteMember($(this).parent().index()," + memberName + ")' style='position: relative; bottom: 17px'>" +
                                             "&Cross;</span></div>"
                                         );
@@ -227,9 +225,12 @@
                 </c:if>
             </table>
 
+            <%-- id : hidden --%>
+            <input name="member.id" type="hidden" value="test26"/><%-- 추후 세션처리 --%>
+
             <%-- 저장 버튼 --%>
             <div id="reviewIU-container--bottom">
-                <button class="button--exceptionboot" onclick="submitCrewBoard()"
+                <button class="button--exceptionboot" type="button" onclick="submitCrewBoard()"
                         style="width: 130px; height: 40px; font-size: 23px; background-color: #FF8000">
                     저장
                 </button>
@@ -237,28 +238,28 @@
         </form>
     </section>
 
-        <script>
-            function submitCrewBoard(){
-                var form = $('#cBoardI-form')[0];
-                var formData = new FormData(form);
+    <script>
+        function submitCrewBoard() {
+            var form = $('#cBoardI-form')[0];
+            var formData = new FormData(form);
 
-                $j1124.ajax({
-                    type: 'POST',
-                    url: '${pageContext.request.contextPath}' + '/crew/board',
-                    data: formData,
-                    processData: false,	// data 파라미터 강제 string 변환 방지
-                    contentType: false,	// application/x-www-form-urlencoded; 방지
-                    cache: false,
-                    success: function (data) {
-                        alert("게시글이 등록 되었습니다.");
-                        location.replace(contextPath + '/crew/board');
-                    },
-                    error: function (request, status, error) {
-                        alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-                    }
-                });
-            }
-        </script>
+            $j1124.ajax({
+                type: 'POST',
+                url: '${pageContext.request.contextPath}' + '/crew/board',
+                data: formData,
+                processData: false,	// data 파라미터 강제 string 변환 방지
+                contentType: false,	// application/x-www-form-urlencoded; 방지
+                cache: false,
+                success: function (data) {
+                    alert("게시글이 등록 되었습니다.");
+                    location.replace(${pageContext.request.contextPath} +'/crew/board');
+                },
+                error: function (request, status, error) {
+                    alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            });
+        }
+    </script>
 
     <%-- 푸터 --%>
     <footer>

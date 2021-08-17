@@ -1,11 +1,14 @@
 package com.finalprj.doldolseo.controller.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
 import com.finalprj.doldolseo.domain.crew.CrewMember;
+import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
+import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,6 +39,9 @@ public class CrewBoardController {
     CrewBoardServiceImpl crewBoardService;
     @Autowired
     CrewMemberServiceImpl crewMemberService;
+    @Autowired
+    MemberServiceImpl memberService;
+
     @Autowired
     CrewServiceImpl crewService;
 
@@ -109,23 +116,26 @@ public class CrewBoardController {
                                 @RequestParam(required = false) String[] memberName,
                                 CrewPostDTO dto) {
 
-        System.out.println("11111111111111 이미지 :"+ Arrays.toString(uploadImgs));
-        System.out.println("222222222222 dto :"+ dto.toString());
-        System.out.println("333333333 멤버이름 :"+ Arrays.toString(memberName));
-
         if (uploadImgs != null) {
             //String배열 문자열 치환 후 문자열로 변경
             String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
             dto.setUploadImg(uploadImg);
         }
 
+
         CrewDTO crewDTO = crewService.getCrew(dto.getCrew().getCrewNo());
+        MemberDTO memberDTO = memberService.selectMember(dto.getMember().getId());
+        Member member = memberService.dtoToEntity(memberDTO);
+
         Crew crew = modelMapper.map(crewDTO, Crew.class);
-        CrewPostDTO post = crewBoardService.insertPost(dto,crew);
+        String memberList = Arrays.stream(memberName).map(s -> s = s.split("/")[1].replace("\"","")).collect(Collectors.joining(","));
+
+        CrewPostDTO post = crewBoardService.insertPost(dto,crew,member,memberList);
         if (post.getUploadImg() != null) {
             fileUtil.moveImagesCrew(post.getPostNo(), post.getUploadImg());
         }
         System.out.println("등록 완료");
+
     }
 
 

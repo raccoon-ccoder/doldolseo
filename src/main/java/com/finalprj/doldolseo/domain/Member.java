@@ -19,6 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Setter
 public class Member {
     @Id
     private String id;

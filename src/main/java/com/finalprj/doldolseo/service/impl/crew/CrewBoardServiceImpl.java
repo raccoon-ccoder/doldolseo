@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.service.impl.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
 import com.finalprj.doldolseo.domain.crew.CrewPost;
 import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
@@ -50,10 +51,12 @@ public class CrewBoardServiceImpl {
     }
 
     //크루게시글 등록
-    public CrewPostDTO insertPost(CrewPostDTO dto, Crew crew){
+    public CrewPostDTO insertPost(CrewPostDTO dto, Crew crew, Member member,String memberList){
         dto.setHit(1);
         dto.setWDate(LocalDateTime.now());
         dto.setCrew(crew);
+        dto.setMember(member);
+        dto.setMemberList(memberList);
 
         CrewPost crewPostEntity = modelMapper.map(dto, CrewPost.class);
         System.out.println(crewPostEntity);

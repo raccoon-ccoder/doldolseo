@@ -68,9 +68,9 @@ public class UploadFileUtil {
 
         for (int i = 0; i < uploadImgs.length; i++) {
             Path src = Paths.get(rootLocation.toString() + "/crew/board/temp/" + uploadImgs[i]);
-            Path dst = Paths.get(rootLocation.toString() + "crew/board/" + postNo + "/" + uploadImgs[i]);
+            Path dst = Paths.get(rootLocation.toString() + "/crew/board/" + postNo + "/" + uploadImgs[i]);
 
-            File noDirectory = new File(rootLocation.toString() + "/review/" + postNo);
+            File noDirectory = new File(rootLocation.toString() + "/crew/board/" + postNo);
             if (!noDirectory.exists()) {
                 noDirectory.mkdirs();
             }
