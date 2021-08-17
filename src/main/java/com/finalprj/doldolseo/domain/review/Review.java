@@ -29,6 +29,7 @@ public class Review {
     @Column(name = "REVIEW_NO")
     private Long reviewNo;
 
+
     private String id;
     private String title;
     private String content;

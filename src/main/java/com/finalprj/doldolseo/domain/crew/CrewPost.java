@@ -1,9 +1,13 @@
 package com.finalprj.doldolseo.domain.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.jpa.repository.EntityGraph;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -23,16 +27,21 @@ import java.time.LocalDateTime;
         sequenceName="CREW_BOARD_SEQ",
         allocationSize=1)
 @Setter
-public class CrewBoard {
+@DynamicInsert
+public class CrewPost {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CREW_BOARD_SEQ_GEN")
     @Column(name = "CREW_POST_NO")
     private Long postNo;
 
-    @Column(name = "CREW_NO")
-    private Long crewNo;
+    @JoinColumn(name = "CREW_NO")
+    @ManyToOne
+    private Crew crew;
 
-    private String id;
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    private Member member;
+
     private String category;
     private String title;
     private String content;

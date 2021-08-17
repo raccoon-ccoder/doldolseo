@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.controller.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
@@ -44,11 +45,11 @@ public class CrewMemberController {
     public String joinCrew(CrewMemberDTO dto) {
 
         //크루장 가입 방지
-        if (crewService.isCrewLeader(dto.getCrewNo(), dto.getId())) {
+        if (dto.getCrew().getMember().getId().equals(dto.getMember().getId())) {
             System.out.println("이미 해당 크루의 크루장 입니다.");
         } else {
             //크루 재가입 방지
-            if (crewMemberService.hasThisCrewMember(dto.getCrewNo(), dto.getId())) {
+            if (crewMemberService.hasThisCrewMember(dto.getCrew().getCrewNo(), dto.getMember().getId())) {
                 System.out.println("이미 가입된 크루원 입니다.");
             } else {
                 //크루원 등록
@@ -77,22 +78,24 @@ public class CrewMemberController {
 
     //크루장 위임
     @RequestMapping(value = "/crewJ/give", method = RequestMethod.POST)
-    public String giveMaster(@RequestBody CrewMemberDTO dto, HttpServletRequest request) throws IOException {
-
+    public String giveMaster(@RequestBody CrewMemberDTO dto) throws IOException {
 
         CrewMemberDTO crewMemberDTO = crewMemberService.getCrewMember(dto.getRegNo());
 
         crewMemberService.deleteCrew(dto.getRegNo());//크루원 삭제
 
-        MemberDTO memberDTO = memberService.selectMember(dto.getId());
+        MemberDTO memberDTO = memberService.selectMember(crewMemberDTO.getMember().getId());
+        Member member = memberService.dtoToEntity(memberDTO);
 
-        if (memberDTO.getCrleader() == 'y') {
+        if (crewMemberDTO.getMember().getCrleader() == 'y') {
             System.out.println("해당 멤버는 이미 크루장 입니다.");
         } else {
-            memberDTO.setCrleader('y');
-            memberService.updateMemberSecurity(memberDTO, request.getSession());
+            crewService.updateCrewMaster(crewMemberDTO.getCrew().getCrewNo(), member);
 
-            crewService.updateCrewMaster(crewMemberDTO.getCrewNo(), crewMemberDTO.getId());
+            memberDTO.setCrleader('y');
+            memberService.updateMmeber(memberDTO);
+
+
         }
 
         return "redirect:/crewL";

@@ -151,7 +151,7 @@ x
                                 <div class="crew-member--photo">
                                     <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png" alt="profile"/>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.id}</div>
+                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.member.nickname}</div>
                             </div>
                         </td>
                     </tr>

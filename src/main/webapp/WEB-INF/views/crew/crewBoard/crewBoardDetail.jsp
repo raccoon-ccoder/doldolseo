@@ -6,6 +6,8 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(crewPost.WDate)}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +15,7 @@
     <title>글 상세 보기</title>
 
     <%-- 메인 스타일시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 
     <%-- jQuery--%>
     <script
@@ -23,7 +25,7 @@
     </script>
 
     <%-- 댓글 이벤트 처리 --%>
-    <script src="_js/comment.js"></script>
+    <script src="${pageContext.request.contextPath}/_js/comment.js"></script>
 
     <script>
         function appearCrewList() {
@@ -63,11 +65,11 @@
 
         <%-- 크루활동 게시판 네비 바 : 전체/맛집/쇼핑/문화/자유 --%>
         <div class="cBoard-nav">
-            <a href="#">전체</a>
-            <a href="#">맛집</a>
-            <a href="#">쇼핑</a>
-            <a href="#">문화</a>
-            <a href="#">자유</a>
+            <a href="${pageContext.request.contextPath}/crew/board">전체</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=맛집">맛집</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=쇼핑">쇼핑</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=문화">문화</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=자유">자유</a>
         </div>
 
         <%-- 상세 글 목록  --%>
@@ -79,17 +81,17 @@
                     <div class="profilebox">
                         <%-- 회원사진 --%>
                         <div class="profilebox--photo">
-                            <img src="_image/sample1.png">
+                            <img src="${pageContext.request.contextPath}/_image/profile/${crewPost.member.member_img}">
                         </div>
                         <%-- 닉네임 + 작성날짜 컨테이너 --%>
                         <div class="profilebox--container--sub">
                             <%-- 닉네임 --%>
                             <div class="profilebox--nickname">
-                                박소은
+                                ${crewPost.member.nickname}
                             </div>
                             <%-- 작성날짜 --%>
                             <div class="profilebox--wdate">
-                                2020-07-21
+                                ${dateYMD}
                             </div>
                         </div>
                     </div>
@@ -115,7 +117,7 @@
                             </svg>
                         </div>
                         <div class="iconbox__hitcount">
-                            1234
+                            ${crewPost.hit}
                         </div>
                     </div>
                 </td>
@@ -124,7 +126,7 @@
             <%-- 글 제목 --%>
             <tr class="common-tbl__item">
                 <td style="position: relative">
-                    <span id="reviewD__title">눈을맞춰 술잔을 채워</span>
+                    <span id="reviewD__title">${crewPost.hit}</span>
                     <div id="cBoardD-box--crewWith">
                         <button id="cBoardD-btn-crewWith" onclick="appearCrewList()"><%-- 버튼 클릭시 함께한 크루원 출력 --%>
                             <%-- 함께한 크루원 아이콘 --%>
@@ -168,11 +170,7 @@
             <tr class="common-tbl__item">
                 <td>
                     <p id="reviewD-content">
-                        뭐가 어때 나는 어리고 또 자유로운 건데<br/>
-                        나쁜 거니 그런 기준은 어디서 배워 온 거니<br/>
-                        뭐가 어때 나는 취할거고 사랑도 할 건데<br/>
-                        못된 거면 욕이라도 해줘<br/>
-                        넌 그런게 귀여우니~<br/>
+                       ${crewPost.content}
                     </p>
                 </td>
             </tr>

@@ -1469,9 +1469,14 @@ table {
     position: relative;
     top: 5px;
     right: 3px;
+    cursor: pointer;
 }
 
-.crew-navi__btn:hover {
+.crew-navi__btn > a {
+    color: #A4A4A4;
+}
+
+.crew-navi__btn >a:hover {
     color: #A9E2F3;
 }
 
@@ -1896,6 +1901,7 @@ table {
     background-color: #6E6E6E;
     color: white;
     line-height: 15px;
+    margin: 3px;
 }
 
 .crew-withMember--idbox {
@@ -2190,12 +2196,13 @@ table {
     margin: 20px 0 20px 0;
 }
 
-.crew_popupContainer{
+.crew_popupContainer {
     width: 800px;
     margin: 10px auto 0;
     /*border: 1px #CDCECF solid;*/
 }
-.crew_popupContainer > span{
+
+.crew_popupContainer > span {
     display: inline-block;
     text-align: left;
     line-height: 48px;
@@ -2205,7 +2212,8 @@ table {
     padding: 5px;
 
 }
-.crewEJ-input--modify{
+
+.crewEJ-input--modify {
     border: 1px #CDCECF solid;
     padding: 8px;
     width: 630px;
@@ -2464,7 +2472,7 @@ table {
     cursor: pointer;
 }
 
-.mypageD-buttonbox__button--gray{
+.mypageD-buttonbox__button--gray {
     margin: 20px auto;
     width: 170px;
     height: 50px;

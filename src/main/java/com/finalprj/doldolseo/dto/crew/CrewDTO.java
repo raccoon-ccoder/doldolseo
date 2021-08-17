@@ -1,10 +1,12 @@
 package com.finalprj.doldolseo.dto.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 public class CrewDTO {
     private Long crewNo;
-    private String id;
+    private Member member;
     private String crewName;
     private String areaList;
     private String intro;

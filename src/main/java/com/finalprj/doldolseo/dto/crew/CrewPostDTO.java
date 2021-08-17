@@ -1,5 +1,7 @@
 package com.finalprj.doldolseo.dto.crew;
 
+import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.domain.crew.Crew;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,10 +17,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class CrewBoardDTO {
+public class CrewPostDTO {
     private Long postNo;
-    private Long crewNo;
-    private String id;
+    private Crew crew;
+    private Member member;
     private String category;
     private String title;
     private String content;

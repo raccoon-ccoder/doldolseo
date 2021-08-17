@@ -6,6 +6,8 @@
 -->
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,11 +21,11 @@
     <%-- 헤더 --%>
     <jsp:include page="../../header.jsp"/>
 
-    <section class="crew-mainContainer" style="height: 1000px;">
+    <section class="crew-mainContainer">
         <%-- 크루 네비게이션 : 공통 --%>
-        <nav class="crew-navi" style="width: 1100px">
-            <span class="crew-navi__btn">크루활동</span>
-            <span class="crew-navi__btn">크루목록</span>
+        <nav class="crew-navi">
+            <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crew/board">크루활동</a></span>
+            <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crewL">크루목록</a></span>
             <button id="crew-navi__btn--mycrew" class="crew-button">My Crew</button>
         </nav>
 
@@ -43,11 +45,11 @@
 
         <%-- 크루활동 게시판 네비 바 : 전체/맛집/쇼핑/문화/자유 --%>
         <div class="cBoard-nav">
-            <a href="#">전체</a>
-            <a href="#">맛집</a>
-            <a href="#">쇼핑</a>
-            <a href="#">문화</a>
-            <a href="#">자유</a>
+            <a href="${pageContext.request.contextPath}/crew/board">전체</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=맛집">맛집</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=쇼핑">쇼핑</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=문화">문화</a>
+            <a href="${pageContext.request.contextPath}/crew/board?cat=자유">자유</a>
         </div>
 
         <%-- 상단 정렬버튼 --%>
@@ -56,7 +58,7 @@
                 <button class="crew-button">크루 전체</button>
                 <button class="crew-button">내 크루만</button>
             </div>
-            <button id="cBoardL-btn--write" class="crew-button">글쓰기</button>
+            <button id="cBoardL-btn--write" class="crew-button" onclick=location.href="${pageContext.request.contextPath}/crew/board/new?id=test28">글쓰기</button>
         </div>
 
         <table id="cBoardL-list">
@@ -68,32 +70,19 @@
                 <td>등록일</td>
                 <td>조회수</td>
             </tr>
-            <%-- 샘플 데이터 - 추후 반복 처리 --%>
-            <tr class="list--item">
-                <td>새튀단</td>
-                <td>맛집</td>
-                <td>눈을 맞춰 새우를 튀겨</td>
-                <td>새튀바사삭</td>
-                <td>2021-07-21</td>
-                <td>1234</td>
-            </tr>
-            <tr class="list--item">
-                <td>청사모</td>
-                <td>자유</td>
-                <td>청청입고 면접본 후기</td>
-                <td>청자켓사나이</td>
-                <td>2021-07-21</td>
-                <td>1244</td>
-            </tr>
-            <tr class="list--item">
-                <td>술고래클럽</td>
-                <td>자유</td>
-                <td>코딩후엔 역시 소주뿌시기죠</td>
-                <td>돌고래는술고래</td>
-                <td>2021-07-21</td>
-                <td>1244</td>
-            </tr>
-            <%-- 샘플 데이터 - 추후 반복 처리 --%>
+
+            <%-- 게시글 목록 --%>
+            <c:forEach items="${crewPosts.content}" var="crewPosts" begin="0" end="40">
+                <c:set var="dateYMDMH" value="${DateTimeFormatUtil.changeToYMDHM(crewPosts.WDate)}"/>
+                <tr class="list--item">
+                    <td>${crewPosts.crew.crewName}</td>
+                    <td>${crewPosts.category}</td>
+                    <td><a href="${pageContext.request.contextPath}/crew/board/${crewPosts.postNo}">${crewPosts.title}</a></td>
+                    <td>${crewPosts.member.nickname}</td>
+                    <td>${dateYMDMH}</td>
+                    <td>${crewPosts.hit}</td>
+                </tr>
+            </c:forEach>
         </table>
 
         <%-- 페이지네이션 및 검색창--%>
@@ -102,15 +91,40 @@
             <%-- 페이지네이션 --%>
             <table class="pagination">
                 <tr>
-                    <td><<</td>
-                    <td><</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>></td>
-                    <td>>></td>
+                    <!-- 첫 페이지로 이동 -->
+                    <td>
+                        <a href="${pageContext.request.contextPath}/crew/board?page=0">
+                            << </a>
+                    </td>
+
+                    <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
+                    <c:if test="${startBlockPage ne 1}">
+                        <td>
+                            <a href="${pageContext.request.contextPath}/crew/board?page=${startBlockPage-2}">
+                                < </a>
+                        </td>
+                    </c:if>
+
+                    <!-- 페이징 블록 1 ~ 10 -->
+                    <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
+                        <td>
+                            <a href="${pageContext.request.contextPath}/crew/board?page=${idx-1}">${idx}</a>
+                        </td>
+                    </c:forEach>
+
+                    <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
+                    <c:if test="${endBlockPage ne crewPosts.totalPages}">
+                        <td>
+                            <a href="${pageContext.request.contextPath}/crew/board?page=${endBlockPage}">
+                                > </a>
+                        </td>
+                    </c:if>
+
+                    <!-- 마지막 페이지로 이동 -->
+                    <td>
+                        <a href="${pageContext.request.contextPath}/crew/board?page=${reviewList.totalPages-1}">
+                            >> </a>
+                    </td>
                 </tr>
             </table>
         </div>

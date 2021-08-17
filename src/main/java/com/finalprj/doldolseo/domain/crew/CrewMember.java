@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.domain.crew;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,14 @@ public class CrewMember {
     @Column(name = "CREW_REG_NO")
     private Long regNo;
 
-    @Column(name = "CREW_NO")
-    private Long crewNo;
+    @ManyToOne
+    @JoinColumn(name = "CREW_NO")
+    private Crew crew;
 
-    private String id;
+    @OneToOne
+    @JoinColumn(name = "ID")
+    private Member member;
+
     private Boolean state;
     private String answer1;
     private String answer2;

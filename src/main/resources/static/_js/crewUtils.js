@@ -479,9 +479,10 @@ function DenyOrKick(contextPath, regNo) {
 }
 
 //크루장 위임
-function giveCrewMaster(contextPath, regNo, id) {
+function giveCrewMaster(contextPath, regNo ) {
 
-    var param = {regNo:regNo, id:id};
+
+    var param = {regNo:regNo};
 
     $j1124.ajax({
         data: JSON.stringify(param),

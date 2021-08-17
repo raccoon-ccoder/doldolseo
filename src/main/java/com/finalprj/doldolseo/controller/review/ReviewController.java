@@ -60,6 +60,19 @@ public class ReviewController {
         return "/review/reviewList";
     }
 
+    //후기게시글 상세
+    @GetMapping(value = "/review/{reviewNo}")
+    public String getReview(Model model,
+                            @PathVariable("reviewNo") Long reviewNo) {
+        ReviewDTO review = service.getReview(reviewNo);
+        String content = review.getContent();
+        if (content != null) {
+            review.setContent(content.replace("temp", "" + review.getReviewNo()));
+        }
+        model.addAttribute("review", review);
+        return "/review/reviewDetail";
+    }
+
     //후기 게시글 등록
     @PostMapping(value = "/review")
     @ResponseBody
@@ -97,18 +110,7 @@ public class ReviewController {
         return "/review/reviewInsert";
     }
 
-    //후기게시글 상세
-    @GetMapping(value = "/review/{reviewNo}")
-    public String getReview(Model model,
-                            @PathVariable("reviewNo") Long reviewNo) {
-        ReviewDTO review = service.getReview(reviewNo);
-        String content = review.getContent();
-        if (content != null) {
-            review.setContent(content.replace("temp", "" + review.getReviewNo()));
-        }
-        model.addAttribute("review", review);
-        return "/review/reviewDetail";
-    }
+
 
     //후기게시글 삭제
     @DeleteMapping(value = "/review/{reviewNo}")

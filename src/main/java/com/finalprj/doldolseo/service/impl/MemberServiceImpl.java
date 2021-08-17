@@ -77,6 +77,15 @@ public class MemberServiceImpl implements MemberService {
         return  dto;
     }
 
+    //temp BY gyeong
+    public MemberDTO updateMmeber(MemberDTO memberDTO) throws IOException {
+
+        Member memberEntity = dtoToEntity(memberDTO);
+        Member member = repository.save(memberEntity);
+        MemberDTO dto = entityToDto(member);
+        return  dto;
+    }
+
     @Override
     public MemberDTO selectMember(String id) {
         Optional<Member> member = repository.findById(id);

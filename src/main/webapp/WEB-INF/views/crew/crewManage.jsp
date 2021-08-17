@@ -203,7 +203,7 @@
                                     <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
                                          alt="profile"/>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.id}</div>
+                                <div style="display: inline-block; position: relative; bottom: 18px">${crew.member.nickname}</div>
                             </div>
                         </td>
                     </tr>
@@ -219,9 +219,9 @@
                                     <div class="crew-member--photo">
                                         <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
                                     </div>
-                                    <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.id}
+                                    <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.member.id}
                                         <button type="button" class="crew-button"
-                                                onclick="giveCrewMaster('${pageContext.request.contextPath}',${crewMember.regNo},'${crewMember.id}')">
+                                                onclick="giveCrewMaster('${pageContext.request.contextPath}',${crewMember.regNo})">
                                             위임
                                         </button>
                                         <button type="button" class="crew-button"
@@ -288,7 +288,7 @@
                                         <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
                                              alt="profile"/>
                                     </div>
-                                    <div style="display: inline-block; position: relative; bottom: 18px;">${watingMember.id}</div>
+                                    <div style="display: inline-block; position: relative; bottom: 18px;">${watingMember.member.id}</div>
                                     <span class="crewM-member--idbox__btnbox">
                                         <button class="crew-button">가입서 보기</button>
                                         <button type="button" class="crew-button"

@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--
 작성자: 김경일
 페이지이름: reviewInsert.jsp
@@ -6,8 +5,8 @@
 페이지 생성일: 21/07/21
 -->
 
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,7 +108,7 @@
                         제목
                     </td>
                     <td>
-                        <input style="width: 600px" name="title" type="text"/>
+                        <input  name="title" style="width: 600px" type="text"/>
                     </td>
                 </tr>
 
@@ -166,9 +165,6 @@
                                     }
                                 });
                             }
-                        </script>
-                        <script>
-
                         </script>
                     </td>
                 </tr>

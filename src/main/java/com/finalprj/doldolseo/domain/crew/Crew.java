@@ -1,9 +1,7 @@
 package com.finalprj.doldolseo.domain.crew;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.finalprj.doldolseo.domain.Member;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
@@ -19,13 +17,16 @@ import java.time.LocalDateTime;
         allocationSize = 1)
 @Setter
 @DynamicInsert
+@ToString
 public class Crew {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CREW_SEQ_GEN")
     @Column(name = "CREW_NO")
     private Long crewNo;
 
-    private String id;
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    private Member member;
 
     @Column(name = "CREW_NAME")
     private String crewName;
