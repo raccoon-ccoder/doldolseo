@@ -338,7 +338,7 @@
                     <c:forEach items="${commentList.content}" var="commentList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${commentList.commentNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.reviewNo}" class="mypageD-boardbox__a--white">${commentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.review.reviewNo}" class="mypageD-boardbox__a--white">${commentList.content}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                 <fmt:parseDate value="${commentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                 <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
@@ -402,7 +402,7 @@
                     <c:forEach items="${crewCommentList.content}" var="crewCommentList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${crewCommentList.commentNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.reviewNo}" class="mypageD-boardbox__a--white">${crewCommentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/crew/board/${commentList.crewPost.postNo}" class="mypageD-boardbox__a--white">${crewCommentList.content}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                 <fmt:parseDate value="${crewCommentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                 <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />

@@ -166,6 +166,7 @@ public class MemberServiceImpl implements MemberService {
             dto = modelMapper.map(crew, new TypeToken<List<CrewMemberDTO>>() {
             }.getType());
         }
+
         return dto;
     }
 
