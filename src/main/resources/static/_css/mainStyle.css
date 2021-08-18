@@ -990,6 +990,16 @@ table {
     resize: none;
 }
 
+.comment__textarea_edit {
+    width: 730px;
+    height: 90px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    resize: none;
+}
+
 .common-tbl__item {
     font-family: 'Nanum Gothic Coding', monospace;
     font-size: 15px;

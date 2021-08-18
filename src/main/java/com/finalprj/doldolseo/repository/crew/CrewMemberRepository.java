@@ -18,8 +18,14 @@ public interface CrewMemberRepository extends JpaRepository<CrewMember, Long> {
 
     List<CrewMember> findAllByMemberId(String id);
 
+    int countCrewMemberByMemberId(String id);
+
     // 사용자가 가입한 크루 탈퇴
     // @Author 백정연, @Date 2021/08/18
     @Transactional
     void deleteAllByMemberId(String id);
+
+    boolean existsByMemberId(String id);
+
+    CrewMember findByMemberIdAndCrewCrewNo(String id , Long crewNo);
 }

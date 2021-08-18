@@ -33,8 +33,8 @@ function appendComment(data, contextPath, loginId) {
                 "</div> <div class='comment__deleteUpdatelist'> " +
                 "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + context + ")'>삭제</button> " +
                 "</div> </div> " +
-                "<input type='hidden' name='id' value='kkkkkkk'/>" +
-                "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
+                "<input type='hidden' name='id' value='"+id+"'/>" +
+                "<textarea name='content' class='comment__textarea_edit' readonly='readonly'>" + data[i].content + "</textarea> " +
                 "<div class='comment-editSubbox'> " +
                 "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + context + ")'>완료</button> " +
                 "<button type='button' class='comment-editSub__btn--cancle'>취소</button> " +
@@ -108,7 +108,7 @@ function doUpdateMode(idx) {
     //서브버튼 활성화
     document.getElementsByClassName('comment-editSubbox')[idx].style.display = "block";
     //textarea readonly제거후 포커스
-    var editArea = document.getElementsByClassName('comment__textarea')[idx];
+    var editArea = document.getElementsByClassName('comment__textarea_edit')[idx];
     editArea.removeAttribute("readonly");
     editArea.focus();
 }
@@ -118,7 +118,7 @@ function editOkOrCancle(idx) {
     //서브버튼 비활성
     document.getElementsByClassName('comment-editSubbox')[idx].style.display = "none";
     //textarea 수정불가
-    var editArea = document.getElementsByClassName('comment__textarea')[idx];
+    var editArea = document.getElementsByClassName('comment__textarea_edit')[idx];
     editArea.setAttribute('readonly', 'readonly');
 }
 

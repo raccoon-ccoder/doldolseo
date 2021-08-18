@@ -7,6 +7,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
+<c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(crew.CDate)}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +32,11 @@
 
     <script>
         function popupEditJoin() {
-            window.open('${pageContext.request.contextPath}/crewM/editJoin?crewNo=${crew.crewNo}&question1=${crew.question1}&question2=${crew.question2}&question3=${crew.question3}', "크루가입 수정", "width = 800, height = 450, top = 400, left = 1200")
+            window.open('${pageContext.request.contextPath}/crewM/editJoin?crewNo=${crew.crewNo}&question1=${crew.question1}&question2=${crew.question2}&question3=${crew.question3}', "크루가입 수정", "width = 800, height = 450, top = 400, left = 1200");
+        }
+
+        function getJoinInfo(id){
+            window.open('${pageContext.request.contextPath}/crewJ/info?id='+id+'&crewNo=${crew.crewNo}', "크루가입서 보기", "width = 700, height = 350, top = 800, left = 1200");
         }
     </script>
 </head>
@@ -43,9 +49,9 @@
 
     <%-- 크루 네이게이션 : 공통 --%>
     <nav class="crew-navi" style="width: 1115px;">
-        <span class="crew-navi__btn">크루활동</span>
-        <span class="crew-navi__btn">크루목록</span>
-        <button id="crew-navi__btn--mycrew" class="crew-button">My Crew</button>
+        <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crew/board">크루활동</a></span>
+        <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crewL">크루목록</a></span>
+        <button id="crew-navi__btn--mycrew" type="button" class="crew-button">My Crew</button>
     </nav>
 
     <section class="crew-mainContainer" style="width: 1120px; text-align: left">
@@ -87,13 +93,13 @@
                 <%-- 크루 명 --%>
                 <div class="crew-info__item">
                     <span>크루명 :</span>
-                    <span class="crew-namelabel">새튀단</span>
+                    <span class="crew-namelabel">${crew.crewName}</span>
                 </div>
 
                 <%-- 크루 설립일 --%>
                 <div class="crew-info__item">
                     크루설립일 :
-                    <span class="crew-namelabel">2021.07.27</span>
+                    <span class="crew-namelabel">${dateYMD}</span>
                 </div>
 
                 <%-- 크루 등급 --%>
@@ -127,7 +133,7 @@
                 <div class="crew-info__item">
                     크루포인트 :
                     <div class="crew-info__pointbar--holder">
-                        <div class="crew-info__pointbar--bar">85.12%</div>
+                        <div class="crew-info__pointbar--bar">${crew.crewPoint}</div>
                     </div>
                 </div>
             </div>
@@ -200,7 +206,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                    <img src="${pageContext.request.contextPath}/_image/crew/profile/${crew.member.member_img}"
                                          alt="profile"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">${crew.member.nickname}</div>
@@ -220,10 +226,14 @@
                                         <img src="${pageContext.request.contextPath}/_image/profile/${crewMember.member.member_img}"/>
                                     </div>
                                     <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.member.id}
-                                        <button type="button" class="crew-button"
-                                                onclick="giveCrewMaster('${pageContext.request.contextPath}',${crewMember.regNo})">
-                                            위임
-                                        </button>
+                                        <form id="crewM-form--assign" method="post" style="display: inline-block">
+                                            <input type="hidden" name="member.id" value="${crewMember.member.id}"/>
+                                            <input type="hidden" name="regNo" value="${crewMember.regNo}"/>
+                                            <button type="button" class="crew-button"
+                                                    onclick="giveCrewMaster('${pageContext.request.contextPath}',${crew.crewNo})">
+                                                위임
+                                            </button>
+                                        </form>
                                         <button type="button" class="crew-button"
                                                 onclick="DenyOrKick('${pageContext.request.contextPath}',${crewMember.regNo})">
                                             강퇴
@@ -285,12 +295,13 @@
                             <td>
                                 <div class="crewM-member--idbox">
                                     <div class="crew-member--photo">
-                                        <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                        <img src="${pageContext.request.contextPath}/_image/profile/${watingMember.member.member_img}"
                                              alt="profile"/>
                                     </div>
                                     <div style="display: inline-block; position: relative; bottom: 18px;">${watingMember.member.id}</div>
                                     <span class="crewM-member--idbox__btnbox">
-                                        <button class="crew-button">가입서 보기</button>
+                                        <button class="crew-button" type="button"
+                                                onclick="getJoinInfo('${watingMember.member.id}')">가입서 보기</button>
                                         <button type="button" class="crew-button"
                                                 onclick="agreeJoin('${pageContext.request.contextPath}',${watingMember.regNo})">승인</button>
                                         <button type="button" class="crew-button"
@@ -300,6 +311,7 @@
                             </td>
                         </tr>
                     </c:forEach>
+
 
                 </table>
             </div>

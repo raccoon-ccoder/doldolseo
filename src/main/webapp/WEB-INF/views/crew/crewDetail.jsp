@@ -156,7 +156,7 @@
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                    <img src="${pageContext.request.contextPath}/_image/profile/${crew.member.member_img}"
                                          alt="profile"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">${crew.member.nickname}</div>
@@ -191,7 +191,7 @@
                 <security:authorize access="isAuthenticated()">
                     <c:choose>
                         <c:when test="${crewMembers.contains(member.id)}">
-                            <button class="crew-button" style="float: right; margin-top: 2px" onclick="popupCrewJoin()">
+                            <button class="crew-button" style="float: right; margin-top: 2px" >
                                 크루
                                 탈퇴
                             </button>

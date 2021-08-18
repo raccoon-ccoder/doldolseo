@@ -97,7 +97,7 @@
             </table>
 
             <input type="hidden" name="crew.crewNo" value="${crew.crewNo}">
-            <input type="hidden" name="member.id" value="test3">
+            <input type="hidden" name="member.id" value="${member.id}">
 
             <div id="crewJ-container-bottom">
                 <button type="button" class="crew-button" onclick="submitCrewJoin()">가입</button>

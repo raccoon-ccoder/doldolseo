@@ -143,11 +143,17 @@ function checkCrewParam() {
         let introDetail = $('#crewI-introDetail')
         let recruit = $('#crewI-recuit')
         let question1 = $('#question1')
+        let areaList = $("input:checked[name=areaListValues]")
 
 
         if (!doNameCheck) {
             alert("크루명 중복 체크는 필수 입니다.")
             $('#crewI-btn--checkName').focus();
+            return false;
+        }
+
+        if (areaList.length === 0) {
+            alert("관심지역은 하나이상 선택 하셔야 합니다.")
             return false;
         }
 
@@ -455,7 +461,10 @@ function agreeJoin(contextPath, regNo) {
         cache: false,
         processData: false,
         success: function (data) {
-            alert("success transform")
+            alert("해당 멤버의 가입이 승인 되었습니다.")
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     });
 }
@@ -473,26 +482,38 @@ function DenyOrKick(contextPath, regNo) {
         cache: false,
         processData: false,
         success: function (data) {
-            alert("success transform")
+            alert("해당 멤버의 가입을 거절 하였습니다.")
+        },
+        error: function (request, status, error) {
+            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         }
     });
 }
 
 //크루장 위임
-function giveCrewMaster(contextPath, regNo ) {
+function giveCrewMaster(contextPath,crewNo) {
 
+    let form = $("#crewM-form--assign")[0];
+    var formData = new FormData(form);
 
-    var param = {regNo:regNo};
+    if (confirm("해당 멤버를 크루장으로 위임 하겠습니까?") === true) {
+        $j1124.ajax({
+            data: formData,
+            type: 'POST',
+            url: contextPath + '/crewJ/give',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                alert(data)
+                location.replace(contextPath+'/crewM?crewNo='+crewNo);
+            },
+            error: function (request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    } else {   //취소
+        return false;
+    }
 
-    $j1124.ajax({
-        data: JSON.stringify(param),
-        type: 'POST',
-        url: contextPath + '/crewJ/give',
-        contentType: "application/json",
-        cache: false,
-        processData: false,
-        success: function (data) {
-            alert("success transform")
-        }
-    });
 }

@@ -1,12 +1,15 @@
 package com.finalprj.doldolseo.controller.crew;
 
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.domain.crew.Crew;
+import com.finalprj.doldolseo.domain.crew.CrewMember;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
 import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,9 @@ public class CrewMemberController {
     @Autowired
     MemberServiceImpl memberService;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     // crewDetail -> 크루 가입 버튼 클릭시 팝업창 생성
     @RequestMapping(value = "/crewJ", method = RequestMethod.GET)
     public String getCrewJoinForm(Model model,
@@ -46,8 +52,14 @@ public class CrewMemberController {
     public String joinCrew(CrewMemberDTO dto) throws IOException {
         CrewDTO crewDTO = crewService.getCrew(dto.getCrew().getCrewNo());
 
+        String joinMemberId = dto.getMember().getId();
+
+        if (crewMemberService.countMember(joinMemberId) >= 3) {
+            return "가입 하실 수 있는 크루는 최대 3개 입니다.";
+        }
+
         //크루장 가입 방지
-        if (crewDTO.getMember().getId().equals(dto.getMember().getId())) {
+        if (crewDTO.getMember().getId().equals(joinMemberId)) {
             System.out.println("이미 해당 크루의 크루장 입니다.");
             return "이미 해당 크루의 크루장 입니다.";
         } else {
@@ -56,9 +68,15 @@ public class CrewMemberController {
                 System.out.println("이미 가입된 크루원 입니다.");
                 return "이미 가입된 크루원 입니다.";
             } else {
+
+                MemberDTO memberDTO = memberService.selectMember(joinMemberId);
+                Member member = memberService.dtoToEntity(memberDTO);
+                Crew crew = modelMapper.map(crewDTO, Crew.class);
+                dto.setMember(member);
+                dto.setCrew(crew);
                 //크루원 등록
                 crewMemberService.insertCrewMember(dto);
-                return "크루에 성공적으로 가입되었습니다.";
+                return "크루가입이 요청 되었습니다.";
             }
         }
     }
@@ -80,29 +98,46 @@ public class CrewMemberController {
     }
 
     //크루장 위임
-    @PreAuthorize("isAuthenticated() and #dto.crew.member.id == principal.username")
+    @ResponseBody
     @RequestMapping(value = "/crewJ/give", method = RequestMethod.POST)
-    public String giveMaster(@RequestBody CrewMemberDTO dto) throws IOException {
-
+    public String giveMaster(CrewMemberDTO dto, HttpSession session) throws IOException {
         CrewMemberDTO crewMemberDTO = crewMemberService.getCrewMember(dto.getRegNo());
 
-        crewMemberService.deleteCrew(dto.getRegNo());//크루원 삭제
 
-        MemberDTO memberDTO = memberService.selectMember(crewMemberDTO.getMember().getId());
+        MemberDTO memberDTO = memberService.selectMember(dto.getMember().getId());
         Member member = memberService.dtoToEntity(memberDTO);
 
-        if (crewMemberDTO.getMember().getCrleader() == 'y') {
-            System.out.println("해당 멤버는 이미 크루장 입니다.");
+        if (member.getCrleader() == 'y') {
+            return "해당 멤버는 이미 크루장 입니다.";
         } else {
+            crewMemberService.deleteCrew(dto.getRegNo());//크루원 삭제
             crewService.updateCrewMaster(crewMemberDTO.getCrew().getCrewNo(), member);
-
+            //권한 부여
             memberDTO.setCrleader('y');
             memberService.updateMmeber(memberDTO);
 
-
+            //권한 박탈
+            MemberDTO user = (MemberDTO) session.getAttribute("member");
+            user.setCrleader('n');
+            MemberDTO userNoLeader = memberService.updateMmeber(user);
+            session.setAttribute("member", userNoLeader);
         }
 
-        return "redirect:/crewL";
+        return "해당멤버가 크루장으로 위임되었습니다.";
+    }
+
+    //대기멤버 가입서 보기
+    @RequestMapping(value = "/crewJ/info", method = RequestMethod.GET)
+    public String getJoinInfo(Model model,
+                              @RequestParam String id,
+                              @RequestParam Long crewNo) throws IOException {
+        CrewMemberDTO crewMember = crewMemberService.getCrewMember(id, crewNo);
+        CrewDTO crew = crewService.getCrew(crewNo);
+
+        model.addAttribute("crewMember",crewMember);
+        model.addAttribute("crew",crew);
+
+        return "crew/popup_joinInfo";
     }
 
 
