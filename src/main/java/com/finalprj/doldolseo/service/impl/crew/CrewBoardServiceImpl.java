@@ -44,15 +44,19 @@ public class CrewBoardServiceImpl {
     }
 
     //크루 게시글 조회
+    @Transactional
     public CrewPostDTO getCrewPost(Long postNo) {
         CrewPost crewPostEntity = repository.findByPostNo(postNo);
+        //크루포인트 1증가
+//        crewPostEntity.getCrew().setCrewPoint(crewPostEntity.getCrew().getCrewPoint()+1);
         CrewPostDTO dto = modelMapper.map(crewPostEntity, CrewPostDTO.class);
 
         return dto;
     }
 
     //크루게시글 등록
-    public CrewPostDTO insertPost(CrewPostDTO dto, Crew crew, Member member,String memberList){
+    @Transactional
+    public CrewPostDTO insertPost(CrewPostDTO dto, Crew crew, Member member, String memberList) {
         dto.setHit(1);
         dto.setWDate(LocalDateTime.now());
         dto.setCrew(crew);
@@ -60,7 +64,8 @@ public class CrewBoardServiceImpl {
         dto.setMemberList(memberList);
 
         CrewPost crewPostEntity = modelMapper.map(dto, CrewPost.class);
-        System.out.println(crewPostEntity);
+        //크루포인트 10증가
+//        crewPostEntity.getCrew().setCrewPoint(crewPostEntity.getCrew().getCrewPoint()+1);
         CrewPost post = repository.save(crewPostEntity);
 
         return modelMapper.map(post, CrewPostDTO.class);
@@ -72,7 +77,7 @@ public class CrewBoardServiceImpl {
     }
 
     @Transactional
-    public void updatePost(Long postNo, CrewPostDTO dto){
+    public void updatePost(Long postNo, CrewPostDTO dto) {
         CrewPost post = repository.findByPostNo(postNo);
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());

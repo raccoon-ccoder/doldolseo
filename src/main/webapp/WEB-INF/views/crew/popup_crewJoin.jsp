@@ -14,6 +14,9 @@
 
     <%-- 메인 스타일시트 --%>
     <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
+
+    <%-- Jquery --%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
 
@@ -35,7 +38,7 @@
 
     <%-- 크루 가입 폼 --%>
     <section id="crewJ-container">
-        <form action="${pageContext.request.contextPath}/crewJ/" method="post">
+        <form id="crewJ-form">
             <table id="crewJ-tbl">
                 <tr class="common-tbl__item">
                     <td style="width: 170px; height: 30px">
@@ -93,13 +96,36 @@
                 </tr>
             </table>
 
-            <input type="hidden" name="crewNo" value="${crew.crewNo}" >
-            <input type="hidden" name="id" value="test3" >
+            <input type="hidden" name="crew.crewNo" value="${crew.crewNo}">
+            <input type="hidden" name="member.id" value="test3">
 
             <div id="crewJ-container-bottom">
-                <button type="submit" class="crew-button">가입</button>
-                <button type="button" class="crew-button">취소</button>
+                <button type="button" class="crew-button" onclick="submitCrewJoin()">가입</button>
+                <button type="button" class="crew-button" onclick="window.close()">취소</button>
             </div>
+            <script>
+                //폼 데이터 생성
+                function submitCrewJoin() {
+                    var form = $('#crewJ-form')[0];
+                    var formData = new FormData(form);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '${pageContext.request.contextPath}/crewJ',
+                        data: formData,
+                        processData: false,	// data 파라미터 강제 string 변환 방지
+                        contentType: false,	// application/x-www-form-urlencoded; 방지
+                        cache: false,
+                        success: function (data) {
+                            alert(data);
+                            window.close();
+                        },
+                        error: function (request, status, error) {
+                            alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                        }
+                    });
+                }
+            </script>
         </form>
     </section>
 </body>

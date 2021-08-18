@@ -81,7 +81,7 @@
             <table class="common-iuContainer--writeform">
 
                 <%-- id : hidden --%>
-                <input name="id" type="hidden" value="${member.id}"/><%-- 추후 세션처리 --%>
+                <input name="member.id" type="hidden" value="${member.id}"/><%-- 추후 세션처리 --%>
 
                 <%-- 지역 : select --%>
                 <tr class="common-tbl__item">
@@ -190,9 +190,6 @@
                         class="button--exceptionboot" style="width: 130px; height: 40px; font-size: 23px">
                     저장
                 </button>
-                <div id="secret">
-                    <img src="${pageContext.request.contextPath}/_image/sample_loopy3-1.png"/>
-                </div>
             </div>
         </form>
     </section>

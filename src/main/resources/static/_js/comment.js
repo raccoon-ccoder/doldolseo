@@ -1,39 +1,59 @@
 //댓글 1개 추가 :
-function appendComment(data, contextPath, imagePath) {
+function appendComment(data, contextPath, loginId) {
+
+    let count = data.length
+    $("#reviewD-comment_count").append(count);
 
     for (let i = 0; i < data.length; i++) {
-        let id = data[i].id;
+        let nickname = data[i].member.nickname;
+        let id = data[i].member.id;
         let wdate = data[i].wdate;
-        let reviewNo = data[i].reviewNo;
+        let reviewNo = data[i].review.reviewNo;
         let commentNo = data[i].commentNo;
-        let context = '\"'+contextPath+'\"'
+        let imgPath = data[i].member.member_img;
+        let context = '\"' + contextPath + '\"'
 
 
-        $('#reviewD-commentLayout').append(
-            "<tr class='comment-tablelayout'> " +
-            "<td style='padding: 10px 10px 10px 10px;'> " +
-            "<div class='profilebox' style='margin-top: 7px'> " +
-            "<div class='profilebox--photo'><img src=" + contextPath + "/_image/profile/" + imagePath + "/></div> " +
-            "<div class='profilebox--container--sub'>" +
-            "<div class='profilebox--nickname'>" + id + "</div>" +
-            "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +
-            "</div> </div> " +
-            "<div class='commentbox'> " +
-            "<form id='reviewD-commentUpdateForm-" + commentNo + "' method='post'>" +
-            "<button type='button' class='comment__deleteUpdateButton'> <<</button> " +
-            "<div class='comment__deleteUpdateBox'> " +
-            "<div class='comment__deleteUpdatelist'> " +
-            "<button type='button' class='comment__updateButton'>수정</button> " +
-            "</div> <div class='comment__deleteUpdatelist'> " +
-            "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + context + ")'>삭제</button> " +
-            "</div> </div> " +
-            "<input type='hidden' name='id' value='kkkkkkk'/>" +
-            "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
-            "<div class='comment-editSubbox'> " +
-            "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + context + ")'>완료</button> " +
-            "<button type='button' class='comment-editSub__btn--cancle'>취소</button> " +
-            "</form>" +
-            "</div></div> </td> </tr>");
+        if (loginId === id) {
+            $('#reviewD-commentLayout').append(
+                "<tr class='comment-tablelayout'> " +
+                "<td style='padding: 10px 10px 10px 10px;'> " +
+                "<div class='profilebox' style='margin-top: 7px'> " +
+                "<div class='profilebox--photo'><img src=" + contextPath + "/_image/profile/" + imgPath + "></div> " +
+                "<div class='profilebox--container--sub'>" +
+                "<div class='profilebox--nickname'>" + nickname + "</div>" +
+                "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +
+                "</div> </div> " +
+                "<div class='commentbox'> " +
+                "<form id='reviewD-commentUpdateForm-" + commentNo + "' method='post'>" +
+                "<button type='button' class='comment__deleteUpdateButton'> <<</button> " +
+                "<div class='comment__deleteUpdateBox'> " +
+                "<div class='comment__deleteUpdatelist'> " +
+                "<button type='button' class='comment__updateButton'>수정</button> " +
+                "</div> <div class='comment__deleteUpdatelist'> " +
+                "<button type='button' onclick='deleteComment(" + commentNo + "," + reviewNo + "," + context + ")'>삭제</button> " +
+                "</div> </div> " +
+                "<input type='hidden' name='id' value='kkkkkkk'/>" +
+                "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
+                "<div class='comment-editSubbox'> " +
+                "<button type='button' class='comment-editSub__btn--ok' onclick='updateComment(" + commentNo + "," + reviewNo + "," + context + ")'>완료</button> " +
+                "<button type='button' class='comment-editSub__btn--cancle'>취소</button> " +
+                "</form>" +
+                "</div></div> </td> </tr>");
+        } else {
+            $('#reviewD-commentLayout').append(
+                "<tr class='comment-tablelayout'> " +
+                "<td style='padding: 10px 10px 10px 10px;'> " +
+                "<div class='profilebox' style='margin-top: 7px'> " +
+                "<div class='profilebox--photo'><img src=" + contextPath + "/_image/profile/" + imgPath + "></div> " +
+                "<div class='profilebox--container--sub'>" +
+                "<div class='profilebox--nickname'>" + nickname + "</div>" +
+                "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +
+                "</div> </div> " +
+                "<div class='commentbox'> " +
+                "<textarea name='content' class='comment__textarea' readonly='readonly'>" + data[i].content + "</textarea> " +
+                "</div></div> </td> </tr>");
+        }
     }
 }
 

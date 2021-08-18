@@ -198,7 +198,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Page<ReviewDTO> getReviewListByUser(String id, Pageable pageable) {
-        Page<Review> entityPage = reviewRepository.findAllById(id, pageable);
+        Page<Review> entityPage = reviewRepository.findAllByMemberId(id, pageable);
         Page<ReviewDTO> reviewList = modelMapper.map(entityPage,
                 new TypeToken<Page<ReviewDTO>>() {
                 }.getType());
@@ -208,7 +208,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Page<ReviewCommentDTO> getReviewCommentListByUser(String id, Pageable pageable) {
-        Page<ReviewComment> entityPage = commentRepository.findAllById(id, pageable);
+        Page<ReviewComment> entityPage = commentRepository.findAllByMemberId(id, pageable);
         Page<ReviewCommentDTO> commentList = modelMapper.map(entityPage,
                 new TypeToken<Page<ReviewCommentDTO>>() {
                 }.getType());
@@ -217,7 +217,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<ReviewDTO> getReviewListByMember(String id) {
-        List<Review> reviews = reviewRepository.findAllById(id);
+        List<Review> reviews = reviewRepository.findAllByMemberId(id);
         List<ReviewDTO> reviewList = modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>() {
         }.getType());
         return reviewList;
@@ -241,19 +241,21 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteCommentListByUser(String id) {
-        commentRepository.deleteAllById(id);
+        commentRepository.deleteAllByMemberId(id);
     }
 
     @Override
     public void deleteCommentListByReviewNo(Long reviewNo) {
-        commentRepository.deleteAllByReviewNo(reviewNo);
+        commentRepository.deleteAllByReview_ReviewNo(reviewNo);
     }
 
     //메소드 추가 by gyeong
-    public void setMemberToCrleader(String id){
+    public void setMemberToCrleader(String id, HttpSession session){
         MemberDTO dto = selectMember(id);
         dto.setCrleader('y');
         Member member = dtoToEntity(dto);
+        modelMapper.map(member, MemberDTO.class);
+        updateMemberSecurity(        modelMapper.map(member, MemberDTO.class), session);
 
         repository.save(member);
     }

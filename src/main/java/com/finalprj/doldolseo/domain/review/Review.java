@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.domain.review;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -29,8 +30,10 @@ public class Review {
     @Column(name = "REVIEW_NO")
     private Long reviewNo;
 
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    private Member member;
 
-    private String id;
     private String title;
     private String content;
 

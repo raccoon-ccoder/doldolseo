@@ -75,7 +75,7 @@ public class ReviewController {
             review.setContent(content.replace("temp", "" + review.getReviewNo()));
         }
 
-        MemberDTO memberDTO = memberService.selectMember(review.getId());
+        MemberDTO memberDTO = memberService.selectMember(review.getMember().getId());
 
         model.addAttribute("memberImg",memberDTO.getMember_img());
         model.addAttribute("review", review);

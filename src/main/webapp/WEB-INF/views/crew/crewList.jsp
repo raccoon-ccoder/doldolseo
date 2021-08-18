@@ -50,20 +50,22 @@
                     <a href="#">크루 목록</a>
             </span>
 
-                <security:authorize access="isAuthenticated()">
-                    <c:choose>
-                        <c:when test="${member.crleader.toString() eq 'y' }">
-                            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewM'">
-                                크루 관리
-                            </button>
-                        </c:when>
-                        <c:otherwise>
-                            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewI'">
-                                크루 생성
-                            </button>
-                        </c:otherwise>
-                    </c:choose>
-                </security:authorize>
+            <security:authorize access="isAuthenticated()">
+                <c:choose>
+                    <c:when test="${member.crleader.toString() eq 'y' }">
+                        <button id="crew-topContainer__crewBtn"
+                                onclick="location.href='${pageContext.request.contextPath}/crewM'">
+                            크루 관리
+                        </button>
+                    </c:when>
+                    <c:otherwise>
+                        <button id="crew-topContainer__crewBtn"
+                                onclick="location.href='${pageContext.request.contextPath}/crewI'">
+                            크루 생성
+                        </button>
+                    </c:otherwise>
+                </c:choose>
+            </security:authorize>
 
         </div>
 

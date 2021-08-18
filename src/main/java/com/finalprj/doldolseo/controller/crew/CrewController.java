@@ -75,8 +75,9 @@ public class CrewController {
         dto.setCrewImage(crewImageName);
 
         // 추가코드
-        memberService.setMemberToCrleader(dto.getMember().getId()); //해당 멤버 크루장으로
+        memberService.setMemberToCrleader(dto.getMember().getId(), session); //해당 멤버 크루장으로
         Member member = memberService.selectMemberEntity(dto.getMember());
+        session.setAttribute("member",memberService.entityToDto(member));
         //update추가
 //        memberService.updateMemberSecurity(, session);
         dto.setMember(member);
@@ -84,7 +85,7 @@ public class CrewController {
 
         crewService.insertCrew(dto);
 
-        return "/crew/crewList";
+        return "redirect:/crewL";
     }
 
     /* 크루명 중복 체크 */
@@ -111,16 +112,9 @@ public class CrewController {
     @PreAuthorize("isAuthenticated() and hasAuthority('y')")
     @RequestMapping("/crewM")
     public String crewManage(Model model,
-//                             @RequestParam Long crewNo,
                              HttpSession session) throws Exception {
 
-//        CrewDTO crew = crewService.getCrew(crewNo);
-//        if(!session.getId().equals(crew.getMember().getId())){
-//            System.out.println("잘못된 접근 입니다");
-//            return "redirect:/crewL";
-//        }
         MemberDTO member = (MemberDTO) session.getAttribute("member");
-        System.out.println("ssssssssssssssssssssssssssssss"+member.getId());
         CrewDTO crew = crewService.getCrewById(member.getId());
 
 

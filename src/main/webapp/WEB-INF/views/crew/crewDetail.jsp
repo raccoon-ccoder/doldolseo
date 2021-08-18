@@ -163,6 +163,7 @@
                             </div>
                         </td>
                     </tr>
+
                     <c:forEach items="${crewMembers}" var="crewMember">
                         <%-- 크루원 --%>
                         <tr class="common-tbl__item">

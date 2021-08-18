@@ -1,6 +1,8 @@
 package com.finalprj.doldolseo.service.impl.review;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
+import com.finalprj.doldolseo.repository.MemberRepository;
 import com.finalprj.doldolseo.repository.review.ReviewRepository;
 import com.finalprj.doldolseo.domain.review.Review;
 import com.finalprj.doldolseo.service.review.ReviewService;
@@ -18,6 +20,8 @@ import java.time.LocalDateTime;
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
     ReviewRepository repository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     ModelMapper modelMapper;
@@ -48,6 +52,10 @@ public class ReviewServiceImpl implements ReviewService {
         dto.setWDate(LocalDateTime.now());
 
         Review reviewEntity = modelMapper.map(dto, Review.class);
+
+        Member member =  memberRepository.findOneById(dto.getMember().getId());
+        reviewEntity.setMember(member);
+
         Review review = repository.save(reviewEntity);
 
         return modelMapper.map(review, ReviewDTO.class);

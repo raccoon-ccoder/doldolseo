@@ -28,10 +28,12 @@ public class CrewCommentServiceImpl {
         return comments;
     }
 
+    @Transactional
     public CrewComment insertComment(CrewCommentDTO dto) {
         dto.setWDate(LocalDateTime.now());
         CrewComment comment = modelMapper.map(dto, CrewComment.class);
-
+        //크루포인트 5증가
+//        comment.getCrewPost().getCrew().setCrewPoint(comment.getCrewPost().getCrew().getCrewPoint()+5);
         return repository.save(comment);
     }
 

@@ -220,7 +220,8 @@ public class UploadFileUtil {
 
         if (!crewImageFile.isEmpty()) {
             //파일 이름 : 크루이름.확장자
-            String crewImageName = dto.getCrewName() + "." + crewImageFile.getOriginalFilename().split("\\.")[1];
+            String[]  filenameSplit = crewImageFile.getOriginalFilename().split("\\.");
+            String crewImageName = dto.getCrewName() + "." + filenameSplit[filenameSplit.length-1];
             String crewImagePath = rootLocation.toString() + "/crew/logo/" + crewImageName;
 
             crewImage = new File(crewImagePath);

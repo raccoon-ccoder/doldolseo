@@ -11,14 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 @Controller
@@ -43,22 +42,25 @@ public class CrewMemberController {
 
     //크루 가입
     @RequestMapping(value = "/crewJ", method = RequestMethod.POST)
-    public String joinCrew(CrewMemberDTO dto) {
+    @ResponseBody
+    public String joinCrew(CrewMemberDTO dto) throws IOException {
+        CrewDTO crewDTO = crewService.getCrew(dto.getCrew().getCrewNo());
 
         //크루장 가입 방지
-        if (dto.getCrew().getMember().getId().equals(dto.getMember().getId())) {
+        if (crewDTO.getMember().getId().equals(dto.getMember().getId())) {
             System.out.println("이미 해당 크루의 크루장 입니다.");
+            return "이미 해당 크루의 크루장 입니다.";
         } else {
             //크루 재가입 방지
             if (crewMemberService.hasThisCrewMember(dto.getCrew().getCrewNo(), dto.getMember().getId())) {
                 System.out.println("이미 가입된 크루원 입니다.");
+                return "이미 가입된 크루원 입니다.";
             } else {
                 //크루원 등록
                 crewMemberService.insertCrewMember(dto);
+                return "크루에 성공적으로 가입되었습니다.";
             }
         }
-
-        return "redirect:/crewL";
     }
 
     //크루 가입 승인
