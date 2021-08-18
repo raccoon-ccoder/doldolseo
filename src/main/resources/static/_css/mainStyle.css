@@ -2311,11 +2311,19 @@ table {
     border-radius: 20px 20px 0px 0px;
 }
 
+.memberL-header__div .headerM-weatherBox__text{
+    line-height:17px;
+}
+
 .mypageD-titlecontainer__span--big {
     font-size: 34px;
     font-weight: bold;
     display: inline-block;
     margin: 23px 10px 0px 26px;
+}
+
+.mypageD_span{
+    font-family: 'Jua', sans-serif;
 }
 
 .mypageD-infocontainer {
@@ -2509,6 +2517,15 @@ table {
     display: inline-block;
     margin: 10px 0 10px 26px;
     font-family: 'Jua', sans-serif;
+}
+
+.mypageD-crewlistbox__span--none{
+    font-size:20px;
+    font-weight:bold;
+    display:inline-block;
+    position:absolute;
+    top:60px;
+    left:300px;
 }
 
 .mypageD-crewlistbox {
@@ -2763,7 +2780,7 @@ table {
     margin: 20px 15px 0 0;
     border: none;
     border-radius: 6px;
-    background-color: #a9e2f3;
+    background-color: #0080ff;
     color: white;
     font-family: 'Jua', sans-serif;
     font-size: 18px;
@@ -3510,7 +3527,7 @@ table {
 
 .planI-mapbox {
     height: 90%;
-    width: 65.6%;
+    width: 63%;
     position: absolute;
     left: 731px;
 }

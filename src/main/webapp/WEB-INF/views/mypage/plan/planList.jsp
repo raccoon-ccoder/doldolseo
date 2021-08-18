@@ -25,7 +25,17 @@
             $("#popdown").click(function () {
                 $("#popup").fadeOut();
             });
+
         });
+
+        function deletePlanner(plannerNo){
+            var result = confirm("플래너를 삭제하시겠습니까?");
+            if(result == false){
+                return false;
+            }else if(result == true){
+                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&id=${member.id}';
+            }
+        }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
@@ -34,7 +44,7 @@
 </head>
 <body>
 <!-- header -->
-<div class="planD-header">
+<div class="memberL-header__div">
     <jsp:include page="../../header.jsp"/>
 </div>
 <!-- // header -->
@@ -124,7 +134,7 @@
                         <fmt:parseNumber value="${planner.getFDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="first"/>
                         <fmt:parseNumber value="${planner.getLDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="last"/>
                         <span class="planL-detailinfo__span--days">${last - first + 1}DAYS</span>
-                        <button onclick="window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo=${planner.plannerNo}&id=${planner.id}'" class="planL-detailinfo__button--blue">삭제</button>
+                        <button onclick="deletePlanner(${planner.plannerNo})" class="planL-detailinfo__button--blue">삭제</button>
                     </div>
 
                 </div>

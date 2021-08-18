@@ -20,7 +20,7 @@
 </head>
 <body>
     <!-- header -->
-    <div class="planD-header">
+    <div class="memberL-header__div">
         <jsp:include page="../header.jsp"/>
     </div>
     <!-- // header -->
