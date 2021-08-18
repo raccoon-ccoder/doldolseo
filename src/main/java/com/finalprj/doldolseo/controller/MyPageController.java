@@ -2,11 +2,16 @@ package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
+import com.finalprj.doldolseo.dto.crew.CrewCommentDTO;
+import com.finalprj.doldolseo.dto.crew.CrewDTO;
+import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
+import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
 import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.service.MemberService;
 import com.finalprj.doldolseo.service.impl.PlanServiceImpl;
 import com.finalprj.doldolseo.service.impl.PlannerServiceImpl;
+import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
 import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
@@ -54,9 +59,11 @@ public class MyPageController {
     private ReviewServiceImpl reviewService;
 
     @Autowired
+    private CrewBoardServiceImpl crewBoardService;
+
+    @Autowired
     UploadFileUtil fileUtil;
 
-    // 크루 게시글 추가해야함
     @RequestMapping("/updateMember")
     public String updateMember(@RequestParam(value = "memberimg") MultipartFile file,
                                @PageableDefault(size = 5, sort = "wDate", direction = Sort.Direction.DESC) Pageable pageable,
@@ -70,12 +77,34 @@ public class MyPageController {
         // 스프링 시큐리티 세션 갱신
         service.updateMemberSecurity(updatedUser, session);
 
+        // 크루 목록 생성
+        CrewDTO crewDTO = service.getCrew(dto.getId());
+        List<CrewMemberDTO> crewMemberDTO = service.getCrewList(dto.getId());
+        model.addAttribute("crewDTO", crewDTO);
+        model.addAttribute("crewMemberDTO", crewMemberDTO);
+
+        // 사용자 크루활동글 목록
+        Page<CrewPostDTO> crewPostList = service.getCrewPostListByUser(dto.getId(), pageable);
+        PagingUtil crewPostPagingUtil = new PagingUtil(5, crewPostList);
+        model.addAttribute("crewPost_startBlockPage", crewPostPagingUtil.startBlockPage);
+        model.addAttribute("crewPost_endBlockPage", crewPostPagingUtil.endBlockPage);
+        model.addAttribute("crewPostList", crewPostList);
+
+        // 사용자 크루활동댓글 목록
+        Page<CrewCommentDTO> crewCommentList = service.getCrewCommentListByUser(dto.getId(), pageable);
+        PagingUtil crewCommentPagingUtil = new PagingUtil(5, crewCommentList);
+        model.addAttribute("crewComment_startBlockPage", crewCommentPagingUtil.startBlockPage);
+        model.addAttribute("crewComment_endBlockPage", crewCommentPagingUtil.endBlockPage);
+        model.addAttribute("crewCommentList", crewCommentList);
+
+        // 사용자 후기글 목록
         Page<ReviewDTO> reviewList = service.getReviewListByUser(dto.getId(), pageable);
         PagingUtil pagingUtil = new PagingUtil(5, reviewList);
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("reviewList", reviewList);
 
+        // 사용자 댓글 목록
         Page<ReviewCommentDTO> commentList = service.getReviewCommentListByUser(dto.getId(), pageable);
         PagingUtil commentPagingUtil = new PagingUtil(5, commentList);
         model.addAttribute("c_startBlockPage", commentPagingUtil.startBlockPage);
@@ -88,13 +117,35 @@ public class MyPageController {
     @RequestMapping("/mypageD")
     public String mypageDetail(@PageableDefault(size = 5, sort = "wDate", direction = Sort.Direction.DESC) Pageable pageable
                                 ,MemberDTO dto, Model model) throws Exception{
+        // 크루 목록 생성
+        CrewDTO crewDTO = service.getCrew(dto.getId());
+        List<CrewMemberDTO> crewMemberDTO = service.getCrewList(dto.getId());
+        model.addAttribute("crewDTO", crewDTO);
+        model.addAttribute("crewMemberDTO", crewMemberDTO);
 
+        // 사용자 크루활동글 목록
+        Page<CrewPostDTO> crewPostList = service.getCrewPostListByUser(dto.getId(), pageable);
+        PagingUtil crewPostPagingUtil = new PagingUtil(5, crewPostList);
+        model.addAttribute("crewPost_startBlockPage", crewPostPagingUtil.startBlockPage);
+        model.addAttribute("crewPost_endBlockPage", crewPostPagingUtil.endBlockPage);
+        model.addAttribute("crewPostList", crewPostList);
+
+        // 사용자 크루활동댓글 목록
+        Page<CrewCommentDTO> crewCommentList = service.getCrewCommentListByUser(dto.getId(), pageable);
+        PagingUtil crewCommentPagingUtil = new PagingUtil(5, crewCommentList);
+        model.addAttribute("crewComment_startBlockPage", crewCommentPagingUtil.startBlockPage);
+        model.addAttribute("crewComment_endBlockPage", crewCommentPagingUtil.endBlockPage);
+        model.addAttribute("crewCommentList", crewCommentList);
+
+
+        // 사용자 후기글 목록
         Page<ReviewDTO> reviewList = service.getReviewListByUser(dto.getId(), pageable);
         PagingUtil pagingUtil = new PagingUtil(5, reviewList);
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("reviewList", reviewList);
 
+        // 사용자 댓글 목록
         Page<ReviewCommentDTO> commentList = service.getReviewCommentListByUser(dto.getId(), pageable);
         PagingUtil commentPagingUtil = new PagingUtil(5, commentList);
         model.addAttribute("c_startBlockPage", commentPagingUtil.startBlockPage);
@@ -123,6 +174,18 @@ public class MyPageController {
             reviewService.deleteReview(reviewDTO.getReviewNo());
             fileUtil.deleteImages(reviewDTO.getReviewNo());
         }
+
+        // 사용자 크루 게시판 글,댓글 삭제
+        service.deleteCrewCommentListByUser(dto.getId());
+        List<CrewPostDTO> crewPostList = service.getCrewPostListByMember(dto.getId());
+        for(CrewPostDTO crewPostDTO : crewPostList){
+            service.deleteCrewCommentListByPostNo(crewPostDTO.getPostNo());
+            crewBoardService.deletePost(crewPostDTO.getPostNo());
+            fileUtil.deleteCrewImages(crewPostDTO.getPostNo());
+        }
+
+        // 사용자 크루 탈퇴
+        service.deleteCrewMember(dto.getId());
 
         // 사용자 프로필, 계정 삭제
         MemberDTO member = service.selectMember(dto.getId());

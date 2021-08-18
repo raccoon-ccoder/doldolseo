@@ -123,7 +123,8 @@ public class CrewBoardController {
     public void crewBoardInsert(@RequestParam(required = false) String[] uploadImgs,
                                 @RequestParam(required = false) String[] memberName,
                                 CrewPostDTO dto) {
-
+        System.out.println(dto.getCrew().getCrewNo());
+        System.out.println(dto.getMember().getId());
         if (uploadImgs != null) {
             //String배열 문자열 치환 후 문자열로 변경
             String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
