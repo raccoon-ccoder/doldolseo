@@ -217,7 +217,7 @@
                             <td>
                                 <div class="crew-member--idbox">
                                     <div class="crew-member--photo">
-                                        <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
+                                        <img src="${pageContext.request.contextPath}/_image/profile/${crewMember.member.member_img}"/>
                                     </div>
                                     <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.member.id}
                                         <button type="button" class="crew-button"

@@ -1,6 +1,7 @@
 package com.finalprj.doldolseo.dto.review;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.finalprj.doldolseo.domain.Member;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReviewDTO {
         private Long reviewNo;
-        private String id;
+        private Member member;
         private String title;
         private String content;
         private String courseImg;

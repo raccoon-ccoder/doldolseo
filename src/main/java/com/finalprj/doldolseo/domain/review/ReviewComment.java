@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.domain.review;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,10 +22,14 @@ public class ReviewComment {
     @Column(name = "COMMENT_NO")
     private Long commentNo;
 
-    @Column(name = "REVIEW_NO")
-    private Long reviewNo;
+    @ManyToOne
+    @JoinColumn(name = "REVIEW_NO")
+    private Review review;
 
-    private String id;
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    private Member member;
+
     private String content;
 
     @Column(name = "w_date")

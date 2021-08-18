@@ -21,5 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     @Transactional
     void deleteById(String id);
 
-
+    //추가 BY 경
+    Member findOneById(String id);
 }

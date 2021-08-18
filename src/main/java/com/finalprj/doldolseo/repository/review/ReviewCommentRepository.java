@@ -12,21 +12,21 @@ import java.util.List;
 @Repository
 public interface ReviewCommentRepository extends JpaRepository<ReviewComment, Long> {
 
-    List<ReviewComment> findAllByReviewNo(Long reviewNo);
+    List<ReviewComment> findAllByReview_ReviewNo(Long reviewNo);
 
     ReviewComment findByCommentNo(Long commnetNo);
 
     // 사용자 작성 댓글 목록 조회
     // @Author 백정연, @Date 2021/08/12
-    Page<ReviewComment> findAllById(String id, Pageable pageable);
+    Page<ReviewComment> findAllByMemberId(String id, Pageable pageable);
 
     // 사용자 작성 댓글 삭제
     // @Author 백정연, @Date 2021/08/13
     @Transactional
-    void deleteAllById(String id);
+    void deleteAllByMemberId(String id);
 
     // 특정 글의 모든 댓글 삭제
     // @Author 백정연, @Date 2021/08/13
     @Transactional
-    void deleteAllByReviewNo(Long reviewNo);
+    void deleteAllByReview_ReviewNo(Long reviewNo);
 }
