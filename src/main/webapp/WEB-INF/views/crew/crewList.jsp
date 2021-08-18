@@ -7,6 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
         <nav class="crew-navi">
             <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crew/board">크루활동</a></span>
             <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crewL">크루목록</a></span>
-            <button id="crew-navi__btn--mycrew" class="crew-button">My Crew</button>
+            <button id="crew-navi__btn--mycrew" type="button" class="crew-button">My Crew</button>
         </nav>
 
         <%-- 상단 제목,드릴다운 : 공통 --%>
@@ -48,9 +49,22 @@
                     <span> > </span>
                     <a href="#">크루 목록</a>
             </span>
-            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewI'">
-                크루 생성
-            </button>
+
+                <security:authorize access="isAuthenticated()">
+                    <c:choose>
+                        <c:when test="${member.crleader eq 'y'} ">
+                            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewM'">
+                                크루 관리
+                            </button>
+                        </c:when>
+                        <c:otherwise>
+                            <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewI'">
+                                크루 생성
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
+                </security:authorize>
+
         </div>
 
         <%-- 상단 정렬버튼 + 검색창 --%>

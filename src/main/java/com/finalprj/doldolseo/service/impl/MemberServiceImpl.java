@@ -169,4 +169,13 @@ public class MemberServiceImpl implements MemberService {
         return result.isPresent()? 0 : 1;
         // 중복된 닉네임이 있으면 0, 없다면 1
     }
+
+    //메소드 추가 by gyeong
+    public void setMemberToCrleader(String id){
+        MemberDTO dto = selectMember(id);
+        dto.setCrleader('y');
+        Member member = dtoToEntity(dto);
+
+        repository.save(member);
+    }
 }

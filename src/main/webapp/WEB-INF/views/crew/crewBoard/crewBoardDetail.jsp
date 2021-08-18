@@ -75,18 +75,20 @@
         </div>
 
         <%-- 글 수정 및 삭제 버튼 --%>
-        <div class="cBoardD-btnbox-edit">
-            <button class="crew-button"
-                    onclick="location.href='${pageContext.request.contextPath}/crew/board/${crewPost.postNo}/edit'"
-                    style="margin-right: 10px;">수정 하기
-            </button>
+        <c:if test="${member.id eq crewPost.member.id}">
+            <div class="cBoardD-btnbox-edit">
+                <button class="crew-button"
+                        onclick="location.href='${pageContext.request.contextPath}/crew/board/${crewPost.postNo}/edit'"
+                        style="margin-right: 10px;">수정 하기
+                </button>
 
-            <form:form action="${pageContext.request.contextPath}/crew/board/${crewPost.postNo}" method="delete">
-                <input type="hidden" name="_method" value="delete"/>
-                <input type="hidden" name="postNo" value="${crewPost.postNo}">
-                <button type="submit" class="crew-button">글 삭제</button>
-            </form:form>
-        </div>
+                <form:form action="${pageContext.request.contextPath}/crew/board/${crewPost.postNo}" method="delete">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" name="postNo" value="${crewPost.postNo}">
+                    <button type="submit" class="crew-button">글 삭제</button>
+                </form:form>
+            </div>
+        </c:if>
 
         <%-- 상세 글 목록  --%>
         <table id="cBoardD-tablelayout">
@@ -197,7 +199,7 @@
                 dataType: 'json',
                 type: 'GET',
                 success: function (data) {
-                    appendComment(data, '${pageContext.request.contextPath}', 'sample2.png');
+                    appendComment(data, '${pageContext.request.contextPath}', '${member.member_img}');
                     enableEditMode();
                 }
             });
@@ -209,20 +211,34 @@
         </table>
 
         <%-- 댓글 입력 폼 --%>
-        <form id="cBoardD-commentForm" method="post">
-            <div class="comment__input" id="cBoardD-comment__input">
-                <input type="hidden" name="member.id" value="kki7823">
-                <input type="hidden" name="crewPost.postNo" value=${postNo}>
-                <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
-                          onfocusin="changeBorderOnFocus()"
-                          onfocusout="changeBorderOnFocusOut()"></textarea>
-                <div class="comment__buttonbox">
-                    <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${postNo})"
-                            class="button--comment">등록
-                    </button>
+        <c:choose>
+            <c:when test="${member.id eq null}">
+                <div class="comment__input">
+                    <textarea name="content" placeholder="로그인이 필요합니다." readonly="readonly"></textarea>
+                    <div class="comment__buttonbox">
+                    </div>
                 </div>
-            </div>
-        </form>
+            </c:when>
+            <c:otherwise>
+                <form id="cBoardD-commentForm" method="post">
+                    <div class="comment__input" id="cBoardD-comment__input">
+                        <input type="hidden" name="member.id" value="${member.id}">
+                        <input type="hidden" name="crewPost.postNo" value=${postNo}>
+                        <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
+                                  onfocusin="changeBorderOnFocus()"
+                                  onfocusout="changeBorderOnFocusOut()"></textarea>
+                        <div class="comment__buttonbox">
+                            <button type="button"
+                                    onclick="insertComment('${pageContext.request.contextPath}',${postNo})"
+                                    class="button--comment">등록
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </c:otherwise>
+        </c:choose>
+
+
     </section>
 
 
