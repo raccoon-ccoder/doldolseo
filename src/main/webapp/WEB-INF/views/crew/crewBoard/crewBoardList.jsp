@@ -58,7 +58,11 @@
                 <button class="crew-button">크루 전체</button>
                 <button class="crew-button">내 크루만</button>
             </div>
-            <button id="cBoardL-btn--write" class="crew-button" onclick=location.href="${pageContext.request.contextPath}/crew/board/new?id=test28">글쓰기</button>
+            <c:if test="${isJoinedCrew}">
+                <button id="cBoardL-btn--write" class="crew-button"
+                        onclick=location.href="${pageContext.request.contextPath}/crew/board/new?id=${member.id}">글쓰기
+                </button>
+            </c:if>
         </div>
 
         <table id="cBoardL-list">
@@ -77,7 +81,9 @@
                 <tr class="list--item">
                     <td>${crewPosts.crew.crewName}</td>
                     <td>${crewPosts.category}</td>
-                    <td><a href="${pageContext.request.contextPath}/crew/board/${crewPosts.postNo}">${crewPosts.title}</a></td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/crew/board/${crewPosts.postNo}">${crewPosts.title}</a>
+                    </td>
                     <td>${crewPosts.member.nickname}</td>
                     <td>${dateYMDMH}</td>
                     <td>${crewPosts.hit}</td>

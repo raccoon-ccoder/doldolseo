@@ -29,7 +29,7 @@ public class CrewMemberServiceImpl {
     ModelMapper modelMapper;
 
     //크루원 조회
-    public CrewMemberDTO getCrewMember(Long regNo){
+    public CrewMemberDTO getCrewMember(Long regNo) {
         CrewMember crewMember = crewMemberRepository.findByRegNo(regNo);
         CrewMemberDTO dto = modelMapper.map(crewMember, CrewMemberDTO.class);
 
@@ -44,7 +44,7 @@ public class CrewMemberServiceImpl {
 
     //크루번호로 크루가입자 명단 조회
     public List<CrewMemberDTO> getCrewMembers(Long crewNo) {
-        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo,true);
+        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo, true);
         List<CrewMemberDTO> crewMember = modelMapper.map(crewMembersEntity, new TypeToken<List<CrewMemberDTO>>() {
         }.getType());
 
@@ -53,7 +53,7 @@ public class CrewMemberServiceImpl {
 
     //크루번호로 크루가입대기자 명단 조회
     public List<CrewMemberDTO> getWatingMember(Long crewNo) {
-        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo,false);
+        List<CrewMember> crewMembersEntity = crewMemberRepository.findByCrewCrewNoAndState(crewNo, false);
         List<CrewMemberDTO> WatingMember = modelMapper.map(crewMembersEntity, new TypeToken<List<CrewMemberDTO>>() {
         }.getType());
 
@@ -67,24 +67,38 @@ public class CrewMemberServiceImpl {
 
     //크루 가입 승인
     @Transactional
-    public void updateCrew(Long regNo){
+    public void updateCrew(Long regNo) {
         CrewMember member = crewMemberRepository.findByRegNo(regNo);
         member.setState(true);
     }
 
     //크루 가입 거절 및 회원 강퇴
-    public void deleteCrew(Long regNo){
+    public void deleteCrew(Long regNo) {
         crewMemberRepository.deleteById(regNo);
     }
 
     //회원id로 가입된 크루 명단 조회
-    public List<CrewMemberDTO> getMyCrewList(String id){
+    public List<CrewMemberDTO> getMyCrewList(String id) {
 
         List<CrewMember> crewMembers = crewMemberRepository.findAllByMemberId(id);
         List<CrewMemberDTO> crewMembersDTO = modelMapper.map(crewMembers, new TypeToken<List<CrewMemberDTO>>() {
         }.getType());
 
         return crewMembersDTO;
+    }
+
+    public int countMember(String id) {
+        return crewMemberRepository.countCrewMemberByMemberId(id);
+    }
+
+    public boolean isJoinedCrew(String id) {
+        return crewMemberRepository.existsByMemberId(id);
+    }
+
+    //아이디, 크루번호로 해당 크루멤버 조회
+    public CrewMemberDTO getCrewMember(String id , Long crewNo){
+        CrewMember crewMemberEntity = crewMemberRepository.findByMemberIdAndCrewCrewNo(id,crewNo);
+        return  modelMapper.map(crewMemberEntity, CrewMemberDTO.class);
     }
 
 }

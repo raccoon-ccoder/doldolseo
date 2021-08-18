@@ -25,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,7 +55,7 @@ public class CrewBoardController {
     @GetMapping("/crew/board")
     public String crewBoardList(Model model,
                                 @RequestParam(name = "cat", required = false) String category,
-                                @PageableDefault(size = 30, sort = "wDate", direction = Sort.Direction.DESC) Pageable pageable) throws Exception {
+                                @PageableDefault(size = 30, sort = "wDate", direction = Sort.Direction.DESC) Pageable pageable, HttpSession session) throws Exception {
 
         Page<CrewPostDTO> crewPosts;
 
@@ -64,12 +65,16 @@ public class CrewBoardController {
             crewPosts = crewBoardService.getCrewPostsByCat(category, pageable);
         }
 
-
         PagingUtil pagingUtil = new PagingUtil(10, crewPosts);
+
         model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
         model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
         model.addAttribute("crewPosts", crewPosts);
 
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+        boolean hasCrew = crewMemberService.isJoinedCrew(memberDTO.getId());
+
+        model.addAttribute("isJoinedCrew", hasCrew);
         return "/crew/crewBoard/crewBoardList";
     }
 
@@ -137,7 +142,12 @@ public class CrewBoardController {
         Member member = memberService.dtoToEntity(memberDTO);
 
         Crew crew = modelMapper.map(crewDTO, Crew.class);
-        String memberList = Arrays.stream(memberName).map(s -> s = s.split("/")[1].replace("\"", "")).collect(Collectors.joining(","));
+
+        String memberList = null;
+
+        if (memberName != null) {
+            memberList = Arrays.stream(memberName).map(s -> s = s.split("/")[1].replace("\"", "")).collect(Collectors.joining(","));
+        }
 
         CrewPostDTO post = crewBoardService.insertPost(dto, crew, member, memberList);
         if (post.getUploadImg() != null) {
