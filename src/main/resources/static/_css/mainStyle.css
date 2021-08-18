@@ -2573,11 +2573,13 @@ table {
 .mypageD-boardcontainer {
     width: 900px;
     height: 280px;
+    margin-bottom: 100px;
 }
 
 .mypageD-crewpostcontainer{
     width: 900px;
     height: 280px;
+    margin-bottom: 80px;
 }
 
 .mypageD-crewcommentcontainer{
@@ -2587,6 +2589,7 @@ table {
 .mypageD-commentcontainer {
     width: 900px;
     height: 280px;
+    margin-bottom: 80px;
 }
 
 .mypageD-boardcontainer__span--big {
@@ -3968,7 +3971,7 @@ table {
 
 #memberJ-idcontainer__input--pw {
     background-color: white;
-    background-image: url("../_image/lock/lock_basic.png");
+    background-image: url("../_image/member/lock/lock_basic.png");
     background-size: 22px;
     background-position: 420px 6px;
     background-repeat: no-repeat;
@@ -3976,7 +3979,7 @@ table {
 
 #memberJ-idcontainer__input--pw2 {
     background-color: white;
-    background-image: url("../_image/lock/lock_basic.png");
+    background-image: url("../_image/member/lock/lock_basic.png");
     background-size: 22px;
     background-position: 420px 6px;
     background-repeat: no-repeat;
