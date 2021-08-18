@@ -319,7 +319,7 @@ function planInsert(place_name,place_y,place_x){
 function getHtml(place_name,place_y,place_x,num, data_date){
     var div = "<div class=\"planI-planbox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\" data-planNo=\"\">";
     div += "<div class=\"planI-plannum\">";
-    div += "<img src=\"_image/num/number" + num + ".png\" class=\"planI-plannum__img-navy\">";
+    div += "<img src=\"_image/plan/num/number" + num + ".png\" class=\"planI-plannum__img-navy\">";
     div += "<span class=\"planI-plannum__span--time\">시간</span>";
     div += "<span class=\"planI-plannum__span--memo\">메모</span></div>";
     div += " <div class=\"planI-plandetail\">";
@@ -345,7 +345,7 @@ function planDelete(num){
     kid.detach();
 
     next_kids.each(function (index, element){
-        var url = "_image/num/number" + num + ".png";
+        var url = "_image/plan/num/number" + num + ".png";
         $(this).find('img').attr("src", url);
 
         var btn = "planDelete(" + num + ")";
