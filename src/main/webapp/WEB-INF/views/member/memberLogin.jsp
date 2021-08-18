@@ -55,7 +55,7 @@
 
     <!-- loginForm -->
     <div id="memberL-container">
-        <img id="memberL-container__image--small" src="${pageContext.request.contextPath}/_image/logo.png">
+        <img id="memberL-container__image--small" src="${pageContext.request.contextPath}/_image/member/logo.png">
 
         <form action="${pageContext.request.contextPath}/login" method="post" name="loginForm" onsubmit="return loginCheck()">
             <div>

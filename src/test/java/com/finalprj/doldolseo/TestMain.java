@@ -1,6 +1,7 @@
 package com.finalprj.doldolseo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import oracle.sql.CHAR;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.servlet.ServletContext;
@@ -17,9 +18,11 @@ import java.util.Optional;
 public class TestMain {
     public static void main(String[] args) {
 
-        List<String> list = new ArrayList<>();
-        list.add("123");
+        String ss = "y";
+        Character ss2 = 'y';
 
-        System.out.println(list.contains("123"));
+        System.out.println(ss2.toString() == ss);
+
+
     }
 }

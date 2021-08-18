@@ -121,7 +121,7 @@
 
     <!-- header -->
     <div class="planI-header">
-        <a href="${pageContext.request.contextPath}/main"><img src="_image/logo.png"></a>
+        <a href="${pageContext.request.contextPath}/main"><img src="_image/plan/logo.png"></a>
 
         <button class="planI-header__button--sumbit">저장</button>
         <button class="planI-header__button--close" onclick="location.href='${pageContext.request.contextPath}/planL?id=${member.id}'">닫기</button>

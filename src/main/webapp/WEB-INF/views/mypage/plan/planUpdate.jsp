@@ -118,7 +118,7 @@
 
 <!-- header -->
 <div class="planI-header">
-    <a href="${pageContext.request.contextPath}/main"><img src="_image/logo.png"></a>
+    <a href="${pageContext.request.contextPath}/main"><img src="_image/plan/logo.png"></a>
 
     <button class="planI-header__button--sumbit">저장</button>
     <button class="planI-header__button--close" onclick="location.href='${pageContext.request.contextPath}/planL?id=${member.id}'">닫기</button>
@@ -158,7 +158,7 @@
                     <c:if test="${nowDate eq openDate}">
                         <div class="planI-planbox" data-date="<fmt:formatDate value="${plan.day}" pattern="yyyy-MM-dd" />" data-y="${plan.y}" data-x="${plan.x}" data-planNo="${plan.planNo}">
                             <div class="planI-plannum">
-                                <img src="_image/num/number<%=i%>.png" class="planI-plannum__img-navy">
+                                <img src="_image/plan/num/number<%=i%>.png" class="planI-plannum__img-navy">
 
                                 <span class="planI-plannum__span--time">시간</span>
 

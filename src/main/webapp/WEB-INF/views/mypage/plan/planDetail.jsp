@@ -33,7 +33,7 @@
             });
 
             let randomNum = Math.floor(Math.random() * 5) + 1;
-            $('.planD-imgbox').children('img').attr('src', '${pageContext.request.contextPath}/_image/tour/tour' + randomNum + '.jpg');
+            $('.planD-imgbox').children('img').attr('src', '${pageContext.request.contextPath}/_image/plan/tour/tour' + randomNum + '.jpg');
 
             var slide = document.querySelectorAll(".planD-map");
             var listslides = document.querySelectorAll(".planD-placelist");
@@ -84,7 +84,7 @@
             <!-- 플래너 상단 (제목)-->
             <div class="planD-titlebox">
                 <div class="planD-imgbox">
-                    <img src="${pageContext.request.contextPath}/_image/tour/tour1.jpg" class="planD-imgbox--img__big">
+                    <img src="${pageContext.request.contextPath}/_image/plan/tour/tour1.jpg" class="planD-imgbox--img__big">
                         <span class="planD-titledetail">${planner.title}</span>
 
                         <fmt:parseNumber value="${planner.getFDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="first"/>
@@ -135,7 +135,7 @@
 
                                 <div class="planD-detail">
                                     <div class="planD-detailnumber">
-                                        <img class="planD-detailnumber__img--navy" src="${pageContext.request.contextPath}/_image/num/number<%=i%>.png">
+                                        <img class="planD-detailnumber__img--navy" src="${pageContext.request.contextPath}/_image/plan/num/number<%=i%>.png">
                                     </div>
 
                                     <div class="planD-detailplace">
@@ -262,7 +262,7 @@
 
                                         <c:if test="${nowDate eq openDate}">
                                             <div class="planD-placedetail">
-                                                <img src="${pageContext.request.contextPath}/_image/num/number<%=j%>.png" class="planD-placedetail__img--navy">
+                                                <img src="${pageContext.request.contextPath}/_image/plan/num/number<%=j%>.png" class="planD-placedetail__img--navy">
                                                 <span class="planD-placedetail__span--small" title="${plan.name}">${plan.name}</span>
                                             </div>
                                             <% ++j;%>

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>지역 게시판</title>
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <%-- contentId 통한 overview(내용) 추출 --%>
@@ -73,7 +73,7 @@
                         <img src="${area.image1}" width="550" height="500" alt="area_image">
                     </c:when>
                     <c:otherwise>
-                        <img src="_image/area/areaListData/default.png" width="550" height="500" alt="area_image"/>
+                            <img src="${pageContext.request.contextPath}/_image/area/areaListData/default.png" width="550" height="500" alt="area_image"/>
                     </c:otherwise>
                 </c:choose>
             </div>

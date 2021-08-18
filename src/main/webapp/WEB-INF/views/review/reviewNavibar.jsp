@@ -61,5 +61,5 @@
             </a>
         </li>
     </ul>
-    <div id="nav-backimg"><img src="${pageContext.request.contextPath}/_image/sample_back1.png"></div>
+    <div id="nav-backimg"><img src="${pageContext.request.contextPath}/_image/nav/navi_image.png"></div>
 </div>

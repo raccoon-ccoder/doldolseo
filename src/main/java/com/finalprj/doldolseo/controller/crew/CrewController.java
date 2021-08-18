@@ -119,7 +119,9 @@ public class CrewController {
 //            System.out.println("잘못된 접근 입니다");
 //            return "redirect:/crewL";
 //        }
-        CrewDTO crew = crewService.getCrewById(session.getId());
+        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        System.out.println("ssssssssssssssssssssssssssssss"+member.getId());
+        CrewDTO crew = crewService.getCrewById(member.getId());
 
 
         List<CrewMemberDTO> crewMembers = crewMemberService.getCrewMembers(crew.getCrewNo());

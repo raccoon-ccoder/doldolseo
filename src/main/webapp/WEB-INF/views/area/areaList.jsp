@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>AREA LIST</title>
     <%-- 메인 스타일 시트 --%>
-    <link href="_css/mainStyle.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <!--헤더-->
@@ -18,7 +18,7 @@
     <section id="areaList-container">
         <!--지역별 배경사진-->
         <div id="areaList-img">
-            <img src="_image/area/areaBanner/areaImage_${sigungu}.png" width="1500" height="550px">
+            <img src="${pageContext.request.contextPath}/_image/area/areaBanner/areaImage_${sigungu}.png" width="1500" height="550px">
         </div>
 
         <!-- 게시판 드릴 다운 메뉴 -->
@@ -90,7 +90,7 @@
                                         <img src="${areaList.image1}" width="250" height="250" alt="area image">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="_image/area/areaListData/default.png" width="250" height="250"
+                                        <img src="${pageContext.request.contextPath}/_image/area/areaListData/default.png" width="250" height="250"
                                              alt="area image">
                                     </c:otherwise>
                                 </c:choose>

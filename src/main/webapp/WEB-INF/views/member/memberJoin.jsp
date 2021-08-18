@@ -72,7 +72,7 @@
     <!-- header -->
     <div id="header" class="memberJ-header">
         <a href="${pageContext.request.contextPath}/main" id="memberJ-header__a">
-            <img id="logoImg" class="memberJ-header__img--small" src="${pageContext.request.contextPath}/_image/logo.png">
+            <img id="logoImg" class="memberJ-header__img--small" src="${pageContext.request.contextPath}/_image/member/logo.png">
         </a>
     </div>
     <!-- header -->
@@ -182,7 +182,7 @@
         <!-- 프로필 사진 등록 -->
         <div class="memberJ-imgcontainer">
             <h4 class="memberJ-container__h4--big">프로필 사진 (선택)</h4>
-            <img id="my_img" class="memberJ-imgcontainer__img-small" src="${pageContext.request.contextPath}/_image/sample.png">
+            <img id="my_img" class="memberJ-imgcontainer__img-small" src="${pageContext.request.contextPath}/_image/member/sample.png">
             <label id="my_img_label" class="memberJ-imgcontainer__label-blue" for="member_img">업로드</label>
             <input type="file" name="memberimg" id="member_img" class="memberJ-imgcontainer__input-disappear" value="" onchange="setImg(event);">
         </div>

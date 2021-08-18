@@ -52,7 +52,7 @@
 
                 <security:authorize access="isAuthenticated()">
                     <c:choose>
-                        <c:when test="${member.crleader eq 'y'} ">
+                        <c:when test="${member.crleader.toString() eq 'y' }">
                             <button id="crew-topContainer__crewBtn" onclick="location.href='${pageContext.request.contextPath}/crewM'">
                                 크루 관리
                             </button>

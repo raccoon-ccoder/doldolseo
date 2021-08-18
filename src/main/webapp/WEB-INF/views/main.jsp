@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link href="_css/mainStyle.css" type="text/css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/_css/mainStyle.css" type="text/css" rel="stylesheet">
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
     <script type="text/javascript" src="http://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
@@ -53,7 +53,7 @@
 
         <!--배경사진-->
         <div id="main_img--seoul">
-            <img src="_image/seoul/seoul2.png" width="1600px;" height="500px;">
+            <img src="${pageContext.request.contextPath}/_image/main/seoul/seoul2.png" width="1600px;" height="500px;">
         </div>
 
         <hr style=" width:100%; color:#bac8d9; margin-top: 40px">
@@ -65,10 +65,10 @@
                  style="vertical-align: top; padding-top: 80px" class="bi bi-caret-left" viewBox="0 0 16 16">
                 <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"></path>
             </svg>
-            <img id="img1" src="_image/testdol/dol1.png" width="300px" height="250px">
-            <img id="img2" src="_image/testdol/dol2.png" width="300px" height="250px"
+            <img id="img1" src="${pageContext.request.contextPath}/_image/main/testdol/dol1.png" width="300px" height="250px">
+            <img id="img2" src="${pageContext.request.contextPath}/_image/main/testdol/dol2.png" width="300px" height="250px"
                  style="margin-left: 40px; margin-right: 40px;">
-            <img id="img3" src="_image/testdol/dol3.png" width="300px" height="250px">
+            <img id="img3" src="${pageContext.request.contextPath}/_image/main/testdol/dol3.png" width="300px" height="250px">
             <svg onclick="convertAfterImg()" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#495c75"
                  style="vertical-align: top; padding-top: 80px" class="bi bi-caret-right" viewBox="0 0 16 16">
                 <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"></path>
@@ -82,7 +82,7 @@
             <p>SEOUL AREA</p>
         </div>
         <div id="main_map">
-            <img class="map" src="_image/seoul/map-fi-c-1.png" usemap="#image-map" alt="map"/>
+            <img class="map" src="${pageContext.request.contextPath}/_image/main/seoul/map-fi-c-1.png" usemap="#image-map" alt="map"/>
             <map name="image-map">
                 <area target="" alt="광화문" title="광화문" href="#" coords="337,150,58" shape="circle">
                 <area target="" alt="홍대" title="홍대" href="#" coords="350,260,52" shape="circle">
@@ -122,11 +122,11 @@
                         </svg>
 
                         <div id="main_crew--bc--photo">
-                            <img src="_image/crewtest/dance.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="_image/crewtest/1.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="_image/crewtest/2.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="_image/crewtest/3.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="_image/crewtest/4.png" width="230px" height="200px"alt="crew_logo">
+                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/dance.png" width="230px" height="200px" alt="crew_logo">
+                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/1.png" width="230px" height="200px" alt="crew_logo">
+                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/2.png" width="230px" height="200px" alt="crew_logo">
+                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/3.png" width="230px" height="200px" alt="crew_logo">
+                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/4.png" width="230px" height="200px"alt="crew_logo">
                         </div>
 
                         <svg id="next" xmlns="http://www.w3.org/2000/svg"
@@ -194,6 +194,6 @@
         <jsp:include page="footer.jsp"/>
     </div>
 
-    <script type="text/javascript" src="_js/mainUtil.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainUtil.js"></script>
 </body>
 </html>

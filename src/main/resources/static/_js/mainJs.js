@@ -68,11 +68,11 @@ function pwCheck(){
 
     if(num.test(pw) && eng.test(pw) && spe.test(pw) && pw.length >7 && pw.length <= 20) {
         document.joinFrm.check_pw.value = "y";
-        document.joinFrm.password.style.backgroundImage = "url('_image/lock/lock_blue.png')";
+        document.joinFrm.password.style.backgroundImage = "url('_image/member/lock/lock_blue.png')";
         document.getElementById('validate_pw').innerText = "";
     }else{
         document.joinFrm.check_pw.value = "";
-        document.joinFrm.password.style.backgroundImage = "url('_image/lock/lock_red.png')"
+        document.joinFrm.password.style.backgroundImage = "url('_image/member/lock/lock_red.png')"
         document.getElementById('validate_pw').innerText = "8~20자 영문, 숫자, 특수문자를 사용하세요.";
     }
 }
@@ -88,11 +88,11 @@ function pw2Check(){
     var re_pw = document.joinFrm.password2.value;
     if(pw == re_pw){
         document.joinFrm.check_pw2.value = "y";
-        document.joinFrm.password2.style.backgroundImage = "url('_image/lock/lock_blue.png')";
+        document.joinFrm.password2.style.backgroundImage = "url('_image/member/lock/lock_blue.png')";
         document.getElementById('validate_pw2').innerText = "";
     }else{
         document.joinFrm.check_pw2.value = "";
-        document.joinFrm.password2.style.backgroundImage = "url('_image/lock/lock_red.png')"
+        document.joinFrm.password2.style.backgroundImage = "url('_image/member/lock/lock_red.png')"
         document.getElementById('validate_pw2').innerText = "비밀번호가 일치하지 않습니다. ";
     }
 }
