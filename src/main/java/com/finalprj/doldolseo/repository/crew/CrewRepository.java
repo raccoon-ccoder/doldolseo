@@ -20,7 +20,4 @@ public interface CrewRepository extends JpaRepository<Crew, Long> {
     /* 크루번호, 아이디로 해당 ID가 크루장인지 조회*/
     boolean existsByCrewNoAndMemberId(Long crewNo, String id);
 
-    /* @Author 백정연 @Date 2021/08/03 */
-    /* 사용자가 가입된 크루 조회 */
-    Crew findByMemberId(String id);
 }

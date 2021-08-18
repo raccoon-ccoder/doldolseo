@@ -149,7 +149,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public CrewDTO getCrew(String id) {
         Crew crew = crewRepository.findByMemberId(id);
-        CrewDTO dto = modelMapper.map(crew, CrewDTO.class);
+        CrewDTO dto = null;
+        if(crew != null){
+            dto = modelMapper.map(crew, CrewDTO.class);
+        }
         return dto;
     }
 
@@ -158,9 +161,11 @@ public class MemberServiceImpl implements MemberService {
     public List<CrewMemberDTO> getCrewList(String id) {
         Member member = repository.findById(id).get();
         List<CrewMember> crew = crewMemberRepository.findAllByMemberId(id);
-        List<CrewMemberDTO> dto = modelMapper.map(crew, new TypeToken<List<CrewMemberDTO>>() {
-        }.getType());
-
+        List<CrewMemberDTO> dto = null;
+        if(crew != null){
+            dto = modelMapper.map(crew, new TypeToken<List<CrewMemberDTO>>() {
+            }.getType());
+        }
         return dto;
     }
 
