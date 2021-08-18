@@ -1,14 +1,22 @@
 package com.finalprj.doldolseo.service.impl;
 
 import com.finalprj.doldolseo.domain.crew.Crew;
+import com.finalprj.doldolseo.domain.crew.CrewComment;
+import com.finalprj.doldolseo.domain.crew.CrewMember;
+import com.finalprj.doldolseo.domain.crew.CrewPost;
 import com.finalprj.doldolseo.domain.review.Review;
 import com.finalprj.doldolseo.domain.review.ReviewComment;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.crew.CrewCommentDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
+import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
+import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
 import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.repository.MemberRepository;
+import com.finalprj.doldolseo.repository.crew.CrewBoardRepository;
+import com.finalprj.doldolseo.repository.crew.CrewCommentRepository;
 import com.finalprj.doldolseo.repository.crew.CrewMemberRepository;
 import com.finalprj.doldolseo.repository.crew.CrewRepository;
 import com.finalprj.doldolseo.repository.review.ReviewCommentRepository;
@@ -55,6 +63,12 @@ public class MemberServiceImpl implements MemberService {
     private CrewMemberRepository crewMemberRepository;
 
     @Autowired
+    private CrewBoardRepository crewBoardRepository;
+
+    @Autowired
+    private CrewCommentRepository crewCommentRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -63,29 +77,6 @@ public class MemberServiceImpl implements MemberService {
     // 추가 코드
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    // MemberDTO 객체를 Member 객체로 변환해서 반환해주는 메소드
-    public Member selectMemberEntity(Member entity){
-        Member member = repository.findById(entity.getId()).get();
-        return member;
-    }
-
-    // 스프링 시큐리티 세션 변경 처리 메소드
-    @Override
-    public void updateMemberSecurity(MemberDTO dto, HttpSession session){
-        // 세션 초기화
-        SecurityContextHolder.clearContext();
-        UserDetails updateUserDetails = new SecurityDetails(dto);
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, null, updateUserDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(newAuth);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", newAuth);
-    }
-
-    @Override
-    public List<CrewDTO> getCrewList(String id) {
-
-        return null;
-    }
 
     @Override
     public MemberDTO save(MemberDTO memberDTO) throws IOException {
@@ -96,7 +87,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = dtoToEntity(memberDTO);
         Member validUser = repository.save(member);
         MemberDTO dto = entityToDto(validUser);
-        return  dto;
+        return dto;
     }
 
     //temp BY gyeong
@@ -105,20 +96,107 @@ public class MemberServiceImpl implements MemberService {
         Member memberEntity = dtoToEntity(memberDTO);
         Member member = repository.save(memberEntity);
         MemberDTO dto = entityToDto(member);
-        return  dto;
+        return dto;
     }
 
     @Override
     public MemberDTO selectMember(String id) {
         Optional<Member> member = repository.findById(id);
-        return member.isPresent()? entityToDto(member.get()) : null;
+        return member.isPresent() ? entityToDto(member.get()) : null;
+    }
+
+
+    @Override
+    public int deleteMember(String id) {
+        repository.deleteById(id);
+        Optional<Member> result = repository.findById(id);
+        return !(result.isPresent()) ? 0 : 1;
+        // 계정이 삭제되었다면 0, 그렇지 않다면 1
     }
 
     @Override
-    public Page<ReviewDTO> getReviewListByUser(String id,Pageable pageable) {
+    public int checkId(String id) {
+        Optional<Member> result = repository.findById(id);
+        return result.isPresent() ? 0 : 1;
+        // 중복된 아이디가 있으면 0, 없다면 1
+    }
+
+    @Override
+    public int checkNickname(String nickname) {
+        Optional<Member> result = repository.findByNickname(nickname);
+        return result.isPresent() ? 0 : 1;
+        // 중복된 닉네임이 있으면 0, 없다면 1
+    }
+
+    // MemberDTO 객체를 Member 객체로 변환해서 반환해주는 메소드
+    public Member selectMemberEntity(Member entity) {
+        Member member = repository.findById(entity.getId()).get();
+        return member;
+    }
+
+    // 스프링 시큐리티 세션 변경 처리 메소드
+    @Override
+    public void updateMemberSecurity(MemberDTO dto, HttpSession session) {
+        // 세션 초기화
+        SecurityContextHolder.clearContext();
+        UserDetails updateUserDetails = new SecurityDetails(dto);
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(updateUserDetails, null, updateUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", newAuth);
+    }
+
+    // 사용자 크루 조회 (크루장)
+    @Override
+    public CrewDTO getCrew(String id) {
+        Crew crew = crewRepository.findByMemberId(id);
+        CrewDTO dto = modelMapper.map(crew, CrewDTO.class);
+        return dto;
+    }
+
+    // 사용자 크루 조회 (크루원)
+    @Override
+    public List<CrewMemberDTO> getCrewList(String id) {
+        Member member = repository.findById(id).get();
+        List<CrewMember> crew = crewMemberRepository.findAllByMemberId(id);
+        List<CrewMemberDTO> dto = modelMapper.map(crew, new TypeToken<List<CrewMemberDTO>>() {
+        }.getType());
+
+        return dto;
+    }
+
+    @Override
+    public List<CrewPostDTO> getCrewPostListByMember(String id) {
+        List<CrewPost> entityPage = crewBoardRepository.findAllByMemberId(id);
+        List<CrewPostDTO> list = modelMapper.map(entityPage,
+                new TypeToken<List<CrewPostDTO>>() {
+                }.getType());
+        return list;
+    }
+
+    @Override
+    public Page<CrewPostDTO> getCrewPostListByUser(String id, Pageable pageable) {
+        Page<CrewPost> entityPage = crewBoardRepository.findAllByMemberId(id, pageable);
+        Page<CrewPostDTO> list = modelMapper.map(entityPage,
+                new TypeToken<Page<CrewPostDTO>>() {
+                }.getType());
+        return list;
+    }
+
+    @Override
+    public Page<CrewCommentDTO> getCrewCommentListByUser(String id, Pageable pageable) {
+        Page<CrewComment> entityPage = crewCommentRepository.findAllByMemberId(id, pageable);
+        Page<CrewCommentDTO> list = modelMapper.map(entityPage,
+                new TypeToken<Page<CrewCommentDTO>>() {
+                }.getType());
+        return list;
+    }
+
+    @Override
+    public Page<ReviewDTO> getReviewListByUser(String id, Pageable pageable) {
         Page<Review> entityPage = reviewRepository.findAllById(id, pageable);
         Page<ReviewDTO> reviewList = modelMapper.map(entityPage,
-                new TypeToken<Page<ReviewDTO>>(){}.getType());
+                new TypeToken<Page<ReviewDTO>>() {
+                }.getType());
 
         return reviewList;
     }
@@ -127,16 +205,34 @@ public class MemberServiceImpl implements MemberService {
     public Page<ReviewCommentDTO> getReviewCommentListByUser(String id, Pageable pageable) {
         Page<ReviewComment> entityPage = commentRepository.findAllById(id, pageable);
         Page<ReviewCommentDTO> commentList = modelMapper.map(entityPage,
-                new TypeToken<Page<ReviewCommentDTO>>(){}.getType());
+                new TypeToken<Page<ReviewCommentDTO>>() {
+                }.getType());
         return commentList;
     }
 
     @Override
     public List<ReviewDTO> getReviewListByMember(String id) {
         List<Review> reviews = reviewRepository.findAllById(id);
-        List<ReviewDTO> reviewList = modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>(){}.getType());
+        List<ReviewDTO> reviewList = modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>() {
+        }.getType());
         return reviewList;
     }
+
+    @Override
+    public void deleteCrewMember(String id) {
+        crewMemberRepository.deleteAllByMemberId(id);
+    }
+
+    @Override
+    public void deleteCrewCommentListByUser(String id) {
+        crewCommentRepository.deleteAllByMemberId(id);
+    }
+
+    @Override
+    public void deleteCrewCommentListByPostNo(Long postNo) {
+        crewCommentRepository.deleteAllByCrewPostPostNo(postNo);
+    }
+
 
     @Override
     public void deleteCommentListByUser(String id) {
@@ -146,28 +242,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteCommentListByReviewNo(Long reviewNo) {
         commentRepository.deleteAllByReviewNo(reviewNo);
-    }
-
-    @Override
-    public int deleteMember(String id) {
-        repository.deleteById(id);
-        Optional<Member> result = repository.findById(id);
-        return !(result.isPresent())? 0 : 1;
-        // 계정이 삭제되었다면 0, 그렇지 않다면 1
-    }
-
-    @Override
-    public int checkId(String id) {
-        Optional<Member> result = repository.findById(id);
-        return result.isPresent()? 0 : 1;
-        // 중복된 아이디가 있으면 0, 없다면 1
-    }
-
-    @Override
-    public int checkNickname(String nickname) {
-        Optional<Member> result = repository.findByNickname(nickname);
-        return result.isPresent()? 0 : 1;
-        // 중복된 닉네임이 있으면 0, 없다면 1
     }
 
     //메소드 추가 by gyeong

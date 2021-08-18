@@ -2,7 +2,10 @@ package com.finalprj.doldolseo.service;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.dto.crew.CrewCommentDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
+import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
+import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
 import com.finalprj.doldolseo.dto.review.ReviewCommentDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import org.springframework.data.domain.Page;
@@ -28,7 +31,14 @@ public interface MemberService {
     void deleteCommentListByUser(String id);
     void deleteCommentListByReviewNo(Long reviewNo);
     void updateMemberSecurity(MemberDTO dto, HttpSession session);
-    List<CrewDTO> getCrewList(String id);
+    CrewDTO getCrew(String id);
+    List<CrewMemberDTO> getCrewList(String id);
+    List<CrewPostDTO> getCrewPostListByMember(String id);
+    Page<CrewPostDTO> getCrewPostListByUser(String id, Pageable pageable);
+    Page<CrewCommentDTO> getCrewCommentListByUser(String id, Pageable pageable);
+    void deleteCrewCommentListByUser(String id);
+    void deleteCrewCommentListByPostNo(Long postNo);
+    void deleteCrewMember(String id);
 
     int deleteMember(String id);
 

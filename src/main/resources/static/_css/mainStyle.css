@@ -2558,6 +2558,20 @@ table {
     height: 280px;
 }
 
+.mypageD-crewpostcontainer{
+    width: 900px;
+    height: 280px;
+}
+
+.mypageD-crewcommentcontainer{
+    width: 900px;
+    height: 280px;
+}
+.mypageD-commentcontainer {
+    width: 900px;
+    height: 280px;
+}
+
 .mypageD-boardcontainer__span--big {
     font-size: 34px;
     font-weight: bold;
@@ -2655,12 +2669,6 @@ table {
 .mypageD-boardpage__a--num:hover {
     text-decoration: none;
     color: black;
-}
-
-.mypageD-commentcontainer {
-    width: 900px;
-    height: 450px;
-    margin-top: 120px;
 }
 
 .mypageD-footer {
