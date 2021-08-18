@@ -167,11 +167,19 @@
             <span class="mypageD-crewcontainer__span--big">내 크루</span>
 
             <div class="mypageD-crewbox">
-                <c:forEach begin="1" end="3">
+                <c:if test="${crewDTO != null}">
                     <div class="mypageD-crewlistbox">
-                        <span class="mypageD-crewlistbox__span--big">㈜코ㄷing zI존</span>
-                        <a href="#" class="mypageD-crewlistbox__a--big"><img src="_image/sample.png" class="mypageD-crewlistbox__img--big"></a>
-                        <button class="mypageD-crewlistbox__button--blue" onclick="location.href='#'">내 크루 보기</button>
+                        <span class="mypageD-crewlistbox__span--big">${crewDTO.crewName}</span>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImage}" class="mypageD-crewlistbox__img--big"></a>
+                        <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}'">내 크루 보기</button>
+                    </div>
+                </c:if>
+
+                <c:forEach items="${crewMemberDTO}" var="crewMember">
+                    <div class="mypageD-crewlistbox">
+                        <span class="mypageD-crewlistbox__span--big">${crewMember.crew.crewName}</span>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewMemberDTO.crew.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewMember.crew.crewImage}" class="mypageD-crewlistbox__img--big"></a>
+                        <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewMemberDTO.crew.crewNo}'">내 크루 보기</button>
                     </div>
                 </c:forEach>
 
@@ -240,6 +248,68 @@
         </div>
         <!-- / 내가 쓴 글 -->
 
+        <!-- 내가 쓴 크루 활동글 / 컨트롤러에게 값 받아서 글 부분 c:forEach 사용 -->
+        <div class="mypageD-crewpostcontainer">
+            <span class="mypageD-boardcontainer__span--big">내가 쓴 크루 활동글</span>
+
+            <div class="mypageD-boardbox">
+                <table class="mypageD-boardbox__table--big">
+                    <tr class="mypageD-boardbox__tr--blue">
+                        <th class="mypageD-boardbox__td--num">번호</th>
+                        <th class="mypageD-boardbox__td--title">제목</th>
+                        <th class="mypageD-boardbox__td--date">날짜</th>
+                    </tr>
+
+                    <c:if test="${crewPostList.hasContent() == false}">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td colspan="3" class="mypageD-boardbox__td--none">작성한 크루 활동글이 존재하지 않습니다.</td>
+                        </tr>
+                    </c:if>
+
+                    <c:forEach items="${crewPostList.content}" var="crewPostList" varStatus="status">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td class="mypageD-boardbox__td--white">${crewPostList.postNo}</td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/crew/board/${crewPostList.postNo}" class="mypageD-boardbox__a--white">${crewPostList.title}</a></td>
+                            <td class="mypageD-boardbox__td--white">
+                                <fmt:parseDate value="${crewPostList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
+                                <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <ul class="mypageD-boardpage">
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
+                    </li>
+
+                    <c:if test="${crewPost_startBlockPage ne 1}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPost_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="${crewPost_startBlockPage}" end="${crewPost_endBlockPage}" var="status">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${crewPost_endBlockPage ne crewPostList.totalPages}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPost_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                        </li>
+                    </c:if>
+
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPostList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- / 내가 쓴 크루 활동글 -->
+
+
         <!-- 내가 쓴 댓글 / 컨트롤러에게 값 받아서 댓글 부분 c:forEach 사용 -->
         <div class="mypageD-commentcontainer">
             <span class="mypageD-boardcontainer__span--big">내가 쓴 댓글</span>
@@ -302,6 +372,71 @@
             </div>
         </div>
         <!-- // 내가 쓴 댓글 -->
+
+
+        <!-- 내가 쓴 내가 쓴 크루활동 댓글  -->
+        <div class="mypageD-crewcommentcontainer">
+            <span class="mypageD-boardcontainer__span--big">내가 쓴 크루 활동 댓글</span>
+
+            <div class="mypageD-boardbox">
+                <table class="mypageD-boardbox__table--big">
+                    <tr class="mypageD-boardbox__tr--blue">
+                        <th class="mypageD-boardbox__td--num">번호</th>
+                        <th class="mypageD-boardbox__td--title">제목</th>
+                        <th class="mypageD-boardbox__td--date">날짜</th>
+                    </tr>
+
+                    <c:if test="${crewCommentList.hasContent() == false}">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td colspan="3" class="mypageD-boardbox__td--none">작성한 크루 활동 댓글이 존재하지 않습니다.</td>
+                        </tr>
+                    </c:if>
+
+                    <c:forEach items="${crewCommentList.content}" var="crewCommentList" varStatus="status">
+                        <tr class="mypageD-boardbox__tr--white">
+                            <td class="mypageD-boardbox__td--white">${crewCommentList.commentNo}</td>
+                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.reviewNo}" class="mypageD-boardbox__a--white">${crewCommentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--white">
+                                <fmt:parseDate value="${crewCommentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
+                                <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
+                            </td>
+                        </tr>
+                    </c:forEach>
+
+                </table>
+
+                <ul class="mypageD-boardpage">
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
+                    </li>
+
+                    <c:if test="${c_startBlockPage ne 1}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewComment_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                        </li>
+                    </c:if>
+
+                    <c:forEach begin="${crewComment_startBlockPage}" end="${crewComment_endBlockPage}" var="status">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${crewComment_endBlockPage ne crewCommentList.totalPages}">
+                        <li class="mypageD-boardpage__li--link">
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewComment_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                        </li>
+                    </c:if>
+
+                    <li class="mypageD-boardpage__li--link">
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewCommentList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- // 내가 쓴 크루활동 댓글 -->
+
     </div>
     </div>
     <!-- // 마이페이지 상세 -->
