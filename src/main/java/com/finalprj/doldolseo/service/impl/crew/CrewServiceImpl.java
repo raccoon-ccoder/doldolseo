@@ -55,6 +55,14 @@ public class CrewServiceImpl {
         return crew;
     }
 
+    /* 크루 상세 조회 */
+    public CrewDTO getCrewById(String id) {
+        Crew crewEntity = repository.findByMemberId(id);
+        CrewDTO crew = modelMapper.map(crewEntity, CrewDTO.class);
+
+        return crew;
+    }
+
     /* 크루 정보 수정 */
     @Transactional
     public void updateCrew(CrewDTO dto, String action) {

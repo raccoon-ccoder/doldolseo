@@ -9,6 +9,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
 <c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(review.WDate)}"/>
 <!DOCTYPE html>
@@ -61,18 +62,21 @@
                 </span>
             </div>
 
-            <div class="review-btnBox--reviewEdit">
-                <button class="review-button"
-                        onclick="location.href='${pageContext.request.contextPath}/review/${review.reviewNo}/edit'"
-                        style="margin-right: 10px;">수정 하기
-                </button>
+                <c:if test="${member.id eq review.id}">
+                    <div class="review-btnBox--reviewEdit">
+                        <button class="review-button"
+                                onclick="location.href='${pageContext.request.contextPath}/review/${review.reviewNo}/edit'"
+                                style="margin-right: 10px;">수정 하기
+                        </button>
 
-                <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="delete">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <input type="hidden" name="reviewNo" value="${review.reviewNo}">
-                    <button type="submit" class="review-button">글 삭제</button>
-                </form:form>
-            </div>
+                        <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}"
+                                   method="delete">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input type="hidden" name="reviewNo" value="${review.reviewNo}">
+                            <button type="submit" class="review-button">글 삭제</button>
+                        </form:form>
+                    </div>
+                </c:if>
 
             <%-- 상세 글 목록  --%>
             <table class="reviewD-tablelayout">
@@ -83,7 +87,7 @@
                         <div class="profilebox">
                             <%-- 회원사진 --%>
                             <div class="profilebox--photo">
-                                <img src="${pageContext.request.contextPath}/_image/sample1.png">
+                                <img src="${pageContext.request.contextPath}/_image/profile/${memberImg}">
                             </div>
                             <%-- 닉네임 + 작성날짜 컨테이너 --%>
                             <div class="profilebox--container--sub">
@@ -171,7 +175,7 @@
                     dataType: 'json',
                     type: 'GET',
                     success: function (data) {
-                        appendComment(data, '${pageContext.request.contextPath}', 'sample2.png');
+                        appendComment(data, '${pageContext.request.contextPath}', '${member.member_img}');
                         enableEditMode();
                     }
                 });
@@ -183,20 +187,34 @@
             </table>
 
             <%-- 댓글 입력 폼 --%>
-            <form id="reviewD-commentForm" method="post">
-                <div class="comment__input" id="reviewD-comment__input">
-                    <input type="hidden" name="id" value="kki7823">
-                    <input type="hidden" name="reviewNo" value=${reviewNo}>
-                    <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
-                              onfocusin="changeBorderOnFocus()"
-                              onfocusout="changeBorderOnFocusOut()"></textarea>
-                    <div class="comment__buttonbox">
-                        <sec:authorize access="isAuthenticated()">
-                            <button type="button" onclick="insertComment('${pageContext.request.contextPath}',${reviewNo})" class="button--comment">등록</button>
-                        </sec:authorize>
+
+            <c:choose>
+                <c:when test="${member.id eq null}">
+                    <div class="comment__input">
+                        <textarea name="content" placeholder="로그인이 필요합니다." readonly="readonly"></textarea>
+                        <div class="comment__buttonbox">
+                        </div>
                     </div>
-                </div>
-            </form>
+                </c:when>
+                <c:otherwise>
+                    <form id="reviewD-commentForm" method="post">
+                        <div class="comment__input" id="reviewD-comment__input">
+                            <input type="hidden" name="id" value="${member.id}">
+                            <input type="hidden" name="reviewNo" value=${reviewNo}>
+                            <textarea id="comment__input__textarea" name="content" placeholder="댓글을 입력해 보세요"
+                                      onfocusin="changeBorderOnFocus()"
+                                      onfocusout="changeBorderOnFocusOut()"></textarea>
+                            <div class="comment__buttonbox">
+                                <button type="button"
+                                        onclick="insertComment('${pageContext.request.contextPath}',${reviewNo})"
+                                        class="button--comment">등록
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </c:otherwise>
+            </c:choose>
+
         </section>
 
     </div>

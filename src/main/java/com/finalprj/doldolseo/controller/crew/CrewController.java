@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class CrewController {
     /* 크루 생성 */
     @RequestMapping(value = "/crewI", method = RequestMethod.POST)
     public String crewInsert(@RequestBody(required = false) MultipartFile crewImageFile,
+                             HttpSession session,
                              CrewDTO dto) throws Exception {
         //크루 이미지 저장 처리
         String crewImageName = uploadFileUtil.crewImgSave(crewImageFile, dto);
@@ -73,7 +75,10 @@ public class CrewController {
         dto.setCrewImage(crewImageName);
 
         // 추가코드
+        memberService.setMemberToCrleader(dto.getMember().getId()); //해당 멤버 크루장으로
         Member member = memberService.selectMemberEntity(dto.getMember());
+        //update추가
+//        memberService.updateMemberSecurity(, session);
         dto.setMember(member);
         // end of 추가코드
 
@@ -95,18 +100,30 @@ public class CrewController {
     public String crewDetail(Model model,
                              @RequestParam Long crewNo) throws Exception {
         CrewDTO crew = crewService.getCrew(crewNo);
+        List<CrewMemberDTO> crewMembers = crewMemberService.getCrewMembers(crewNo);
 
+        model.addAttribute("crewMembers", crewMembers);
         model.addAttribute("crew", crew);
         return "/crew/crewDetail";
     }
 
     /* 크루관리 폼 */
+    @PreAuthorize("isAuthenticated() and hasAuthority('y')")
     @RequestMapping("/crewM")
     public String crewManage(Model model,
-                             @RequestParam Long crewNo) throws Exception {
-        CrewDTO crew = crewService.getCrew(crewNo);
-        List<CrewMemberDTO> crewMembers = crewMemberService.getCrewMembers(crewNo);
-        List<CrewMemberDTO> watingMembers = crewMemberService.getWatingMember(crewNo);
+//                             @RequestParam Long crewNo,
+                             HttpSession session) throws Exception {
+
+//        CrewDTO crew = crewService.getCrew(crewNo);
+//        if(!session.getId().equals(crew.getMember().getId())){
+//            System.out.println("잘못된 접근 입니다");
+//            return "redirect:/crewL";
+//        }
+        CrewDTO crew = crewService.getCrewById(session.getId());
+
+
+        List<CrewMemberDTO> crewMembers = crewMemberService.getCrewMembers(crew.getCrewNo());
+        List<CrewMemberDTO> watingMembers = crewMemberService.getWatingMember(crew.getCrewNo());
 
         model.addAttribute("crew", crew);
         model.addAttribute("crewMembers", crewMembers);
@@ -118,8 +135,8 @@ public class CrewController {
     /* 크루관리 - 수정 */
     @RequestMapping(value = "/crewM/edit/{action}", method = RequestMethod.POST)
     public void crewManageEdit(@PathVariable("action") String action,
-                                 CrewDTO dto,
-                                 MultipartFile crewImageFile) throws Exception {
+                               CrewDTO dto,
+                               MultipartFile crewImageFile) throws Exception {
 
         if (action.equals("img")) {
             CrewDTO crew = crewService.getCrew(dto.getCrewNo());
@@ -128,17 +145,17 @@ public class CrewController {
             dto.setCrewImage(imgFileName);
         }
 
-        crewService.updateCrew(dto,action);
+        crewService.updateCrew(dto, action);
 
 //        return "redirect:/crewM?crewNo="+dto.getCrewNo();
     }
 
     /* 크루 가입 양식 수정 폼 */
     @RequestMapping(value = "/crewM/editJoin", method = RequestMethod.GET)
-    public String getEditJoinForm(Model model,CrewDTO dto) throws Exception {
+    public String getEditJoinForm(Model model, CrewDTO dto) throws Exception {
 
 
-        model.addAttribute("crew",dto);
+        model.addAttribute("crew", dto);
         return "/crew/popup_crewEditJoin";
     }
 

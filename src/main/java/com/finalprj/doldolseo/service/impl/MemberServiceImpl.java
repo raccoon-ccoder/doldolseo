@@ -243,4 +243,13 @@ public class MemberServiceImpl implements MemberService {
     public void deleteCommentListByReviewNo(Long reviewNo) {
         commentRepository.deleteAllByReviewNo(reviewNo);
     }
+
+    //메소드 추가 by gyeong
+    public void setMemberToCrleader(String id){
+        MemberDTO dto = selectMember(id);
+        dto.setCrleader('y');
+        Member member = dtoToEntity(dto);
+
+        repository.save(member);
+    }
 }

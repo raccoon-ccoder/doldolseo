@@ -13,7 +13,7 @@ function appendComment(data, contextPath, imagePath) {
             "<tr class='comment-tablelayout'> " +
             "<td style='padding: 10px 10px 10px 10px;'> " +
             "<div class='profilebox' style='margin-top: 7px'> " +
-            "<div class='profilebox--photo'><img src=" + contextPath + "/_image/" + imagePath + "/></div> " +
+            "<div class='profilebox--photo'><img src=" + contextPath + "/_image/profile/" + imagePath + "/></div> " +
             "<div class='profilebox--container--sub'>" +
             "<div class='profilebox--nickname'>" + id + "</div>" +
             "<div class='profilebox--wdate'>" + wdate.substring(0, 10) + "</div>" +

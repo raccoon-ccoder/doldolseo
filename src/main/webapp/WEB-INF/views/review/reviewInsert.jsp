@@ -81,7 +81,7 @@
             <table class="common-iuContainer--writeform">
 
                 <%-- id : hidden --%>
-                <input name="id" type="hidden" value="kki7823"/><%-- 추후 세션처리 --%>
+                <input name="id" type="hidden" value="${member.id}"/><%-- 추후 세션처리 --%>
 
                 <%-- 지역 : select --%>
                 <tr class="common-tbl__item">

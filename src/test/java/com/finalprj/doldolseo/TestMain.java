@@ -16,6 +16,10 @@ import java.util.Optional;
 
 public class TestMain {
     public static void main(String[] args) {
-        ObjectMapper om = new ObjectMapper();
+
+        List<String> list = new ArrayList<>();
+        list.add("123");
+
+        System.out.println(list.contains("123"));
     }
 }

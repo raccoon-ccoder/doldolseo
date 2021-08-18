@@ -7,6 +7,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
 <c:set var="dateYMD" value="${DateTimeFormatUtil.changeToYMD(crew.CDate)}"/>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
 
     <%-- 메인 스타일 시트 --%>
     <link href="${pageContext.request.contextPath}/_css/mainStyle.css" rel="stylesheet" type="text/css">
-x
+    x
     <%-- 크루가입 팝업 --%>
     <script>
         function popupCrewJoin() {
@@ -33,9 +34,9 @@ x
 
     <%-- 크루 네이게이션 : 공통 --%>
     <nav class="crew-navi" style="width: 1115px;">
-        <span class="crew-navi__btn">크루활동</span>
-        <span class="crew-navi__btn">크루목록</span>
-        <button id="crew-navi__btn--mycrew" class="crew-button">My Crew</button>
+        <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crew/board">크루활동</a></span>
+        <span class="crew-navi__btn"><a href="${pageContext.request.contextPath}/crewL">크루목록</a></span>
+        <button id="crew-navi__btn--mycrew" type="button" class="crew-button">My Crew</button>
     </nav>
 
     <section class="crew-mainContainer" style="width: 1120px; text-align: left">
@@ -65,7 +66,8 @@ x
                 <div class="crew-info__item" style="margin-top: 20px">
                     <span>로고 :</span>
                     <div class="crew-logobox" style="width: 100px; height: 110px;">
-                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}" alt="crew-logo"/>
+                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}"
+                             alt="crew-logo"/>
                     </div>
                 </div>
 
@@ -85,16 +87,20 @@ x
                         <%-- 크루등급별 등급사진 선택 --%>
                         <c:choose>
                             <c:when test="${crew.grade eq '돌고래'}">
-                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png" alt="grade">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png"
+                                     alt="grade">
                             </c:when>
                             <c:when test="${crew.grade eq '동고래'}">
-                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png" alt="grade">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png"
+                                     alt="grade">
                             </c:when>
                             <c:when test="${crew.grade eq '은고래'}">
-                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png" alt="grade">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png"
+                                     alt="grade">
                             </c:when>
                             <c:when test="${crew.grade eq '금고래'}">
-                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png" alt="grade">
+                                <img src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png"
+                                     alt="grade">
                             </c:when>
                         </c:choose>
                     </div>
@@ -143,88 +149,36 @@ x
                         <td>
                             <div class="crew-master--decorate">
                                 <span class="crew-master--decotext">크루장</span>
-                                <img src="${pageContext.request.contextPath}/_image/crew/crew_master_crown.png" alt="crown">
+                                <img src="${pageContext.request.contextPath}/_image/crew/crew_master_crown.png"
+                                     alt="crown">
                             </div>
                         </td>
                         <td>
                             <div class="crew-member--idbox">
                                 <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png" alt="profile"/>
+                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_sample3.png"
+                                         alt="profile"/>
                                 </div>
                                 <div style="display: inline-block; position: relative; bottom: 18px">${crew.member.nickname}</div>
                             </div>
                         </td>
                     </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
+                    <c:forEach items="${crewMembers}" var="crewMember">
+                        <%-- 크루원 --%>
+                        <tr class="common-tbl__item">
+                            <td>
+                                <span class="crew-member-decotext">크루원</span>
+                            </td>
+                            <td>
+                                <div class="crew-member--idbox">
+                                    <div class="crew-member--photo">
+                                        <img src="${pageContext.request.contextPath}/_image/profile/${crewMember.member.member_img}"/>
+                                    </div>
+                                    <div style="display: inline-block; position: relative; bottom: 18px">${crewMember.member.id}</div>
                                 </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원1</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <%-- 크루원 --%>
-                    <tr class="common-tbl__item">
-                        <td>
-                            <span class="crew-member-decotext">크루원</span>
-                        </td>
-                        <td>
-                            <div class="crew-member--idbox">
-                                <div class="crew-member--photo">
-                                    <img src="${pageContext.request.contextPath}/_image/crew/crew_img_sample1.png"/>
-                                </div>
-                                <div style="display: inline-block; position: relative; bottom: 18px">새튀단원2</div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>
@@ -233,8 +187,22 @@ x
         <div class="crew-midContainer--right">
             <div class="common-miniTitle" style="width: 550px; top:45px; left: 65px; font-size: 32px;">
                 <span>모집 공고</span>
-                <button class="crew-button" style="float: right; margin-top: 2px" onclick="popupCrewJoin()">크루 가입
-                </button>
+                <security:authorize access="isAuthenticated()">
+                    <c:choose>
+                        <c:when test="${crewMembers.contains(member.id)}">
+                            <button class="crew-button" style="float: right; margin-top: 2px" onclick="popupCrewJoin()">
+                                크루
+                                탈퇴
+                            </button>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="crew-button" style="float: right; margin-top: 2px" onclick="popupCrewJoin()">
+                                크루
+                                가입
+                            </button>
+                        </c:otherwise>
+                    </c:choose>
+                </security:authorize>
             </div>
             <div class="crew-recruitContainer">
                 ${crew.recruit}

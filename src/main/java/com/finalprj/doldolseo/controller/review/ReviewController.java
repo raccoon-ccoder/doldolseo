@@ -1,6 +1,9 @@
 package com.finalprj.doldolseo.controller.review;
 
+import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
+import com.finalprj.doldolseo.service.MemberService;
+import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
 import com.finalprj.doldolseo.util.PagingUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
@@ -30,7 +33,9 @@ import java.util.stream.Collectors;
 public class ReviewController {
 
     @Autowired
-    private ReviewServiceImpl service;
+    private ReviewServiceImpl reviewService;
+    @Autowired
+    private MemberServiceImpl memberService;
 
     @Autowired
     UploadFileUtil fileUtil;
@@ -44,9 +49,9 @@ public class ReviewController {
         Page<ReviewDTO> reviewList = null;
 
         if (areaNo == null) {
-            reviewList = service.getReviewList(pageable);
+            reviewList = reviewService.getReviewList(pageable);
         } else {
-            reviewList = service.getReviewListByArea(areaNo, pageable);
+            reviewList = reviewService.getReviewListByArea(areaNo, pageable);
         }
 
         PagingUtil pagingUtil = new PagingUtil(10, reviewList);
@@ -64,11 +69,15 @@ public class ReviewController {
     @GetMapping(value = "/review/{reviewNo}")
     public String getReview(Model model,
                             @PathVariable("reviewNo") Long reviewNo) {
-        ReviewDTO review = service.getReview(reviewNo);
+        ReviewDTO review = reviewService.getReview(reviewNo);
         String content = review.getContent();
         if (content != null) {
             review.setContent(content.replace("temp", "" + review.getReviewNo()));
         }
+
+        MemberDTO memberDTO = memberService.selectMember(review.getId());
+
+        model.addAttribute("memberImg",memberDTO.getMember_img());
         model.addAttribute("review", review);
         return "/review/reviewDetail";
     }
@@ -89,7 +98,7 @@ public class ReviewController {
         }
 
 
-        ReviewDTO review = service.insertReview(dto);
+        ReviewDTO review = reviewService.insertReview(dto);
         if (review.getUploadImg() != null) {
             fileUtil.moveImages(review.getReviewNo(), review.getUploadImg());
         }
@@ -117,7 +126,7 @@ public class ReviewController {
     // dto 객체 매개변수로 받아와야 할듯
     @DeleteMapping(value = "/review/{reviewNo}")
     public String deleteReview(@PathVariable("reviewNo") Long reviewNo) {
-        service.deleteReview(reviewNo);
+        reviewService.deleteReview(reviewNo);
         fileUtil.deleteImages(reviewNo);
         return "redirect:/review";
     }
@@ -128,7 +137,7 @@ public class ReviewController {
     @GetMapping(value = "/review/{reviewNo}/edit")
     public String getUpdateForm(Model model,
                                 @PathVariable("reviewNo") Long reviewNo) {
-        ReviewDTO dto = service.getReview(reviewNo);
+        ReviewDTO dto = reviewService.getReview(reviewNo);
         fileUtil.moveToTemp(reviewNo);
         model.addAttribute("review", dto);
 
@@ -147,7 +156,7 @@ public class ReviewController {
             dto.setUploadImg(dto.getUploadImg() + "," + Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(",")));
         }
 
-        service.updateReview(reviewNo, dto);
+        reviewService.updateReview(reviewNo, dto);
         fileUtil.moveImages(reviewNo, dto.getUploadImg());
 
         return "redirect:/review";
