@@ -52,6 +52,15 @@
             }
             show(current);
         });
+
+        function deletePlanner(plannerNo){
+            var result = confirm("플래너를 삭제하시겠습니까?");
+            if(result == false){
+                return false;
+            }else if(result == true){
+                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&id=${member.id}';
+            }
+        }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
@@ -60,7 +69,7 @@
 </head>
 <body>
     <!-- header -->
-    <div class="planD-header">
+    <div class="memberL-header__div">
         <jsp:include page="../../header.jsp"/>
     </div>
     <!-- // header-->
@@ -103,7 +112,7 @@
                 <div class="planD-btnbox">
 
                     <button class="planD-btnbox__button--blue" id="btn">수정</button>
-                    <button class="planD-btnbox__button--gray" onclick="window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo=${planner.plannerNo}&id=${planner.id}'">삭제</button>
+                    <button class="planD-btnbox__button--gray" onclick="deletePlanner(${planner.plannerNo})">삭제</button>
                 </div>
             </div>
             <!-- // 플래너 상단 (제목) -->

@@ -56,7 +56,7 @@
 </head>
 <body>
 <!-- header -->
-<div class="planD-header">
+<div class="memberL-header__div">
     <jsp:include page="../header.jsp"/>
 </div>
 <!-- // header -->
@@ -78,6 +78,7 @@
     <div class="mypageD-container">
         <div class="mypageD-titlecontainer">
             <span class="mypageD-titlecontainer__span--big">내 정보</span>
+            <span class="mypageD_span"> (*) : 수정 가능</span>
         </div>
 
         <!-- 개인 정보 수정-->
@@ -86,7 +87,7 @@
                 <div class="mypageD-userbox">
 
                     <div class="mypageD-imgbox">
-                        <span class="mypageD-imgbox__span--move">사진 (선택)</span>
+                        <span class="mypageD-imgbox__span--move">사진 *(선택)</span>
                         <img id="my_img" class="mypageD-imgbox__img--small" src="${pageContext.request.contextPath}/_image/profile/${member.member_img}">
                         <label for="img" class="mypageD-imgbox__label--big">업로드</label>
                         <input type="file" class="mypageD-imgbox__input--disapear" id="img" name="memberimg" onchange="setImg(event);">
@@ -98,7 +99,7 @@
                     </div>
 
                     <div class="mypageD-infobox">
-                        <span class="mypageD-infocontainer__span--move">이름</span>
+                        <span class="mypageD-infocontainer__span--move">이름 *</span>
                         <input type="text" name="name" class="mypageD-infocontainer__input--big" value="${member.name}">
                     </div>
 
@@ -108,7 +109,7 @@
                     </div>
 
                     <div class="mypageD-infobox">
-                        <span class="mypageD-infocontainer__span--move">이메일</span>
+                        <span class="mypageD-infocontainer__span--move">이메일 *</span>
                         <input type="email" name="email" class="mypageD-infocontainer__input--big" value="${member.email}">
                     </div>
 
@@ -117,7 +118,7 @@
                <div class="mypageD-userbox2">
 
                    <div class="mypageD-infobox">
-                       <span class="mypageD-infobox__span--move">비밀번호</span>
+                       <span class="mypageD-infobox__span--move">비밀번호 *</span>
                        <input type="password" name="password" class="mypageD-infocontainer__input--big">
                    </div>
 
@@ -135,7 +136,7 @@
                    </div>
 
                    <div class="mypageD-infobox">
-                       <span class="mypageD-infobox__span--down">성별</span>
+                       <span class="mypageD-infobox__span--down">성별 *</span>
 
                        <select name="gender" class="mypageD-infocontainer__span--big" id="gender">
                            <option value="">성별</option>
@@ -146,7 +147,7 @@
                    </div>
 
                    <div class="mypageD-infobox">
-                       <span class="mypageD-infobox__span--down">전화번호 (선택)</span>
+                       <span class="mypageD-infobox__span--down">전화번호 *(선택)</span>
                        <input type="tel" name="phone" class="mypageD-infocontainer__input--big" value="${member.phone}" pattern="[0-9]{11}">
                    </div>
 
@@ -167,6 +168,12 @@
             <span class="mypageD-crewcontainer__span--big">내 크루</span>
 
             <div class="mypageD-crewbox">
+                <c:if test="${crewDTO == null && crewMemberDTO.size() == 0}">
+                    <div class="mypageD-crewlistbox">
+                        <span class="mypageD-crewlistbox__span--none">가입된 크루가 존재하지 않습니다.</span>
+                    </div>
+                </c:if>
+
                 <c:if test="${crewDTO != null}">
                     <div class="mypageD-crewlistbox">
                         <span class="mypageD-crewlistbox__span--big">${crewDTO.crewName}</span>
