@@ -185,8 +185,8 @@
                 <c:forEach items="${crewMemberDTO}" var="crewMember">
                     <div class="mypageD-crewlistbox">
                         <span class="mypageD-crewlistbox__span--big">${crewMember.crew.crewName}</span>
-                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewMemberDTO.crew.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewMember.crew.crewImage}" class="mypageD-crewlistbox__img--big"></a>
-                        <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewMemberDTO.crew.crewNo}'">내 크루 보기</button>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewMember.crew.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewMember.crew.crewImage}" class="mypageD-crewlistbox__img--big"></a>
+                        <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewMember.crew.crewNo}'">내 크루 보기</button>
                     </div>
                 </c:forEach>
 
