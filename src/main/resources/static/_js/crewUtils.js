@@ -506,7 +506,7 @@ function giveCrewMaster(contextPath,crewNo) {
             processData: false,
             success: function (data) {
                 alert(data)
-                location.replace(contextPath+'/crewM?crewNo='+crewNo);
+                location.replace(contextPath+'/crewD?crewNo='+crewNo);
             },
             error: function (request, status, error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

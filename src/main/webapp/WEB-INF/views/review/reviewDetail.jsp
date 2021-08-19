@@ -87,13 +87,13 @@
                         <div class="profilebox">
                             <%-- 회원사진 --%>
                             <div class="profilebox--photo">
-                                <img src="${pageContext.request.contextPath}/_image/profile/${memberImg}">
+                                <img src="${pageContext.request.contextPath}/_image/profile/${review.member.member_img}">
                             </div>
                             <%-- 닉네임 + 작성날짜 컨테이너 --%>
                             <div class="profilebox--container--sub">
                                 <%-- 닉네임 --%>
                                 <div class="profilebox--nickname">
-                                    ${review.member.id}
+                                    ${review.member.nickname}
                                 </div>
                                 <%-- 작성날짜 --%>
                                 <div class="profilebox--wdate">
