@@ -65,10 +65,10 @@
                  style="vertical-align: top; padding-top: 80px" class="bi bi-caret-left" viewBox="0 0 16 16">
                 <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"></path>
             </svg>
-            <img id="img1" src="${pageContext.request.contextPath}/_image/main/testdol/dol1.png" width="300px" height="250px">
-            <img id="img2" src="${pageContext.request.contextPath}/_image/main/testdol/dol2.png" width="300px" height="250px"
+            <img id="img1" src="${pageContext.request.contextPath}/_image/main/testCourse/course1.png" width="300px" height="250px">
+            <img id="img2" src="${pageContext.request.contextPath}/_image/main/testCourse/course2.png" width="300px" height="250px"
                  style="margin-left: 40px; margin-right: 40px;">
-            <img id="img3" src="${pageContext.request.contextPath}/_image/main/testdol/dol3.png" width="300px" height="250px">
+            <img id="img3" src="${pageContext.request.contextPath}/_image/main/testCourse/course3.png" width="300px" height="250px">
             <svg onclick="convertAfterImg()" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#495c75"
                  style="vertical-align: top; padding-top: 80px" class="bi bi-caret-right" viewBox="0 0 16 16">
                 <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"></path>
@@ -84,13 +84,13 @@
         <div id="main_map">
             <img class="map" src="${pageContext.request.contextPath}/_image/main/seoul/map-fi-c-1.png" usemap="#image-map" alt="map"/>
             <map name="image-map">
-                <area target="" alt="광화문" title="광화문" href="#" coords="337,150,58" shape="circle">
-                <area target="" alt="홍대" title="홍대" href="#" coords="350,260,52" shape="circle">
-                <area target="" alt="강남" title="강남" href="#" coords="510,400,51" shape="circle">
-                <area target="" alt="여의도" title="여의도" href="#" coords="225,300,62" shape="circle">
-                <area target="" alt="잠실" title="잠실" href="#" coords="615,350,52" shape="circle">
-                <area target="" alt="명동" title="명동" href="#" coords="460,156,420,300" shape="rect">
-                <area target="" alt="강북" title="강북" href="#" coords="480,77,54" shape="circle">
+                <area target="" alt="광화문" title="광화문" href="${pageContext.request.contextPath}/areaL?sigungu=3" coords="337,150,58" shape="circle">
+                <area target="" alt="홍대" title="홍대" href="${pageContext.request.contextPath}/areaL?sigungu=7" coords="350,260,52" shape="circle">
+                <area target="" alt="강남" title="강남" href="${pageContext.request.contextPath}/areaL?sigungu=1" coords="510,400,51" shape="circle">
+                <area target="" alt="여의도" title="여의도" href="${pageContext.request.contextPath}/areaL?sigungu=5" coords="225,300,62" shape="circle">
+                <area target="" alt="잠실" title="잠실" href="${pageContext.request.contextPath}/areaL?sigungu=6" coords="615,350,52" shape="circle">
+                <area target="" alt="명동" title="명동" href="${pageContext.request.contextPath}/areaL?sigungu=4" coords="460,156,420,300" shape="rect">
+                <area target="" alt="강북" title="강북" href="${pageContext.request.contextPath}/areaL?sigungu=2" coords="480,77,54" shape="circle">
             </map>
         </div>
 
