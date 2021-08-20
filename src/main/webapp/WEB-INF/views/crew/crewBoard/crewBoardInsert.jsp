@@ -226,7 +226,7 @@
             </table>
 
             <%-- id : hidden --%>
-            <input name="member.id" type="hidden" value="${member.id}"/><%-- 추후 세션처리 --%>
+            <input name="member.id" type="hidden" value="${member.id}"/>
 
             <%-- 저장 버튼 --%>
             <div id="reviewIU-container--bottom">
