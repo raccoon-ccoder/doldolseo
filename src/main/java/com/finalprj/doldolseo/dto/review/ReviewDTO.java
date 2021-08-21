@@ -20,8 +20,8 @@ public class ReviewDTO {
         private Member member;
         private String title;
         private String content;
-        private String courseImg;
-        private String uploadImg;
+        private String courseImgName;
+        private String uploadImgNames;
         private LocalDateTime wDate;
         private int hit;
         private int areaNo;

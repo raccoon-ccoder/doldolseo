@@ -13,8 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -22,52 +25,84 @@ public class ReviewServiceImpl implements ReviewService {
     ReviewRepository repository;
     @Autowired
     MemberRepository memberRepository;
-
     @Autowired
     ModelMapper modelMapper;
 
-    @Override
-    public Page<ReviewDTO> getReviewList(Pageable pageable) {
-
-        Page<Review> entityPage = repository.findAll(pageable);
-        Page<ReviewDTO> reviewList = modelMapper.map(entityPage, new TypeToken<Page<ReviewDTO>>() {
-        }.getType());
-
-        return reviewList;
+    public Page<ReviewDTO> getReviewPage(Integer areaNo, Pageable pageable) {
+        return (areaNo == null) ? getReviewPage(pageable) : getReviewPageByArea(areaNo, pageable);
     }
 
     @Override
-    public Page<ReviewDTO> getReviewListByArea(Integer areaNo, Pageable pageable) {
+    public Page<ReviewDTO> getReviewPage(Pageable pageable) {
+        Page<Review> reviewPage = repository.findAll(pageable);
+        return entityPageToDtoPage(reviewPage);
+    }
 
-        Page<Review> entityPage = repository.findAllByAreaNo(areaNo, pageable);
-        Page<ReviewDTO> reviewList = modelMapper.map(entityPage, new TypeToken<Page<ReviewDTO>>() {
-        }.getType());
+    public Page<ReviewDTO> getReviewPageByArea(Integer areaNo, Pageable pageable) {
+        Page<Review> reviewPage = repository.findAllByAreaNo(areaNo, pageable);
+        return entityPageToDtoPage(reviewPage);
+    }
 
-        return reviewList;
+    @Override
+    public ReviewDTO getReview(Long reviewNo) {
+        Review review = repository.findByReviewNo(reviewNo);
+        return entityToDto(review);
+    }
+
+    @Transactional
+    public void changeContentImgSrc(Review review) {
+        String content = review.getContent();
+        if (content != null) {
+            review.setContent(content.replace("temp", "" + review.getReviewNo()));
+        }
+    }
+
+    public ReviewDTO getReviewHitAndChangeContentImgSource(Long reviewNo) {
+        Review review = repository.findByReviewNo(reviewNo);
+        increaseHit(review);
+        changeContentImgSrc(review);
+        return entityToDto(review);
+    }
+
+    @Transactional
+    public void increaseHit(Review review) {
+        review.setHit(review.getHit() + 1);
+    }
+
+    public ReviewDTO getDTOfilledValues(String[] uploadImgs, MultipartFile courseImgFile, ReviewDTO dto) {
+        dto = getDtoWithUploadImgName(uploadImgs, dto);
+        dto = getDtoWithCourseImgName(courseImgFile, dto);
+        dto = getDtoWithMember(dto);
+        dto.setHit(1);
+        dto.setWDate(LocalDateTime.now());
+        return dto;
+    }
+
+    public ReviewDTO getDtoWithUploadImgName(String[] uploadImgs, ReviewDTO dto) {
+        if (uploadImgs != null) {
+            String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
+            dto.setUploadImgNames(uploadImg);
+        }
+        return dto;
+    }
+
+    public ReviewDTO getDtoWithCourseImgName(MultipartFile courseImgFile, ReviewDTO dto) {
+        if (courseImgFile != null) {
+            dto.setCourseImgName(courseImgFile.getOriginalFilename());
+        }
+        return dto;
+    }
+
+    public ReviewDTO getDtoWithMember(ReviewDTO dto) {
+        Member member = memberRepository.findOneById(dto.getMember().getId());
+        dto.setMember(member);
+        return dto;
     }
 
     @Override
     public ReviewDTO insertReview(ReviewDTO dto) {
-        dto.setHit(1);
-        dto.setWDate(LocalDateTime.now());
-
-        Review reviewEntity = modelMapper.map(dto, Review.class);
-
-        Member member =  memberRepository.findOneById(dto.getMember().getId());
-        reviewEntity.setMember(member);
-
-        Review review = repository.save(reviewEntity);
-
-        return modelMapper.map(review, ReviewDTO.class);
-    }
-
-    @Override
-    @Transactional
-    public ReviewDTO getReview(Long reviewNo) {
-        Review review = repository.findByReviewNo(reviewNo);
-        review.setHit(review.getHit()+1); //조회수 1증가
-
-        return modelMapper.map(review, ReviewDTO.class);
+        Review review = repository.save(dtoToEntity(dto));
+        return entityToDto(review);
     }
 
     @Override
@@ -82,8 +117,20 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = repository.findByReviewNo(reviewNo);
         review.setTitle(dto.getTitle());
         review.setContent(dto.getContent());
-        review.setUploadImg(dto.getUploadImg());
+        review.setUploadImgNames(dto.getUploadImgNames());
         review.setAreaNo(dto.getAreaNo());
     }
 
+    public Review dtoToEntity(ReviewDTO dto) {
+        return modelMapper.map(dto, Review.class);
+    }
+
+    public ReviewDTO entityToDto(Review review) {
+        return modelMapper.map(review, ReviewDTO.class);
+    }
+
+    public Page<ReviewDTO> entityPageToDtoPage(Page<Review> reviewPage) {
+        return modelMapper.map(reviewPage, new TypeToken<Page<ReviewDTO>>() {
+        }.getType());
+    }
 }

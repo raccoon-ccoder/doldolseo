@@ -2,7 +2,7 @@ package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.AreaDTO;
 import com.finalprj.doldolseo.service.impl.AreaServiceImpl;
-import com.finalprj.doldolseo.util.PagingUtil;
+import com.finalprj.doldolseo.util.PagingParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,12 +39,9 @@ public class AreaController {
             areaList = service.getAreaListBySearch(dto, pageable);
         }
 
-        PagingUtil pagingUtil = new PagingUtil(10, areaList);
-
         model.addAttribute("sigungu", dto.getSigungu());
         model.addAttribute("contentType", dto.getContentType());
-        model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
-        model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
+        model.addAttribute("pagingParam", new PagingParam(10 ,areaList));
         model.addAttribute("areaList", areaList);
         return "area/areaList";
     }

@@ -2,6 +2,7 @@ package com.finalprj.doldolseo.configuration;
 
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
+import com.finalprj.doldolseo.util.UploadReviewFileUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,10 @@ public class DoldolSeoConfiguration {
     @Bean
     public UploadFileUtil uploadFileUtil(){
         return new UploadFileUtil(uploadPath());
+    }
+    @Bean
+    public UploadReviewFileUtil uploadReviewFileUtil(){
+        return new UploadReviewFileUtil(uploadPath());
     }
 
     //파일 저장될 절대 경로(로컬)

@@ -80,11 +80,11 @@
                 <div class="crew-info__item" style="margin-top: 20px">
                     <span>로고 :</span>
                     <div class="crew-logobox" style="width: 100px; height: 110px;">
-                        <img id="crewM_img" src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}"
+                        <img id="crewM_img" src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImgFileName}"
                              alt="crew-logo"/>
                         <form id="crewM-form-img" enctype="multipart/form-data">
                             <label id="crewD-label--img" class="crew-label--upload" for="crewM_input--image">변경</label>
-                            <input type="file" name="crewImageFile" id="crewM_input--image"
+                            <input type="file" name="crewImgFile" id="crewM_input--image"
                                    onchange="setImg_m(event,'${pageContext.request.contextPath}',${crew.crewNo})">
                         </form>
                     </div>

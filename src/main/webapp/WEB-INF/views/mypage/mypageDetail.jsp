@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<c:set var="startBlockPage" value="${pagingParam.startBlockPage}"/>
+<c:set var="endBlockPage" value="${pagingParam.endBlockPage}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,7 +179,7 @@
                 <c:if test="${crewDTO != null}">
                     <div class="mypageD-crewlistbox">
                         <span class="mypageD-crewlistbox__span--big">${crewDTO.crewName}</span>
-                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImage}" class="mypageD-crewlistbox__img--big"></a>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImg}" class="mypageD-crewlistbox__img--big"></a>
                         <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}'">내 크루 보기</button>
                     </div>
                 </c:if>

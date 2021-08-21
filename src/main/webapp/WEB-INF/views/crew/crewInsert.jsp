@@ -63,7 +63,7 @@
                                  src="${pageContext.request.contextPath}/_image/crew/crew-logo-default.jpeg"
                                  alt="crew-logo"/><%-- 기본로고 --%>
                             <label id="crewI-label--img" class="crew-label--upload" for="crewI_input--image">변경</label>
-                            <input type="file" name="crewImageFile" id="crewI_input--image" onchange="setImg_i(event)">
+                            <input type="file" name="crewImgFile" id="crewI_input--image" onchange="setImg_i(event)">
                         </div>
                     </td>
                     <td>

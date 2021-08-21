@@ -46,7 +46,7 @@ public class Crew {
     private String question3;
 
     @Column(name = "CREW_IMG")
-    private String crewImage;
+    private String crewImgFileName;
 
 
     private String grade;

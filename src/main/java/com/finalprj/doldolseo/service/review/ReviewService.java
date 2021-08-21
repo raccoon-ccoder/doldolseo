@@ -13,10 +13,10 @@ import org.springframework.data.domain.Pageable;
 public interface ReviewService {
 
     //후기 게시글 전체 조회
-    public Page<ReviewDTO> getReviewList(Pageable pageable);
+    public Page<ReviewDTO> getReviewPage(Pageable pageable);
 
     //지역번호로 후기 게시글 조회
-    public Page<ReviewDTO> getReviewListByArea (Integer areaNo, Pageable pageable);
+    public Page<ReviewDTO> getReviewPageByArea(Integer areaNo, Pageable pageable);
 
     //후기 게시글 등록
     public ReviewDTO insertReview(ReviewDTO dto);

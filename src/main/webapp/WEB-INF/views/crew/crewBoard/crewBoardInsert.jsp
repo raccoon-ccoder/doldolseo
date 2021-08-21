@@ -130,8 +130,8 @@
                     <td>
                         <select id="cBoardI-select--crew" name="crew.crewNo" onchange="selectCrew()">
                             <option value="">선택안함</option>
-                            <c:forEach items="${myCrewList}" var="crewList">
-                                <option value="${crewList.crew.crewNo}">${crewList.crew.crewName}</option>
+                            <c:forEach items="${myCrewList}" var="crewDTO">
+                                <option value="${crewDTO.crew.crewNo}">${crewDTO.crew.crewName}</option>
                             </c:forEach>
                         </select>
                     </td>

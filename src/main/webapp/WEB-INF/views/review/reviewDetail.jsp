@@ -137,11 +137,11 @@
                 </tr>
 
                 <%-- 여행 코스 --%>
-                <c:if test="${!empty review.courseImg}">
+                <c:if test="${!empty review.courseImgName}">
                     <tr class="common-tbl__item">
                         <td>
                             <div id="reviewD-coursebox">
-                                <img src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/${review.courseImg}"
+                                <img src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/${review.courseImgName}"
                                      alt="여행코스">
                             </div>
                         </td>

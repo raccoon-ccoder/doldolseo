@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<c:set var="startBlockPage" value="${pagingParam.startBlockPage}"/>
+<c:set var="endBlockPage" value="${pagingParam.endBlockPage}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,11 +98,11 @@
         <%-- 크루 목록 --%>
         <%-- * 크루이름 최대 8자 까지 --%>
         <div class="crew-listContainer">
-            <c:forEach items="${crews.content}" var="crews" begin="0" end="20">
+            <c:forEach items="${crewPage.content}" var="crewDTO" begin="0" end="20">
                 <%-- 크루프로필 start --%>
                 <div class="crew-crewProfile">
                     <div class="crew-crewProfile__logo">
-                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crews.crewImage}"
+                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImgFileName}"
                              alt="crew_logo">
                     </div>
                     <div class="crew-crewProfile__crewnameBox">
@@ -108,37 +110,37 @@
                         <span class="crew-crewProfile__crewnameBox__grade">
                             <%-- 크루등급별 등급사진 선택 --%>
                             <c:choose>
-                                <c:when test="${crews.grade eq '돌고래'}">
+                                <c:when test="${crewDTO.grade eq '돌고래'}">
                                     <img id="crewL-img--grade"
                                          src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade1.png"/>
                                 </c:when>
-                                <c:when test="${crews.grade eq '동고래'}">
+                                <c:when test="${crewDTO.grade eq '동고래'}">
                                     <img id="crewL-img--grade"
                                          src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade2.png"/>
                                 </c:when>
-                                <c:when test="${crews.grade eq '은고래'}">
+                                <c:when test="${crewDTO.grade eq '은고래'}">
                                     <img id="crewL-img--grade"
                                          src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade3.png"/>
                                 </c:when>
-                                <c:when test="${crews.grade eq '금고래'}">
+                                <c:when test="${crewDTO.grade eq '금고래'}">
                                     <img id="crewL-img--grade"
                                          src="${pageContext.request.contextPath}/_image/crew/grade/crew_grade4.png"/>
                                 </c:when>
                             </c:choose>
                         </span>
-                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crews.crewNo}" style="color: white">
-                                ${crews.crewName}
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" style="color: white">
+                                ${crewDTO.crewName}
                         </a>
                     </span>
                     </div>
                     <div class="crew-crewProfile__master">
-                        <span class="crew-label--crewmaster">크루장</span>&nbsp;${crews.member.nickname}
+                        <span class="crew-label--crewmaster">크루장</span>&nbsp;${crewDTO.member.nickname}
                     </div>
                     <div class="crew-crewProfile__region">
-                        <span style="color: #5882FA">지역</span> > ${crews.areaList}
+                        <span style="color: #5882FA">지역</span> > ${crewDTO.areaList}
                     </div>
                     <div class="crew-crewProfile__intro">
-                            ${crews.intro}
+                            ${crewDTO.intro}
                     </div>
                 </div>
                 <%-- 크루프로필 end --%>
@@ -173,7 +175,7 @@
                         </c:forEach>
 
                         <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
-                        <c:if test="${endBlockPage ne crews.totalPages}">
+                        <c:if test="${endBlockPage ne crewPage.totalPages}">
                             <td>
                                 <a href="${pageContext.request.contextPath}/crewL?page=${endBlockPage}">
                                     > </a>
@@ -182,7 +184,7 @@
 
                         <!-- 마지막 페이지로 이동 -->
                         <td>
-                            <a href="${pageContext.request.contextPath}/crewL?page=${crews.totalPages-1}">
+                            <a href="${pageContext.request.contextPath}/crewL?page=${crewPage.totalPages-1}">
                                 >> </a>
                         </td>
                     </tr>
