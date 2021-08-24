@@ -20,54 +20,54 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AreaServiceImpl implements AreaService {
-
     @Autowired
     private AreaRepository repository;
-
     @Autowired
     private ModelMapper modelMapper;
 
-
-    //지역명으로 지역정보 상세 조회
     @Override
     public AreaDTO getArea(String name) {
-
-        Area entity = repository.findFirstByName(name);
-        //Area to AreaDTO
-        AreaDTO area = modelMapper.map(entity, AreaDTO.class);
-
-        return area;
+        Area area = repository.findFirstByName(name);
+        return entityToDto(area);
     }
 
-    //지역 목록 조회(시군구코드 + 페이징 처리)
     @Override
-    public Page<AreaDTO> getAreaList(AreaDTO dto, Pageable pageable) {
-
-        Page<Area> entityPage;
-
-        if (dto.getContentType() == null) {
-            entityPage = repository.findBySigungu(dto.getSigungu(), pageable);
+    public Page<AreaDTO> getAreaPage(AreaDTO dto, Pageable pageable) {
+        Page<AreaDTO> areaPage;
+        if (dto.getSearchKeyword() == null) {
+            areaPage = getAreaPageBySigunguOrContentType(dto, pageable);
         } else {
-            entityPage = repository.findBySigunguAndContentType(dto.getSigungu(), dto.getContentType(), pageable);
+            areaPage = getAreaPageBySearch(dto, pageable);
         }
-
-        //Page<Area> to Page<AreaDTO>
-        Page<AreaDTO> areaList = modelMapper.map(entityPage, new TypeToken<Page<AreaDTO>>() {
-        }.getType());
-
-        return areaList;
+        return areaPage;
     }
 
+    public Page<AreaDTO> getAreaPageBySigunguOrContentType(AreaDTO dto, Pageable pageable) {
+        Page<Area> areaPage;
+        if (dto.getContentType() == null) {
+            areaPage = repository.findBySigungu(dto.getSigungu(), pageable);
+        } else {
+            areaPage = repository.findBySigunguAndContentType(dto.getSigungu(), dto.getContentType(), pageable);
+        }
+        return entityPageToDtoPage(areaPage);
+    }
 
-    //검색어 입력시 검색결과 조회
-    @Override
-    public Page<AreaDTO> getAreaListBySearch(AreaDTO dto, Pageable pageable) {
-        Page<Area> entityPage = repository.findBySigunguAndNameContaining(dto.getSigungu(), dto.getSearchKeyword(), pageable);
+    public Page<AreaDTO> getAreaPageBySearch(AreaDTO dto, Pageable pageable) {
+        Page<Area> areaPage = repository.findBySigunguAndNameContaining(dto.getSigungu(), dto.getSearchKeyword(), pageable);
+        return entityPageToDtoPage(areaPage);
+    }
 
-        Page<AreaDTO> areaList = modelMapper.map(entityPage, new TypeToken<Page<AreaDTO>>() {
+    public Area dtoToEntity(AreaDTO dto) {
+        return modelMapper.map(dto, Area.class);
+    }
+
+    public AreaDTO entityToDto(Area area) {
+        return modelMapper.map(area, AreaDTO.class);
+    }
+
+    public Page<AreaDTO> entityPageToDtoPage(Page<Area> areaPage) {
+        return modelMapper.map(areaPage, new TypeToken<Page<AreaDTO>>() {
         }.getType());
-
-        return areaList;
     }
 
 }

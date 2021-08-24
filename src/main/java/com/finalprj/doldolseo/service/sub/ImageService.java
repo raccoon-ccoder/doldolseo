@@ -3,7 +3,6 @@ package com.finalprj.doldolseo.service.sub;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,7 +11,6 @@ import java.util.UUID;
 
 @Service
 public class ImageService {
-
     private final Path reviewLocation;
     private final Path crewLocation;
 

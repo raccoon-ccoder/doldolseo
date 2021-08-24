@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -49,14 +48,6 @@ public class ReviewServiceImpl implements ReviewService {
         return entityToDto(review);
     }
 
-    @Transactional
-    public void changeContentImgSrc(Review review) {
-        String content = review.getContent();
-        if (content != null) {
-            review.setContent(content.replace("temp", "" + review.getReviewNo()));
-        }
-    }
-
     public ReviewDTO getReviewHitAndChangeContentImgSource(Long reviewNo) {
         Review review = repository.findByReviewNo(reviewNo);
         increaseHit(review);
@@ -65,38 +56,42 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Transactional
+    public void changeContentImgSrc(Review review) {
+        String content = review.getContent();
+        if (content != null) {
+            review.setContent(content.replace("temp", "" + review.getReviewNo()));
+        }
+    }
+
+    @Transactional
     public void increaseHit(Review review) {
         review.setHit(review.getHit() + 1);
     }
 
-    public ReviewDTO getDTOfilledValues(String[] uploadImgs, MultipartFile courseImgFile, ReviewDTO dto) {
-        dto = getDtoWithUploadImgName(uploadImgs, dto);
-        dto = getDtoWithCourseImgName(courseImgFile, dto);
-        dto = getDtoWithMember(dto);
+    public void getDTOfilledValues(ReviewDTO dto) {
+        setUploadImgName(dto);
+        setCourseImgName(dto);
+        setMember(dto);
         dto.setHit(1);
         dto.setWDate(LocalDateTime.now());
-        return dto;
     }
 
-    public ReviewDTO getDtoWithUploadImgName(String[] uploadImgs, ReviewDTO dto) {
-        if (uploadImgs != null) {
-            String uploadImg = Arrays.stream(uploadImgs).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
+    public void setUploadImgName(ReviewDTO dto) {
+        if (dto.getUploadImgs() != null) {
+            String uploadImg = Arrays.stream(dto.getUploadImgs()).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
             dto.setUploadImgNames(uploadImg);
         }
-        return dto;
     }
 
-    public ReviewDTO getDtoWithCourseImgName(MultipartFile courseImgFile, ReviewDTO dto) {
-        if (courseImgFile != null) {
-            dto.setCourseImgName(courseImgFile.getOriginalFilename());
+    public void setCourseImgName(ReviewDTO dto) {
+        if (dto.getCourseImgFile() != null) {
+            dto.setCourseImgName(dto.getCourseImgFile().getOriginalFilename());
         }
-        return dto;
     }
 
-    public ReviewDTO getDtoWithMember(ReviewDTO dto) {
+    public void setMember(ReviewDTO dto) {
         Member member = memberRepository.findOneById(dto.getMember().getId());
         dto.setMember(member);
-        return dto;
     }
 
     @Override
@@ -111,6 +106,13 @@ public class ReviewServiceImpl implements ReviewService {
         System.out.println(reviewNo + "번 게시글 삭제");
     }
 
+    public void updateUploadImgName(ReviewDTO dto) {
+        if (dto.getUploadImgs() != null) {
+            String uploadImgName = dto.getUploadImgNames() + "," + Arrays.stream(dto.getUploadImgs()).map(s -> s = s.split("temp")[1].substring(1)).collect(Collectors.joining(","));
+            dto.setUploadImgNames(uploadImgName);
+        }
+    }
+
     @Override
     @Transactional
     public void updateReview(Long reviewNo, ReviewDTO dto) {
@@ -120,6 +122,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setUploadImgNames(dto.getUploadImgNames());
         review.setAreaNo(dto.getAreaNo());
     }
+
 
     public Review dtoToEntity(ReviewDTO dto) {
         return modelMapper.map(dto, Review.class);

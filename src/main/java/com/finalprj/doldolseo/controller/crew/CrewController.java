@@ -7,7 +7,7 @@ import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
 import com.finalprj.doldolseo.util.PagingParam;
-import com.finalprj.doldolseo.util.UploadFileUtil;
+import com.finalprj.doldolseo.util.UploadCrewFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +30,7 @@ public class CrewController {
     CrewMemberServiceImpl crewMemberService;
 
     @Autowired
-    UploadFileUtil uploadFileUtil;
+    UploadCrewFileUtil fileUtil;
 
     //추가코드
     @Autowired
@@ -121,7 +121,7 @@ public class CrewController {
 
         if (action.equals("img")) {
             CrewDTO crew = crewService.getCrew(dto.getCrewNo());
-            String imgFileName = uploadFileUtil.updateCrewLogo(dto, crewImgFile);
+            String imgFileName = fileUtil.updateCrewLogo(dto, crewImgFile);
             System.out.println(imgFileName);
             dto.setCrewImgFileName(imgFileName);
         }

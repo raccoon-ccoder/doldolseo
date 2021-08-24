@@ -3,7 +3,6 @@ package com.finalprj.doldolseo.controller.review;
 import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
 import com.finalprj.doldolseo.util.PagingParam;
-import com.finalprj.doldolseo.util.UploadFileUtil;
 import com.finalprj.doldolseo.util.UploadReviewFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,11 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /*
  * 후기게시판 Controller
@@ -62,13 +56,11 @@ public class ReviewController {
 
     @PostMapping(value = "/review")
     @ResponseBody
-    public void insertReview(@RequestParam(required = false) String[] uploadImgs,
-                             @RequestBody(required = false) MultipartFile courseImgFile,
-                             ReviewDTO dto) {
-        dto = reviewService.getDTOfilledValues(uploadImgs, courseImgFile, dto);
+    public void insertReview(ReviewDTO dto) {
+        reviewService.getDTOfilledValues(dto);
         ReviewDTO insertedReivew = reviewService.insertReview(dto);
         fileUtil.moveImgsTempToReviewNoDir(insertedReivew.getReviewNo(), insertedReivew.getUploadImgNames());
-        fileUtil.saveCourseImg(insertedReivew.getReviewNo(), courseImgFile);
+        fileUtil.saveCourseImg(insertedReivew.getReviewNo(), dto.getCourseImgFile());
     }
 
     @DeleteMapping(value = "/review/{reviewNo}")
@@ -83,16 +75,15 @@ public class ReviewController {
                                       @PathVariable("reviewNo") Long reviewNo) {
         ReviewDTO dto = reviewService.getReview(reviewNo);
         fileUtil.moveImgsReviewNoDirToTemp(reviewNo);
-        model.addAttribute("review", dto);
 
+        model.addAttribute("review", dto);
         return "/review/reviewUpdate";
     }
 
     @PutMapping(value = "/review/{reviewNo}")
     public String updateReview(@PathVariable("reviewNo") Long reviewNo,
-                               @RequestParam(required = false) String[] uploadImgs,
                                ReviewDTO dto) {
-        dto = reviewService.getDtoWithUploadImgName(uploadImgs, dto);
+        reviewService.updateUploadImgName(dto);
         reviewService.updateReview(reviewNo, dto);
         fileUtil.moveImgsTempToReviewNoDir(reviewNo, dto.getUploadImgNames());
 

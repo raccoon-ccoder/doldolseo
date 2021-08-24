@@ -11,6 +11,7 @@ import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
 import com.finalprj.doldolseo.util.PagingParam;
+import com.finalprj.doldolseo.util.UploadCrewFileUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class CrewBoardController {
     ModelMapper modelMapper;
 
     @Autowired
-    UploadFileUtil fileUtil;
+    UploadCrewFileUtil fileUtil;
 
 
     //크루활동게사글 목록

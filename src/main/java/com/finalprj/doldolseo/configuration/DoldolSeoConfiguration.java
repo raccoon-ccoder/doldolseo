@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.configuration;
 
+import com.finalprj.doldolseo.util.UploadCrewFileUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import com.finalprj.doldolseo.util.UploadProfileUtil;
 import com.finalprj.doldolseo.util.UploadReviewFileUtil;
@@ -25,8 +26,8 @@ public class DoldolSeoConfiguration {
     }
 
     @Bean
-    public UploadFileUtil uploadFileUtil(){
-        return new UploadFileUtil(uploadPath());
+    public UploadCrewFileUtil uploadCrewFileUtil(){
+        return new UploadCrewFileUtil(uploadPath());
     }
     @Bean
     public UploadReviewFileUtil uploadReviewFileUtil(){

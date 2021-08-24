@@ -4,7 +4,7 @@ import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.repository.crew.CrewRepository;
-import com.finalprj.doldolseo.util.UploadFileUtil;
+import com.finalprj.doldolseo.util.UploadCrewFileUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -25,7 +24,7 @@ public class CrewServiceImpl {
     @Autowired
     ModelMapper modelMapper;
     @Autowired
-    UploadFileUtil uploadFileUtil;
+    UploadCrewFileUtil fileUtil;
 
     /* 크루 목록 조회 */
     public Page<CrewDTO> getCrewPage(Pageable pageable) {
@@ -46,7 +45,7 @@ public class CrewServiceImpl {
 
         //크루 이미지 저장 처리
         if (crewImgFile != null) {
-            String savedImgName = uploadFileUtil.updateCrewLogo(dto,crewImgFile);
+            String savedImgName = fileUtil.updateCrewLogo(dto,crewImgFile);
             dto.setCrewImgFileName(savedImgName);
         }
 

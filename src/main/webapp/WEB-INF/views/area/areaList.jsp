@@ -70,7 +70,7 @@
         <div id="areaList-dataContainer">
             <div id="areaList-dataBox">
 
-                <c:forEach items="${areaList.content}" var="areaList" varStatus="status">
+                <c:forEach items="${areaList}" var="areaList" varStatus="status">
                     <!-- 항목 -->
                     <div class="areaList-data">
                         <div id="areaList-dataImg" style="display: inline-block;margin: 20px;">

@@ -2,7 +2,6 @@ package com.finalprj.doldolseo.controller.sub;
 
 import com.finalprj.doldolseo.service.sub.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +10,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class ImageController {
-
     @Autowired
     ImageService service;
 
-
     @PostMapping("/image")
-    public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> imageUpload(@RequestParam("file") MultipartFile image) {
         try {
-            String filePath = service.store(file);
+            String filePath = service.store(image);
             return ResponseEntity.ok().body(filePath);
 
         } catch (Exception e) {
@@ -29,9 +26,9 @@ public class ImageController {
     }
 
     @PostMapping("/image/crew")
-    public ResponseEntity<?> imageUploadCrew(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> CrewimageUpload(@RequestParam("file") MultipartFile image) {
         try {
-            String filePath = service.store_crew(file);
+            String filePath = service.store_crew(image);
             return ResponseEntity.ok().body(filePath);
 
         } catch (Exception e) {
@@ -39,5 +36,4 @@ public class ImageController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }

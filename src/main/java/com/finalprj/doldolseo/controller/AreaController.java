@@ -21,43 +21,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AreaController {
-
     @Autowired
     private AreaServiceImpl service;
 
-    //지역게시판 - 시군구 코드및 컨텐츠타입으로 지역게시글 목록 출력
     @GetMapping(value = "/areaL")
-    public String areaList(Model model,
+    public String getAreaListView(Model model,
                            AreaDTO dto,
                            @PageableDefault(page = 0, size = 12) Pageable pageable) {
-
-        Page<AreaDTO> areaList;
-
-        if (dto.getSearchKeyword() == null) {
-            areaList = service.getAreaList(dto, pageable);
-        } else {
-            areaList = service.getAreaListBySearch(dto, pageable);
-        }
+        Page<AreaDTO> areaPage = service.getAreaPage(dto, pageable);
 
         model.addAttribute("sigungu", dto.getSigungu());
         model.addAttribute("contentType", dto.getContentType());
-        model.addAttribute("pagingParam", new PagingParam(10 ,areaList));
-        model.addAttribute("areaList", areaList);
+        model.addAttribute("pagingParam", new PagingParam(10, areaPage));
+        model.addAttribute("areaList", areaPage.getContent());
         return "area/areaList";
     }
 
-    //지역게시판 - 지역명으로 지역정보 상세조회
     @GetMapping(value = "/areaD")
     public String areaDetail(Model model,
                              @RequestParam(value = "name") String name) {
-
         AreaDTO area = service.getArea(name);
         model.addAttribute("area", area);
         return "area/areaDetail";
-    }
-
-    @GetMapping(value = "/areaT")
-    public void printArea() {
-        System.out.println("test");
     }
 }

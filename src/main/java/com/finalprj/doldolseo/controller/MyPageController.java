@@ -13,16 +13,12 @@ import com.finalprj.doldolseo.service.impl.PlanServiceImpl;
 import com.finalprj.doldolseo.service.impl.PlannerServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
 import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
-import com.finalprj.doldolseo.util.PagingParam;
-import com.finalprj.doldolseo.util.UploadFileUtil;
-import com.finalprj.doldolseo.util.UploadProfileUtil;
-import com.finalprj.doldolseo.util.UploadReviewFileUtil;
+import com.finalprj.doldolseo.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,7 +62,7 @@ public class MyPageController {
     private CrewBoardServiceImpl crewBoardService;
 
     @Autowired
-    UploadFileUtil fileUtil;
+    UploadCrewFileUtil crewFileUtil;
 
     @RequestMapping("/updateMember")
     public String updateMember(@RequestParam(value = "memberimg") MultipartFile file,
@@ -171,7 +167,7 @@ public class MyPageController {
         for (CrewPostDTO crewPostDTO : crewPostList) {
             service.deleteCrewCommentListByPostNo(crewPostDTO.getPostNo());
             crewBoardService.deletePost(crewPostDTO.getPostNo());
-            fileUtil.deleteCrewImages(crewPostDTO.getPostNo());
+            crewFileUtil.deleteCrewImages(crewPostDTO.getPostNo());
         }
 
         // 사용자 크루 탈퇴

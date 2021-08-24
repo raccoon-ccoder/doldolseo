@@ -51,7 +51,7 @@
         <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="put">
             <input type="hidden" name="_method" value="put"/>
             <table class="common-iuContainer--writeform">
-            <%-- id : hidden --%>
+                    <%-- id : hidden --%>
                 <input name="member.id" type="hidden" value="${member.id}"/>
                 <input name="uploadImgNames" type="hidden" value="${review.uploadImgNames}"/>
 

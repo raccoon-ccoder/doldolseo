@@ -187,7 +187,6 @@
             </table>
 
             <%-- 댓글 입력 폼 --%>
-
             <c:choose>
                 <c:when test="${member.id eq null}">
                     <div class="comment__input">
