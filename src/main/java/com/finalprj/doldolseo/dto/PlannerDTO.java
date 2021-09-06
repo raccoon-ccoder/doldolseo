@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.dto;
 
+import com.finalprj.doldolseo.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +26,7 @@ import java.util.Date;
 @Data
 public class PlannerDTO {
     private Long plannerNo;
-    private String id;
+    private Member member;
     private String title;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

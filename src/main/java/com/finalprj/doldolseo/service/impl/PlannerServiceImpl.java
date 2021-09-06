@@ -1,6 +1,8 @@
 package com.finalprj.doldolseo.service.impl;
 
+import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.dto.PlannerDTO;
+import com.finalprj.doldolseo.repository.MemberRepository;
 import com.finalprj.doldolseo.repository.PlannerRepository;
 import com.finalprj.doldolseo.domain.Planner;
 import com.finalprj.doldolseo.service.PlannerService;
@@ -33,7 +35,7 @@ public class PlannerServiceImpl implements PlannerService {
 
     @Override
     public List<PlannerDTO> selectPlanners(String id) {
-        List<Planner> planners = repository.findAllByIdOrderByPlannerNoDesc(id);
+        List<Planner> planners = repository.findAllByMemberIdOrderByPlannerNoDesc(id);
         List<PlannerDTO> dto = new ArrayList<PlannerDTO>();
         for(Planner planner : planners){
             dto.add(entityToDto(planner));

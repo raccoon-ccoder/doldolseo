@@ -7,6 +7,7 @@ package com.finalprj.doldolseo.service.impl;
  * @Date 2021/08/06
  */
 
+import com.finalprj.doldolseo.domain.Planner;
 import com.finalprj.doldolseo.dto.PlanDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
 import com.finalprj.doldolseo.repository.PlanRepository;
@@ -25,16 +26,15 @@ public class PlanServiceImpl implements PlanService {
     private PlanRepository repository;
 
     public void insertPlan(List<PlanDTO> planDTOS){
-        List<Plan> plans = new ArrayList<Plan>();
         for(PlanDTO dto : planDTOS){
-            plans.add(dtoToEntity(dto));
+            repository.save(dtoToEntity(dto));
         }
-        repository.saveAll(plans); }
+    }
 
     /* 플래너 번호에 따른 플랜들을 List 타입으로 반환하는 메소드 */
     @Override
     public List<PlanDTO> selectPlan(Long plannerNo) {
-        List<Plan> plans = repository.findAllByPlannerNoOrderByPlanNo(plannerNo);
+        List<Plan> plans = repository.findAllByPlannerPlannerNoOrderByPlanNo(plannerNo);
         List<PlanDTO> planDTOS = new ArrayList<PlanDTO>();
         for(Plan plan : plans){
             planDTOS.add(entityToDto(plan));
@@ -49,7 +49,7 @@ public class PlanServiceImpl implements PlanService {
         Date start = planner.getFDate();
         Date last = new Date(now.getYear(), now.getMonth(), now.getDate(), 23, 59,59);
 
-        List<Plan> result = repository.findAllByPlannerNoAndDayBetweenOrderByPlanNo(planner.getPlannerNo(), start, last);
+        List<Plan> result = repository.findAllByPlannerPlannerNoAndDayBetweenOrderByPlanNo(planner.getPlannerNo(), start, last);
         List<PlanDTO> dto = new ArrayList<PlanDTO>();
         for(Plan plan : result){
             dto.add(entityToDto(plan));
@@ -70,27 +70,27 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public void deletePlans(Long plannerNo) {
-        repository.deleteAllByPlannerNo(plannerNo);
+        repository.deleteAllByPlannerPlannerNo(plannerNo);
     }
 
     /* plnaInsert.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
     public List<PlanDTO> returnPlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y, Long planner_no){
         List<PlanDTO> plans = new ArrayList<PlanDTO>();
+
         for(int i=0;i<days.size();i++){
-            if((days.size()==1) && place_intro.size() == 0){ // 여행 날짜 1일, 일정 1개일때 일정 설명이 null일경우
+            if((place.size()==1) && place_intro.size() == 0){    // 여행 날짜가 1일, 플랜이 1개이며 메모가 없는 플래너일경우
                 PlanDTO plan = PlanDTO.builder()
-                        .plannerNo(planner_no)
+                        .planner(Planner.builder().plannerNo(planner_no).build())
                         .day(days.get(i))
                         .name(place.get(i))
-                        .intro(" ")
+                        .intro(null)
                         .x(X.get(i))
                         .y(Y.get(i))
                         .build();
                 plans.add(plan);
-                System.out.println(place_intro.size());
             }else{
                 PlanDTO plan = PlanDTO.builder()
-                        .plannerNo(planner_no)
+                        .planner(Planner.builder().plannerNo(planner_no).build())
                         .day(days.get(i))
                         .name(place.get(i))
                         .intro(place_intro.get(i))
@@ -98,102 +98,66 @@ public class PlanServiceImpl implements PlanService {
                         .y(Y.get(i))
                         .build();
                 plans.add(plan);
-                System.out.println(place_intro.size());
             }
+
         }
         return  plans;
     }
 
     /* planUpdate.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
-    public List<PlanDTO> returnUpdatePlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
+    public List<PlanDTO> returnUpdatePlan(List<Date> days, List<String> place, List<String> plan_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
         List<PlanDTO> plans = new ArrayList<PlanDTO>();
 
         for(int i=0;i<days.size();i++){
-            if((days.size()==1) && place_intro.size() == 0){  // 여행 날짜 1일, 일정 1개일때 일정 설명이 null일경우
-                if(planNo.size() == 0){                       // DB에 이미 저장된 plan이 아닐경우
-                    PlanDTO plan = PlanDTO.builder()
-                            .plannerNo(planner_no)
-                            .day(days.get(i))
-                            .name(place.get(i))
-                            .intro(" ")
-                            .x(X.get(i))
-                            .y(Y.get(i))
-                            .build();
-                    plans.add(plan);
-                }else{                                        // DB에 이미 저장된 plan일 경우
-                    PlanDTO plan = PlanDTO.builder()
-                            .plannerNo(planner_no)
-                            .planNo(planNo.get(i))
-                            .day(days.get(i))
-                            .name(place.get(i))
-                            .intro(" ")
-                            .x(X.get(i))
-                            .y(Y.get(i))
-                            .build();
-                    plans.add(plan);
-                }
+            if((place.size()==1) && plan_intro.size() == 0){     // 여행 날짜가 1일, 플랜이 1개이며 메모가 없는 플래너일경우
+                PlanDTO plan = PlanDTO.builder()
+                        .planner(Planner.builder().plannerNo(planner_no).build())
+                        .planNo(planNo.get(i))
+                        .day(days.get(i))
+                        .name(place.get(i))
+                        .intro(null)
+                        .x(X.get(i))
+                        .y(Y.get(i))
+                        .build();
+                plans.add(plan);
             }else{
-                if(planNo.size() ==0){                  // DB에 이미 저장된 plan이 아닐경우
-                    PlanDTO plan = PlanDTO.builder()
-                            .plannerNo(planner_no)
-                            .day(days.get(i))
-                            .name(place.get(i))
-                            .intro(place_intro.get(i))
-                            .x(X.get(i))
-                            .y(Y.get(i))
-                            .build();
-                    plans.add(plan);
-                }else{                                      // DB에 이미 저장된 plan일 경우
-                    PlanDTO plan = PlanDTO.builder()
-                            .plannerNo(planner_no)
-                            .planNo(planNo.get(i))
-                            .day(days.get(i))
-                            .name(place.get(i))
-                            .intro(place_intro.get(i))
-                            .x(X.get(i))
-                            .y(Y.get(i))
-                            .build();
-                    plans.add(plan);
-                }
+                PlanDTO plan = PlanDTO.builder()
+                        .planner(Planner.builder().plannerNo(planner_no).build())
+                        .planNo(planNo.get(i))
+                        .day(days.get(i))
+                        .name(place.get(i))
+                        .intro(plan_intro.get(i))
+                        .x(X.get(i))
+                        .y(Y.get(i))
+                        .build();
+                plans.add(plan);
             }
         }
 
         return  plans;
     }
 
-    public void updatePlans(List<PlanDTO> plans, Long plannerNo){
+    public void updatePlans(List<PlanDTO> updatedPlans, Long plannerNo){
         List<PlanDTO> origin_plans = selectPlan(plannerNo);
-        List<Long> origin_planNo = new ArrayList<Long>();
 
-        for(PlanDTO plan : origin_plans){
-                origin_planNo.add(plan.getPlanNo());
-        }
+        // 사용자가 삭제한 플랜들 DB에서 삭제
+        for(PlanDTO oldPlan : origin_plans){
+            boolean isContained = false;
 
-        List<Long> update_planNo = new ArrayList<Long>();
-
-        for(PlanDTO plan : plans){
-            if(plan.getPlanNo() != null){       // 이미 저장된 plan이 아닌 새로 추가된 plan이라면 제외
-                update_planNo.add(plan.getPlanNo());
-            }
-        }
-
-        if(update_planNo.size() == 0){          // 수정한 플래너에 기존 plan이 1개도 없을 경우
-            for(Long num : origin_planNo){
-                repository.deleteByPlanNo(num);
-            }
-        }else{
-
-            for(Long num : update_planNo){          // 수정한 플래너에 있는 기존의 plan과 기존 플래너의 플랜들과 비교
-                if(origin_planNo.contains(num)){    // 비교하며 삭제되어야 할 플랜의 번호를 분류
-                    origin_planNo.remove(num);
+            for(PlanDTO newPlan : updatedPlans){
+                if(oldPlan.getPlanNo() == newPlan.getPlanNo()){
+                    isContained = true;
+                    break;
                 }
             }
 
-            for(Long num : origin_planNo){          // 분류 완료 후 삭제 되어야 할 planNo만 남은 상태
-                repository.deleteByPlanNo(num);
+            if(isContained == false){
+                repository.deleteByPlanNo(oldPlan.getPlanNo());
             }
-
         }
+
+        // 수정된 플랜들 DB 반영
+        insertPlan(updatedPlans);
     }
 
     public int getDiffDayCount(Date fromDate, Date toDate){
@@ -260,7 +224,7 @@ public class PlanServiceImpl implements PlanService {
     public List<Long> changeLongList(List<String> data){
         List<Long> result = new ArrayList<Long>();
         for(int i=0;i<data.size();i++){
-            if(!(data.get(i).isEmpty())){
+            if(!(data.get(i) == "")){
                 Long longNum = Long.parseLong(data.get(i));
                 result.add(longNum);
             }else{

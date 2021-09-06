@@ -82,7 +82,7 @@
                     }
 
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/plannerInsert?id=${member.id}",
+                        url:"${pageContext.request.contextPath}/plannerInsert?member.id=${member.id}",
                         data:{
                             date : date,
                             place : place,

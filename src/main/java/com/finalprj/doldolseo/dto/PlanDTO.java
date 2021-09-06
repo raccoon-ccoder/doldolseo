@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.dto;
 
+import com.finalprj.doldolseo.domain.Planner;
 import lombok.*;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ import java.util.Date;
 @Builder
 public class PlanDTO {
     private Long planNo;
-    private Long plannerNo;
+    private Planner planner;
     private Date day;
     private String name;
     private String intro;
