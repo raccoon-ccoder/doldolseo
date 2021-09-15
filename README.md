@@ -19,7 +19,10 @@
 ![doldolseo_erd2](https://user-images.githubusercontent.com/77538818/133370496-71dbe3f5-4e21-40a7-a100-e2b0b16a76e7.png)
 
 ## 돌고돌아서울 깃허브 주소
-https://github.com/kki7823/doldolseo
+[돌고돌아서울 github](https://github.com/kki7823/doldolseo)
+
+## 돌고돌아서울 웹사이트
+[돌고돌아서울 둘러보기](http://13.124.230.151:8008/doldolseo/main)
 
 ## Features
 - 회원가입, 로그인, 회원 탈퇴
