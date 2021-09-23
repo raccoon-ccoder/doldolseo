@@ -175,7 +175,7 @@
                         가입 질문
                     </td>
                     <td>
-                        <input id="question1" name="question1" type='text' style='width: 847px'/>
+                        <input id="question1" name="question1" type='text' style='width: 847px' maxlength="50"/>
                     </td>
                 </tr>
             </table>

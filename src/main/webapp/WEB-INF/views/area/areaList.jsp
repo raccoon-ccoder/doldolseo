@@ -3,6 +3,7 @@
 <jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
 <c:set var="startBlockPage" value="${pagingParam.startBlockPage}"/>
 <c:set var="endBlockPage" value="${pagingParam.endBlockPage}"/>
+<c:set var="totalPages" value="${pagingParam.totalPages}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,7 +136,7 @@
                         </c:forEach>
 
                         <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
-                        <c:if test="${endBlockPage ne areaList.totalPages}">
+                        <c:if test="${endBlockPage ne totalPages}">
                             <td>
                                 <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}">
                                     > </a>
@@ -144,7 +145,7 @@
 
                         <!-- 마지막 페이지로 이동 -->
                         <td>
-                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}">
+                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${totalPages-1}">
                                 >> </a>
                         </td>
                     </tr>

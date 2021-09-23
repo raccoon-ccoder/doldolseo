@@ -14,7 +14,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>내프로필</title>
+    <title>내 프로필</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/_css/mainStyle.css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/_js/mainJs.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -231,26 +231,26 @@
                             <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
                     </li>
 
-                    <c:if test="${startBlockPage ne 1}">
+                    <c:if test="${reviewListPaging.startBlockPage ne 1}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewListPaging.startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
                         </li>
                     </c:if>
 
-                    <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="status">
+                    <c:forEach begin="${reviewListPaging.startBlockPage}" end="${reviewListPaging.endBlockPage}" var="status">
                         <li class="mypageD-boardpage__li--link">
                             <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
                         </li>
                     </c:forEach>
 
-                    <c:if test="${endBlockPage ne reviewList.totalPages}">
+                    <c:if test="${reviewListPaging.endBlockPage ne reviewListPaging.totalPages}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewListPaging.endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
                         </li>
                     </c:if>
 
                     <li class="mypageD-boardpage__li--link">
-                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewListPaging.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
             </div>
@@ -292,26 +292,26 @@
                         <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
                     </li>
 
-                    <c:if test="${crewPost_startBlockPage ne 1}">
+                    <c:if test="${crewPostPaging.startBlockPage ne 1}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPost_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPostPaging.startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
                         </li>
                     </c:if>
 
-                    <c:forEach begin="${crewPost_startBlockPage}" end="${crewPost_endBlockPage}" var="status">
+                    <c:forEach begin="${crewPostPaging.startBlockPage}" end="${crewPostPaging.endBlockPage}" var="status">
                         <li class="mypageD-boardpage__li--link">
                             <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
                         </li>
                     </c:forEach>
 
-                    <c:if test="${crewPost_endBlockPage ne crewPostList.totalPages}">
+                    <c:if test="${crewPostPaging.endBlockPage ne crewPostPaging.totalPages}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPost_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPostPaging.endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
                         </li>
                     </c:if>
 
                     <li class="mypageD-boardpage__li--link">
-                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPostList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewPostPaging.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
             </div>
@@ -355,26 +355,26 @@
                         <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
                     </li>
 
-                    <c:if test="${c_startBlockPage ne 1}">
+                    <c:if test="${reviewCommentPaging.startBlockPage ne 1}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${c_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewCommentPaging.startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
                         </li>
                     </c:if>
 
-                    <c:forEach begin="${c_startBlockPage}" end="${c_endBlockPage}" var="status">
+                    <c:forEach begin="${reviewCommentPaging.startBlockPage}" end="${reviewCommentPaging.endBlockPage}" var="status">
                         <li class="mypageD-boardpage__li--link">
                             <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
                         </li>
                     </c:forEach>
 
-                    <c:if test="${c_endBlockPage ne commentList.totalPages}">
+                    <c:if test="${reviewCommentPaging.endBlockPage ne reviewCommentPaging.totalPages}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${c_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewCommentPaging.endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
                         </li>
                     </c:if>
 
                     <li class="mypageD-boardpage__li--link">
-                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${commentList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${reviewCommentPaging.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
 
@@ -419,26 +419,26 @@
                         <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=0" class="mypageD-boardpage__a--num">&laquo;</a>
                     </li>
 
-                    <c:if test="${c_startBlockPage ne 1}">
+                    <c:if test="${crewCommentPaging.startBlockPage ne 1}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewComment_startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewCommentPaging.startBlockPage-2}" class="mypageD-boardpage__a--num">&lt;</a>
                         </li>
                     </c:if>
 
-                    <c:forEach begin="${crewComment_startBlockPage}" end="${crewComment_endBlockPage}" var="status">
+                    <c:forEach begin="${crewCommentPaging.startBlockPage}" end="${crewCommentPaging.endBlockPage}" var="status">
                         <li class="mypageD-boardpage__li--link">
                             <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${status-1}" class="mypageD-boardpage__a--num">${status}</a>
                         </li>
                     </c:forEach>
 
-                    <c:if test="${crewComment_endBlockPage ne crewCommentList.totalPages}">
+                    <c:if test="${crewCommentPaging.endBlockPage ne crewCommentPaging.totalPages}">
                         <li class="mypageD-boardpage__li--link">
-                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewComment_endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
+                            <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewCommentPaging.endBlockPage}" class="mypageD-boardpage__a--num">&gt;</a>
                         </li>
                     </c:if>
 
                     <li class="mypageD-boardpage__li--link">
-                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewCommentList.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
+                        <a href="${pageContext.request.contextPath}/mypageD?id=${member.id}&page=${crewCommentPaging.totalPages-1}" class="mypageD-boardpage__a--num">&raquo;</a>
                     </li>
                 </ul>
 

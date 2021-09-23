@@ -23,7 +23,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             MemberDTO dto = ((SecurityDetails)authentication.getPrincipal()).getMemberDTO();
             HttpSession session = request.getSession();
             session.setAttribute("member",dto);
-            response.sendRedirect("/doldolseo/main");
+            response.sendRedirect("/main");
         }catch (Exception e){
             System.out.println("LoginSuccessHandler err : " + e.getMessage());
         }

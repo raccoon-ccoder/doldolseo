@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.18'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+    //implementation 'com.oracle.database.jdbc:ojdbc8'
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -38,6 +39,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.security:spring-security-taglibs'
+
+    // Oracle 지갑 관련
+    implementation 'com.oracle.ojdbc:ucp'
+    // https://mvnrepository.com/artifact/com.oracle.ojdbc/ojdbc10_g
+    //implementation 'com.oracle.ojdbc:ojdbc10_g:19.3.0.0'
+    // https://mvnrepository.com/artifact/com.oracle.database.security/oraclepki
+    implementation 'com.oracle.database.security:oraclepki'
+//    // https://mvnrepository.com/artifact/com.oracle.database.security/osdt_core
+    implementation 'com.oracle.database.security:osdt_core'
+//    // https://mvnrepository.com/artifact/com.oracle.database.security/osdt_cert
+    implementation 'com.oracle.database.security:osdt_cert'
+
+
+
 
 
 
