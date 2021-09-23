@@ -50,7 +50,12 @@
                         date.push($(this).attr("data-date"));
                         y.push($(this).attr("data-y"));
                         x.push($(this).attr("data-x"));
-                        planNo.push($(this).attr("data-planNo"));
+
+                        if($(this).attr("data-planNo") == ""){
+                            planNo.push(null)
+                        }else{
+                            planNo.push($(this).attr("data-planNo"));
+                        }
                     });
 
                     $('.planI-plandetail__span--place').each(function (i){
@@ -58,8 +63,8 @@
                     });
 
                     $('.planI-plandetail__input--intro').each(function (i){
-                        if($(this).val() == null){
-                            plan_intro.push(" ");
+                        if($(this).val() == null || $(this).val() == ""){
+                            plan_intro.push(null);
                         }else{
                             plan_intro.push($(this).val());
                         }
@@ -77,11 +82,11 @@
                     }
 
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/plannerUpdate?id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
+                        url:"${pageContext.request.contextPath}/plannerUpdate?member.id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
                         data:{
                             date : date,
                             place : place,
-                            plan_intro : plan_intro,
+                            planIntro : plan_intro,
                             y : y,
                             x : x,
                             time : time,

@@ -74,7 +74,6 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private ReviewCommentRepository commentRepository;
 
-    // 추가 코드
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 

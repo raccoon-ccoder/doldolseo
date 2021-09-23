@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
+<c:set var="startBlockPage" value="${pagingParam.startBlockPage}"/>
+<c:set var="endBlockPage" value="${pagingParam.endBlockPage}"/>
+<c:set var="totalPages" value="${pagingParam.totalPages}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +71,7 @@
         <div id="areaList-dataContainer">
             <div id="areaList-dataBox">
 
-                <c:forEach items="${areaList.content}" var="areaList" varStatus="status">
+                <c:forEach items="${areaList}" var="areaList" varStatus="status">
                     <!-- 항목 -->
                     <div class="areaList-data">
                         <div id="areaList-dataImg" style="display: inline-block;margin: 20px;">
@@ -133,7 +136,7 @@
                         </c:forEach>
 
                         <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
-                        <c:if test="${endBlockPage ne areaList.totalPages}">
+                        <c:if test="${endBlockPage ne totalPages}">
                             <td>
                                 <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${endBlockPage}">
                                     > </a>
@@ -142,7 +145,7 @@
 
                         <!-- 마지막 페이지로 이동 -->
                         <td>
-                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${areaList.totalPages-1}">
+                            <a href="${pageContext.request.contextPath}/areaL?sigungu=${sigungu}&contentType=${contentType}&page=${totalPages-1}">
                                 >> </a>
                         </td>
                     </tr>

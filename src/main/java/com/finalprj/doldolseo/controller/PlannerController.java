@@ -34,6 +34,7 @@ public class PlannerController {
     @Autowired
     private PlanServiceImpl planService;
 
+    // 플래너 상세 조회
     @RequestMapping("/planD")
     public String planDetail(PlannerDTO dto, Model model) throws Exception {
         PlannerDTO planner = plannerService.selectPlanner(dto.getPlannerNo());
@@ -46,7 +47,7 @@ public class PlannerController {
         return "/mypage/plan/planDetail";
     }
 
-
+    // 플래너 목록 조회
     @RequestMapping("/planL")
     public String planList(MemberDTO dto, Model model) throws Exception {
         List<PlannerDTO> planners = plannerService.selectPlanners(dto.getId());
@@ -57,6 +58,7 @@ public class PlannerController {
         return "/mypage/plan/planList";
     }
 
+    // 플래너 생성
     @RequestMapping(value = "/plannerInsert", method = RequestMethod.POST)
     @ResponseBody
     public String planInsert(@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
@@ -68,12 +70,13 @@ public class PlannerController {
 
         List<PlanDTO> plans = planService.returnPlan(days, place, plan_intro, float_x, float_y, plannerDTO.getPlannerNo());
         planService.insertPlan(plans);
-        return "planL?id=" + dto.getId();
+        return "planL?id=" + dto.getMember().getId();
     }
 
+    // 플래너 수정
     @RequestMapping(value = "/plannerUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String plannerUpdate(@RequestParam(value = "planNo[]") List<String> planNo, @RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
+    public String plannerUpdate(@RequestParam(value = "planNo[]") List<String> planNo, @RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "planIntro[]") List<String> planIntro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
         PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
 
         List<Date> days = planService.changeDateListForUpdate(date, time);
@@ -81,21 +84,22 @@ public class PlannerController {
         List<Float> float_y = planService.changeFloatList(y);
         List<Long> long_planNo = planService.changeLongList(planNo);
 
-        List<PlanDTO> plans = planService.returnUpdatePlan(days, place, plan_intro, float_x, float_y, long_planNo, plannerDTO.getPlannerNo());
+        List<PlanDTO> plans = planService.returnUpdatePlan(days, place, planIntro, float_x, float_y, long_planNo, plannerDTO.getPlannerNo());
         planService.updatePlans(plans, dto.getPlannerNo());
-        planService.insertPlan(plans);
 
         return "planD?plannerNo=" + dto.getPlannerNo();
     }
 
+    // 플래너 삭제
     @RequestMapping("plannerDelete")
     public String deletePlanner(PlannerDTO dto, Model model) {
         planService.deletePlans(dto.getPlannerNo());
         plannerService.deletePlanner(dto.getPlannerNo());
 
-        return "redirect:/planL?id=" + dto.getId();
+        return "redirect:/planL?id=" + dto.getMember().getId();
     }
 
+    // 플래너 작성 폼
     @RequestMapping("/goPlanI")
     public String goIsertPage(PlannerDTO dto, Model model) throws Exception {
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());
@@ -105,6 +109,7 @@ public class PlannerController {
         return "/mypage/plan/planInsert";
     }
 
+    // 플래너 수정 폼
     @RequestMapping("/goPlanU")
     public String goUpdatePage(PlannerDTO dto, Model model) throws Exception {
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());

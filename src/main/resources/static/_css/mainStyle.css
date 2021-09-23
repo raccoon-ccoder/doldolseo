@@ -3540,7 +3540,7 @@ table {
 
 .planI-mapbox {
     height: 90%;
-    width: 63%;
+    width: 70%;
     position: absolute;
     left: 731px;
 }
@@ -4200,9 +4200,5 @@ table {
 }
 
 .memberL-footer {
-
+    padding-top:40px;
 }
-
-/* memberPolicy */
-
-/* memberRule */

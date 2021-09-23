@@ -2,17 +2,16 @@ package com.finalprj.doldolseo.controller.crew;
 
 import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.crew.Crew;
-import com.finalprj.doldolseo.domain.crew.CrewMember;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewDTO;
 import com.finalprj.doldolseo.dto.crew.CrewMemberDTO;
 import com.finalprj.doldolseo.dto.crew.CrewPostDTO;
-import com.finalprj.doldolseo.dto.review.ReviewDTO;
 import com.finalprj.doldolseo.service.impl.MemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewMemberServiceImpl;
 import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
-import com.finalprj.doldolseo.util.PagingUtil;
+import com.finalprj.doldolseo.util.PagingParam;
+import com.finalprj.doldolseo.util.UploadCrewFileUtil;
 import com.finalprj.doldolseo.util.UploadFileUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +44,7 @@ public class CrewBoardController {
     ModelMapper modelMapper;
 
     @Autowired
-    UploadFileUtil fileUtil;
+    UploadCrewFileUtil fileUtil;
 
 
     //크루활동게사글 목록
@@ -65,10 +61,7 @@ public class CrewBoardController {
             crewPosts = crewBoardService.getCrewPostsByCat(category, pageable);
         }
 
-        PagingUtil pagingUtil = new PagingUtil(10, crewPosts);
-
-        model.addAttribute("startBlockPage", pagingUtil.startBlockPage);
-        model.addAttribute("endBlockPage", pagingUtil.endBlockPage);
+        model.addAttribute("pagingParam", new PagingParam(10, crewPosts));
         model.addAttribute("crewPosts", crewPosts);
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");

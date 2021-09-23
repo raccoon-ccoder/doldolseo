@@ -9,5 +9,4 @@ public class DoldolseoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DoldolseoApplication.class, args);
     }
-
 }

@@ -51,10 +51,9 @@
         <form:form action="${pageContext.request.contextPath}/review/${review.reviewNo}" method="put">
             <input type="hidden" name="_method" value="put"/>
             <table class="common-iuContainer--writeform">
-
                     <%-- id : hidden --%>
-                <input name="id" type="hidden" value="kki7823"/><%-- 추후 세션처리 --%>
-                <input name="uploadImg" type="hidden" value="${review.uploadImg}"/><%-- 추후 세션처리 --%>
+                <input name="member.id" type="hidden" value="${member.id}"/>
+                <input name="uploadImgNames" type="hidden" value="${review.uploadImgNames}"/>
 
                     <%-- 지역 : select --%>
                 <tr class="common-tbl__item">

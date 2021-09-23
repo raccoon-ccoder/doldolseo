@@ -31,6 +31,7 @@ public class MemberController {
     @Autowired
     private UploadProfileUtil profileUtil;
 
+    // 가입한 회원 등록
     @RequestMapping("/register")
     public String register(@RequestParam(value = "memberimg") MultipartFile file, MemberDTO memberDTO, Model model, HttpServletRequest request) throws Exception{
         String profileImg = "sample.png";
@@ -45,6 +46,7 @@ public class MemberController {
         return "/member/memberJoinResult";
     }
 
+    // 회원가입시 ID 중복체크
     @RequestMapping(value="/member/checkId")
     @ResponseBody
     public Map<Object, Object> checkId(@RequestBody String id) {
@@ -54,6 +56,7 @@ public class MemberController {
         return map;
     }
 
+    // 회원가입시 닉네임 중복체크
     @RequestMapping(value="/member/checkNickname")
     @ResponseBody
     public Map<Object, Object> checkNickname(@RequestBody String nickname) {
@@ -63,21 +66,25 @@ public class MemberController {
         return map;
     }
 
+    // 회원가입 등록 폼
     @RequestMapping("/memberJ")
     public String memberJoin() throws Exception{
         return "/member/memberJoin";
     }
 
+    // 회원가입 완료 여부 페이지
     @RequestMapping("/memberJR")
     public String memberJoinResult() throws Exception{
         return "/member/memberJoinResult";
     }
 
+    // 이용방침 페이지
     @RequestMapping("/memberP")
     public String memberPolicy() throws Exception{
         return "/member/memberPolicy";
     }
 
+    // 가입약관 페이지
     @RequestMapping("/memberR")
     public String memberRule() throws Exception{
         return "/member/memberRule";

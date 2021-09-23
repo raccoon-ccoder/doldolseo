@@ -3,6 +3,8 @@ package com.finalprj.doldolseo.dto.review;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.finalprj.doldolseo.domain.Member;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 
 /*
@@ -16,13 +18,18 @@ import java.time.LocalDateTime;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReviewDTO {
-        private Long reviewNo;
-        private Member member;
-        private String title;
-        private String content;
-        private String courseImg;
-        private String uploadImg;
-        private LocalDateTime wDate;
-        private int hit;
-        private int areaNo;
+    private Long reviewNo;
+    private Member member;
+    private String title;
+    private String content;
+    private String courseImgName;
+    private String uploadImgNames;
+    private LocalDateTime wDate;
+    private int hit;
+    private int areaNo;
+
+    //DTO Only
+    private MultipartFile courseImgFile;
+    private String[] uploadImgs;
+
 }

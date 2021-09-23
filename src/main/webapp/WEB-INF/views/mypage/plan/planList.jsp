@@ -107,7 +107,7 @@
 
                         /*for문 생성 */
                         <c:forEach items="${plans}" var="plan" varStatus="plan_status">
-                            <c:if test="${planner.plannerNo eq plan.plannerNo}">
+                            <c:if test="${planner.plannerNo eq plan.planner.plannerNo}">
                                 /* 지도에 마커 생성 */
                                 /* 서울역 마커 */
                                 var markerPosition  = new kakao.maps.LatLng(${plan.y}, ${plan.x});

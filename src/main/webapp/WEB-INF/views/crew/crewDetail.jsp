@@ -66,7 +66,7 @@
                 <div class="crew-info__item" style="margin-top: 20px">
                     <span>로고 :</span>
                     <div class="crew-logobox" style="width: 100px; height: 110px;">
-                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImage}"
+                        <img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImgFileName}"
                              alt="crew-logo"/>
                     </div>
                 </div>

@@ -31,8 +31,10 @@ public class Planner {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PLANNER_SEQ_GENERATOR")
     private Long plannerNo;
 
-    @Column(nullable = false)
-    private String id;
+    // 추가 코드
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    private Member member;
 
     @Column(nullable = false)
     private String title;

@@ -2,11 +2,9 @@ package com.finalprj.doldolseo.dto.crew;
 
 import com.finalprj.doldolseo.domain.Member;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.persistence.OneToOne;
+import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,7 +21,7 @@ public class CrewDTO {
     private String question1;
     private String question2;
     private String question3;
-    private String crewImage;
+    private String crewImgFileName;
     private String grade;
     private Integer crewPoint;
     private LocalDateTime cDate;

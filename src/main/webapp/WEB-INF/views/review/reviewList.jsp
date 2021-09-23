@@ -9,6 +9,7 @@
 <jsp:useBean id="mapFactory" class="com.finalprj.doldolseo.util.CodeMapFactory"/>
 <%@ page import="com.finalprj.doldolseo.util.DateTimeFormatUtil" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,9 @@
 
                 <%-- 글쓰기 버튼 --%>
                 <div id="reviewL-top__buttonbox">
-                    <button class="review-button" onclick="location.href='${pageContext.request.contextPath}/review/new'">글쓰기</button>
+                    <button class="review-button"
+                            onclick="location.href='${pageContext.request.contextPath}/review/new'">글쓰기
+                    </button>
                 </div>
             </div>
 
@@ -65,15 +68,16 @@
                     <td style="width: 150px">등록일</td>
                     <td style="width: 100px">조회수</td>
                 </tr>
-                <c:forEach items="${reviewList.content}" var="reviewList" begin="0" end="40">
-                    <c:set var="dateYMDMH" value="${DateTimeFormatUtil.changeToYMDHM(reviewList.WDate)}" />
+                <c:forEach items="${reviewList}" var="review" begin="0" end="40">
+                    <c:set var="dateYMDMH" value="${DateTimeFormatUtil.changeToYMDHM(review.WDate)}"/>
 
                     <tr class="list--item">
-                        <td>${mapFactory.areaMap.get(reviewList.areaNo)}</td>
-                        <td><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}">${reviewList.title}</a></td>
-                        <td>${reviewList.member.id}</td>
+                        <td>${mapFactory.areaMap.get(review.areaNo)}</td>
+                        <td><a href="${pageContext.request.contextPath}/review/${review.reviewNo}">${review.title}</a>
+                        </td>
+                        <td>${review.member.id}</td>
                         <td>${dateYMDMH}</td>
-                        <td>${reviewList.hit}</td>
+                        <td>${review.hit}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -82,6 +86,9 @@
             <div id="reviewL-container--bottom">
 
                 <%-- 페이지네이션 --%>
+                <c:set var="START_BLOCK_PAGE" value="${pagingParam.startBlockPage}"/>
+                <c:set var="END_BLOCK_PAGE" value="${pagingParam.endBlockPage}"/>
+                <c:set var="TOTAL_PAGES" value="${pagingParam.totalPages}"/>
                 <div id="reviewL-bottom__pagination">
                     <table class="pagination">
                         <tr>
@@ -92,31 +99,31 @@
                             </td>
 
                             <!-- 이전 페이지로 이동 : 첫 페이지 제외 -->
-                            <c:if test="${startBlockPage ne 1}">
+                            <c:if test="${START_BLOCK_PAGE ne 1}">
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/review?page=${startBlockPage-2}">
+                                    <a href="${pageContext.request.contextPath}/review?page=${START_BLOCK_PAGE-2}">
                                         < </a>
                                 </td>
                             </c:if>
 
                             <!-- 페이징 블록 1 ~ 10 -->
-                            <c:forEach begin="${startBlockPage}" end="${endBlockPage}" var="idx">
+                            <c:forEach begin="${START_BLOCK_PAGE}" end="${END_BLOCK_PAGE}" var="idx">
                                 <td>
                                     <a href="${pageContext.request.contextPath}/review?page=${idx-1}">${idx}</a>
                                 </td>
                             </c:forEach>
 
                             <!-- 다음 페이지로 이동 : 마지막 페이지 제외 -->
-                            <c:if test="${endBlockPage ne reviewList.totalPages}">
+                            <c:if test="${END_BLOCK_PAGE ne TOTAL_PAGES}">
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/review?page=${endBlockPage}">
+                                    <a href="${pageContext.request.contextPath}/review?page=${END_BLOCK_PAGE}">
                                         > </a>
                                 </td>
                             </c:if>
 
                             <!-- 마지막 페이지로 이동 -->
                             <td>
-                                <a href="${pageContext.request.contextPath}/review?page=${reviewList.totalPages-1}">
+                                <a href="${pageContext.request.contextPath}/review?page=${TOTAL_PAGES-1}">
                                     >> </a>
                             </td>
                         </tr>

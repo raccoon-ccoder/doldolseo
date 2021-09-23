@@ -22,7 +22,7 @@ public interface PlanService {
     default PlanDTO entityToDto(Plan plan){
         PlanDTO dto = PlanDTO.builder()
                 .planNo(plan.getPlanNo())
-                .plannerNo(plan.getPlannerNo())
+                .planner(plan.getPlanner())
                 .name(plan.getName())
                 .intro(plan.getIntro())
                 .day(plan.getDay())
@@ -35,7 +35,7 @@ public interface PlanService {
     default Plan dtoToEntity(PlanDTO dto){
         Plan plan = Plan.builder()
                 .planNo(dto.getPlanNo())
-                .plannerNo(dto.getPlannerNo())
+                .planner(dto.getPlanner())
                 .name(dto.getName())
                 .intro(dto.getIntro())
                 .day(dto.getDay())

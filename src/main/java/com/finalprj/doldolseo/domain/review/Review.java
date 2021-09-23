@@ -38,10 +38,10 @@ public class Review {
     private String content;
 
     @Column(name = "COURSE_IMG")
-    private String courseImg;
+    private String courseImgName;
 
     @Column(name = "UPLOAD_IMG")
-    private String uploadImg;
+    private String uploadImgNames;
 
     @Column(name = "W_DATE")
     private LocalDateTime wDate;
