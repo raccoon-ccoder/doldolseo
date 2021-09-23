@@ -12,8 +12,8 @@
 - 개발 환경 : IntelliJ IDEA
 - Front-End : HTML5, CSS3, JavaScript, JQuery, Ajax
 - Back-End : Spring boot, Gradle, Spring-Data-JPA, Spring-Security
-- DB : Oracle 11g 
-- 배포 : AWS EC2
+- DB : Oracle 19c
+- 배포 : AWS EC2 (Amazon Linux)
 
 ## ERD
 ![doldolseo_erd2](https://user-images.githubusercontent.com/77538818/133370496-71dbe3f5-4e21-40a7-a100-e2b0b16a76e7.png)
@@ -33,5 +33,6 @@
 ## What I Did
 - Spring Security를 활용한 회원가입, 로그인, 회원 탈퇴 및 회원 관련 페이지 구현
 - 카카오지도 API 활용 여행 플래너 CRUD 및 플래너 관련 페이지 구현
+- Oracle 클라우드, AWS (Amazon Web Services)를 이용한 프로젝트 배포 
 
 
