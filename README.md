@@ -22,7 +22,7 @@
 [돌고돌아서울 github](https://github.com/kki7823/doldolseo)
 
 ## 돌고돌아서울 웹사이트
-[돌고돌아서울 둘러보기](http://13.124.230.151:8008/doldolseo/main)
+[돌고돌아서울 둘러보기](http://52.78.185.163:8080/doldolseo/main)
 
 ## Features
 - 회원가입, 로그인, 회원 탈퇴
@@ -30,9 +30,20 @@
 - 크루 생성, 가입 및 크루 활동글, 댓글 작성
 - 서울 각 지역 관광지 정보 확인
 
+
 ## What I Did
 - Spring Security를 활용한 회원가입, 로그인, 회원 탈퇴 및 회원 관련 페이지 구현
 - 카카오지도 API 활용 여행 플래너 CRUD 및 플래너 관련 페이지 구현
 - Oracle 클라우드, AWS (Amazon Web Services)를 이용한 프로젝트 배포 
+
+## 협업 방식
+- DB 및 Server : ERD Cloud를 먼저 작성하여 DB 설계 관련 회의을 통해 최종 ERD 완성 후 데이터베이스 구축, 테스트 데이터 삽입 후 AWS에 프로젝트를 배포하여 서버 공유
+
+<img width="900" alt="스크린샷 2021-09-24 오후 4 06 53" src="https://user-images.githubusercontent.com/77538818/134632776-04f24149-9465-4987-a406-36488967e07a.png">
+
+
+- 각 기능별로 브랜치를 생성하여 커밋룰에 따라서 작업, TO DO LIST를 만들어 팀원들의 진행 상황과 일정 체크 공유
+
+<img width="380" height="430" src="https://user-images.githubusercontent.com/77538818/134633058-19429a65-7f85-4773-bf38-b8029bf9e532.png" align="left"/> <img width="530" height="250" src="https://user-images.githubusercontent.com/77538818/134633235-756b79db-df26-438e-9658-5155c9c233d4.png" align="right"/>
 
 
