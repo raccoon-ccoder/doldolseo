@@ -30,6 +30,10 @@
 - 크루 생성, 가입 및 크루 활동글, 댓글 작성
 - 서울 각 지역 관광지 정보 확인
 
+## 스크린샷
+회원가입
+![join](https://user-images.githubusercontent.com/77538818/135020730-f003398c-8b38-4dfd-898b-d4691b49a633.gif)
+
 
 ## What I Did
 - Spring Security를 활용한 회원가입, 로그인, 회원 탈퇴 기능 및 회원 관련 페이지 담당
@@ -43,6 +47,7 @@
 
 
 - 각 기능별로 브랜치를 생성하여 커밋룰에 따라서 작업, TO DO LIST를 만들어 팀원들의 진행 상황과 일정 체크 공유
+<img src="https://user-images.githubusercontent.com/77538818/134633058-19429a65-7f85-4773-bf38-b8029bf9e532.png" width="40%" /><img src="https://user-images.githubusercontent.com/77538818/134633235-756b79db-df26-438e-9658-5155c9c233d4.png" width="60%" />
 ![](https://user-images.githubusercontent.com/77538818/134633058-19429a65-7f85-4773-bf38-b8029bf9e532.png)
 ![](https://user-images.githubusercontent.com/77538818/134633235-756b79db-df26-438e-9658-5155c9c233d4.png)
 
