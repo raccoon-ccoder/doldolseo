@@ -43,9 +43,8 @@
 
 
 - 각 기능별로 브랜치를 생성하여 커밋룰에 따라서 작업, TO DO LIST를 만들어 팀원들의 진행 상황과 일정 체크 공유
-
-<img width="400" height="300" src="https://user-images.githubusercontent.com/77538818/134633058-19429a65-7f85-4773-bf38-b8029bf9e532.png" align="left"/> <img width="530" height="250" src="https://user-images.githubusercontent.com/77538818/134633235-756b79db-df26-438e-9658-5155c9c233d4.png" align="right"/>
-
+![](https://user-images.githubusercontent.com/77538818/134633058-19429a65-7f85-4773-bf38-b8029bf9e532.png)
+![](https://user-images.githubusercontent.com/77538818/134633235-756b79db-df26-438e-9658-5155c9c233d4.png)
 
 
 
@@ -58,7 +57,7 @@
 + 시행착오를 줄이고자 작업 시작 전 프로젝트 기능, UI 관련 세부 사항까지 정리
 	- 팀원들의 아이디어를 취합하여 와이어프레임 작성
 	- 기능 사항 회의 완료 후 각자 맡은 페이지에 대한 스토리보드 작성 
-	사진 추가나 링크 추가
+	- 사진 추가나 링크 추가
 	 
 + 서로 어떤 작업을 하고 있는지 잘 몰라서 생기는 의사소통 문제와 오해
 	- To Do List를 작성하고 아침마다 오늘 할 작업을 팀원에게 브리핑하여 크로스체크하며 일정 조율
@@ -69,7 +68,7 @@
 
 + 플래너 작성시 1개가 아닌, 여러 개의 데이터(일정)을 어떤 방식으로 Controller에게 넘기고 DB에 저장해야할지 고민
 	- Plan 객체 구성에 필요한 데이터(날짜, 장소명, x좌표, y좌표, 메모, 시간)을 div 태그의 속성으로 부여 후 ajax를 통해 2차원 배열로 Controller에게 전달
-	사진 추가
+	- 사진 추가
 	- Service에서 전달 받은 String 타입의 2차원 배열을 알맞은 타입으로 가공 후 JPA의 saveAll() 메서드로 DB에 저장
-	사진 추가 
+	- 사진 추가 
 
