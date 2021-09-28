@@ -22,17 +22,19 @@
 - DB : Oracle 19c
 - 배포 : AWS EC2 (Amazon Linux)
 
-
-## ERD
-![doldolseo_erd2](https://user-images.githubusercontent.com/77538818/133370496-71dbe3f5-4e21-40a7-a100-e2b0b16a76e7.png)
-
-
 ## 돌고돌아서울 깃허브 주소
 [돌고돌아서울 github](https://github.com/kki7823/doldolseo)
 
 
 ## 돌고돌아서울 웹사이트
 [돌고돌아서울 둘러보기](http://52.78.185.163:8080/doldolseo/main)
+
+## 설계
+### ERD
+![doldolseo_erd2](https://user-images.githubusercontent.com/77538818/133370496-71dbe3f5-4e21-40a7-a100-e2b0b16a76e7.png)
+
+### 스토리보드
+![storyboard](https://user-images.githubusercontent.com/77538818/135047527-2c1d76f6-67e9-4ba0-bc68-7925f2d6afc1.gif)
 
 
 ## 스크린샷
@@ -80,8 +82,13 @@
 
 + 시행착오를 줄이고자 작업 시작 전 프로젝트 기능, UI 관련 세부 사항까지 정리
 	- 팀원들의 아이디어를 취합하여 와이어프레임 작성
+	
+	( 와이어프레임 예시 )
+	
+	<img src="https://user-images.githubusercontent.com/77538818/135045587-fd452a92-e321-4874-bc46-1101123170a7.png" width="45%" ><img src="https://user-images.githubusercontent.com/77538818/135045643-d15fc161-286d-4c6c-9c13-7e2179cbe292.png" width="45%" >
+	
 	- 기능 사항 회의 완료 후 각자 맡은 페이지에 대한 스토리보드 작성 
-	 [1차 회의 일지.docx](https://github.com/raccoon-ccoder/doldolseo/files/7241969/1.docx)
+
 
 + 서로 어떤 작업을 하고 있는지 잘 몰라서 생기는 의사소통 문제와 오해
 	- To Do List를 작성하고 아침마다 오늘 할 작업을 팀원에게 브리핑하여 크로스체크하며 일정 조율
@@ -92,13 +99,17 @@
 
 + 플래너 작성시 1개가 아닌, 여러 개의 데이터(일정)을 어떤 방식으로 Controller에게 넘기고 DB에 저장해야할지 고민
 	- Plan 객체 구성에 필요한 데이터(날짜, 장소명, x좌표, y좌표, 메모, 시간)을 일정 추가 시 해당 div 태그의 속성으로 부여 후 ajax를 통해 2차원 배열로 Controller에게 전달
+	
+	
 	<img src="https://user-images.githubusercontent.com/77538818/135031339-f36bb354-b4d3-44c3-8b8d-5a1fa551a24d.png" width="60%" height="50%" />
 	
+	
 	- Service에서 전달 받은 String 타입의 2차원 배열을 알맞은 타입으로 가공 후 JPA의 saveAll() 메서드로 DB에 저장
+	
+	
 	<img src="https://user-images.githubusercontent.com/77538818/135033063-70f17ee6-d4fd-4e44-a0cd-62acbc507089.png" width="80%" />
 	
 	![스크린샷 2021-09-28 오후 3 13 47](https://user-images.githubusercontent.com/77538818/135033132-0547d390-6853-46e3-9f8e-740b12842489.png)
 
-	
 
 
