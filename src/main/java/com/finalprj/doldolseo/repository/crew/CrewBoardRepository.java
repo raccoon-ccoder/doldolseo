@@ -25,5 +25,9 @@ public interface CrewBoardRepository extends JpaRepository<CrewPost, Long> {
     // 사용자 id로 게시글 검색 (List 타입)
     // @Author 백정연, @Date 2021/08/17
     List<CrewPost> findAllByMemberId(String id);
+
+    // 조회수 많은 순으로 게시글 조회
+    // @Author 백정연, @Date 2021/09/25
+    List<CrewPost> findTop5ByOrderByHitDesc();
 }
 

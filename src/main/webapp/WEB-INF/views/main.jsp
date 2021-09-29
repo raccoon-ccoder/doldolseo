@@ -7,7 +7,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -61,18 +61,11 @@
         <!--추천코스-->
         <div id="main_bestcourse">
             <p>BEST COURSE</p>
-            <svg onclick="convertBeforeImg()" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#495c75"
-                 style="vertical-align: top; padding-top: 80px" class="bi bi-caret-left" viewBox="0 0 16 16">
-                <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"></path>
-            </svg>
-            <img id="img1" src="${pageContext.request.contextPath}/_image/main/testCourse/course1.png" width="300px" height="250px">
-            <img id="img2" src="${pageContext.request.contextPath}/_image/main/testCourse/course2.png" width="300px" height="250px"
-                 style="margin-left: 40px; margin-right: 40px;">
-            <img id="img3" src="${pageContext.request.contextPath}/_image/main/testCourse/course3.png" width="300px" height="250px">
-            <svg onclick="convertAfterImg()" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#495c75"
-                 style="vertical-align: top; padding-top: 80px" class="bi bi-caret-right" viewBox="0 0 16 16">
-                <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"></path>
-            </svg>
+
+            <c:forEach items="${reviewList}" var="review" varStatus="status">
+                <a href="${pageContext.request.contextPath}/review/${review.reviewNo}"><img id="img${status.count}" src="${pageContext.request.contextPath}/_image/review/${review.reviewNo}/course.png" width="300px" height="250px"></a>
+            </c:forEach>
+
         </div>
 
         <hr style=" width:100%; color:#bac8d9; margin-top: 40px">
@@ -101,7 +94,7 @@
             <div>
                 <div id="main_crew--text">
                     <div id="main_crew--text1">
-                        <p style="border: 1px solid; background-color: #5882FA; color: white; padding: 10px;">BEST
+                        <p style="border: 1px solid; background-color: #5882FA; color: white; padding: 10px;">NEW
                             CREW</p>
                     </div>
 
@@ -114,28 +107,21 @@
 
             <div id="main_crew--container">
                 <div id="main_crew--bc">
-                    <div>
-                        <svg id="prev" xmlns="http://www.w3.org/2000/svg"
-                             style="display: inline-block; vertical-align: top; margin-top: 110px;" width="50"
-                             height="50" fill="#495c75" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path>
-                        </svg>
+                    <div class="crewBox">
 
+                        <button id="prevBtn"> &#10094;</button>
                         <div id="main_crew--bc--photo">
-                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/dance.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/1.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/2.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/3.png" width="230px" height="200px" alt="crew_logo">
-                            <img src="${pageContext.request.contextPath}/_image/main/crewtest/4.png" width="230px" height="200px"alt="crew_logo">
+                            <c:forEach items="${crewList}" var="crew">
+                                <div class="crewList">
+                                    <a href="${pageContext.request.contextPath}/crewD?crewNo=${crew.crewNo}"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crew.crewImgFileName}" width="230px" height="200px" alt="${crew.crewName}" class="crewImg"></a>
+                                    <span class="crewName">${crew.crewName}</span>
+                                </div>
+                            </c:forEach>
                         </div>
 
-                        <svg id="next" xmlns="http://www.w3.org/2000/svg"
-                             style="display: inline-block; vertical-align: top; margin-top: 110px;" width="50"
-                             height="50" fill="#495c75" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"></path>
-                        </svg>
+                         <button id="nextBtn">&#10095;</button>
+                        <script src ="${pageContext.request.contextPath}/_js/main.js"></script>
                     </div>
-                    <p style="font-family: nanumB; font-size: 1.1em; color: #647C97"><B>돌고래와춤을</B></p>
                 </div>
 
                 <div id="main_crew--bcp">
@@ -150,36 +136,45 @@
                             </tr>
                             </thead>
                             <tbody style="text-align: center; font-family: nanumB; font-size: 16px;">
-                            <tr>
-                                <td>돌고래와춤을</td>
-                                <td>맛집</td>
-                                <td><a href="#"><b>애완 돌고래 동반 가능한 맛집 리스트</b></a></td>
-                                <td>young2</td>
-                            </tr>
-                            <tr>
-                                <td>청사모</td>
-                                <td>쇼핑</td>
-                                <td><a href="#"><b>청바지도 감성이 있다구요</b></a></td>
-                                <td>kki0829</td>
-                            </tr>
-                            <tr>
-                                <td>인생한방</td>
-                                <td>자유</td>
-                                <td><a href="#"><b>찐 명당 알려준다 드루와</b></a></td>
-                                <td>gogojy</td>
-                            </tr>
-                            <tr>
-                                <td>멍멍멍</td>
-                                <td>자유</td>
-                                <td><a href="#"><b>강아지 팔자가 좋다는건 옛말</b></a></td>
-                                <td>bboong</td>
-                            </tr>
-                            <tr>
-                                <td>freeflux</td>
-                                <td>자유</td>
-                                <td><a href="#"><b>이모티콘 모음입니다..m^_^m</b></a></td>
-                                <td>kkh123</td>
-                            </tr>
+                            <c:forEach items="${crewPosts}" var="post">
+                                <tr>
+                                    <td>${post.crew.crewName}</td>
+                                    <td>${post.category}</td>
+                                    <td><a href="${pageContext.request.contextPath}/crew/board/${post.postNo}"><b>${post.title}</b></a></td>
+                                    <td>${post.member.nickname}</td>
+                                </tr>
+                            </c:forEach>
+
+<%--                            <tr>--%>
+<%--                                <td>돌고래와춤을</td>--%>
+<%--                                <td>맛집</td>--%>
+<%--                                <td><a href="#"><b>애완 돌고래 동반 가능한 맛집 리스트</b></a></td>--%>
+<%--                                <td>young2</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>청사모</td>--%>
+<%--                                <td>쇼핑</td>--%>
+<%--                                <td><a href="#"><b>청바지도 감성이 있다구요</b></a></td>--%>
+<%--                                <td>kki0829</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>인생한방</td>--%>
+<%--                                <td>자유</td>--%>
+<%--                                <td><a href="#"><b>찐 명당 알려준다 드루와</b></a></td>--%>
+<%--                                <td>gogojy</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>멍멍멍</td>--%>
+<%--                                <td>자유</td>--%>
+<%--                                <td><a href="#"><b>강아지 팔자가 좋다는건 옛말</b></a></td>--%>
+<%--                                <td>bboong</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>freeflux</td>--%>
+<%--                                <td>자유</td>--%>
+<%--                                <td><a href="#"><b>이모티콘 모음입니다..m^_^m</b></a></td>--%>
+<%--                                <td>kkh123</td>--%>
+<%--                            </tr>--%>
                             </tbody>
                         </table>
                     </div>

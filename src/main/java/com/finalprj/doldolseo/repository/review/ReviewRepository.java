@@ -34,4 +34,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     // 사용자 작성 글 목록 조회 (List 타입)
     // @Author 백정연, @Date 2021/08/13
     List<Review> findAllByMemberId(String id);
+
+    // 베스트 후기글 조회
+    // @Author 백정연, @Date 2021/09/24
+    List<Review> findTop3ByCourseImgNameNotNullOrderByHitDesc();
 }

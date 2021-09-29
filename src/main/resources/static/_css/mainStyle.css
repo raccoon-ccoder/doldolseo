@@ -62,9 +62,26 @@
 #img2 {
     border-radius: 10px;
     border: 4px solid #495c75;
+    margin-left: 40px; margin-right: 40px;
 }
 
 #img3 {
+    border-radius: 10px;
+    border: 4px solid #495c75;
+}
+
+#img4 {
+    border-radius: 10px;
+    border: 4px solid #495c75;
+}
+
+#img5 {
+    border-radius: 10px;
+    border: 4px solid #495c75;
+    margin-left: 40px; margin-right: 40px;
+}
+
+#img6 {
     border-radius: 10px;
     border: 4px solid #495c75;
 }
@@ -174,6 +191,55 @@
 #main_crew--bcp--table a {
     text-decoration: none;
     color: #647C97;
+}
+
+.crewBox{
+    position:relative;
+}
+
+.crewList{
+    position:relative;
+
+}
+
+.crewImg{
+    position:absolute;
+    top:5px;
+    left:-115px;
+    cursor: pointer;
+}
+
+#prevBtn{
+    position:absolute;
+    top:100px;
+    left:10px;
+    font-size:50px;
+    font-weight:900;
+    border:none;
+    background-color:white;
+    color: #495c75;
+}
+
+#nextBtn{
+    position:absolute;
+    top:100px;
+    right:10px;
+    font-size:50px;
+    font-weight:900;
+    border:none;
+    background-color:white;
+    color: #495c75;
+}
+
+.crewName{
+    font-family: nanumB;
+    font-size: 1.1em;
+    font-weight:600;
+    color: #647C97;
+    position:absolute;
+    width:250px;
+    bottom:-250px;
+    left:-127px;
 }
 
 
@@ -736,7 +802,6 @@
 #areaDetail-info__table th, td {
     /*border: 1px solid;*/
 }
-
 /* by 김경일 */
 /* 공통 */
 html, body {
@@ -2619,6 +2684,7 @@ table {
     border-collapse: collapse;
     text-align: center;
     font-size: 14px;
+    table-layout:fixed;
 }
 
 .mypageD-boardbox__tr--blue {
@@ -2648,6 +2714,16 @@ table {
 
 .mypageD-boardbox__td--white {
     border-bottom: 2px solid #dadce0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mypageD-boardbox__td--long{
+    border-bottom: 2px solid #dadce0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .mypageD-boardbox__a--white:link {

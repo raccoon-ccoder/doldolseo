@@ -179,7 +179,7 @@
                 <c:if test="${crewDTO != null}">
                     <div class="mypageD-crewlistbox">
                         <span class="mypageD-crewlistbox__span--big">${crewDTO.crewName}</span>
-                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImg}" class="mypageD-crewlistbox__img--big"></a>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewDTO.crewImgFileName}" class="mypageD-crewlistbox__img--big"></a>
                         <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewDTO.crewNo}'">내 크루 보기</button>
                     </div>
                 </c:if>
@@ -187,7 +187,7 @@
                 <c:forEach items="${crewMemberDTO}" var="crewMember">
                     <div class="mypageD-crewlistbox">
                         <span class="mypageD-crewlistbox__span--big">${crewMember.crew.crewName}</span>
-                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewMember.crew.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewMember.crew.crewImage}" class="mypageD-crewlistbox__img--big"></a>
+                        <a href="${pageContext.request.contextPath}/crewD?crewNo=${crewMember.crew.crewNo}" class="mypageD-crewlistbox__a--big"><img src="${pageContext.request.contextPath}/_image/crew/logo/${crewMember.crew.crewImgFileName}" class="mypageD-crewlistbox__img--big"></a>
                         <button class="mypageD-crewlistbox__button--blue" onclick="location.href='${pageContext.request.contextPath}/crewD?crewNo=${crewMember.crew.crewNo}'">내 크루 보기</button>
                     </div>
                 </c:forEach>
@@ -217,7 +217,7 @@
                     <c:forEach items="${reviewList.content}" var="reviewList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${reviewList.reviewNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}" class="mypageD-boardbox__a--white">${reviewList.title}</a></td>
+                            <td class="mypageD-boardbox__td--long"><a href="${pageContext.request.contextPath}/review/${reviewList.reviewNo}" class="mypageD-boardbox__a--white">${reviewList.title}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                     <fmt:parseDate value="${reviewList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                     <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
@@ -278,7 +278,7 @@
                     <c:forEach items="${crewPostList.content}" var="crewPostList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${crewPostList.postNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/crew/board/${crewPostList.postNo}" class="mypageD-boardbox__a--white">${crewPostList.title}</a></td>
+                            <td class="mypageD-boardbox__td--long"><a href="${pageContext.request.contextPath}/crew/board/${crewPostList.postNo}" class="mypageD-boardbox__a--white">${crewPostList.title}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                 <fmt:parseDate value="${crewPostList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                 <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
@@ -340,7 +340,7 @@
                     <c:forEach items="${commentList.content}" var="commentList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${commentList.commentNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/review/${commentList.review.reviewNo}" class="mypageD-boardbox__a--white">${commentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--long"><a href="${pageContext.request.contextPath}/review/${commentList.review.reviewNo}" class="mypageD-boardbox__a--white">${commentList.content}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                 <fmt:parseDate value="${commentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                 <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />
@@ -404,7 +404,7 @@
                     <c:forEach items="${crewCommentList.content}" var="crewCommentList" varStatus="status">
                         <tr class="mypageD-boardbox__tr--white">
                             <td class="mypageD-boardbox__td--white">${crewCommentList.commentNo}</td>
-                            <td class="mypageD-boardbox__td--white"><a href="${pageContext.request.contextPath}/crew/board/${commentList.crewPost.postNo}" class="mypageD-boardbox__a--white">${crewCommentList.content}</a></td>
+                            <td class="mypageD-boardbox__td--long"><a href="${pageContext.request.contextPath}/crew/board/${crewCommentList.crewPost.postNo}" class="mypageD-boardbox__a--white">${crewCommentList.content}</a></td>
                             <td class="mypageD-boardbox__td--white">
                                 <fmt:parseDate value="${crewCommentList.WDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDate" type="both" />
                                 <fmt:formatDate value="${parsedDate}" pattern="yyyy-MM-dd" />

@@ -33,7 +33,7 @@
             if(result == false){
                 return false;
             }else if(result == true){
-                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&id=${member.id}';
+                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&member.id=${member.id}';
             }
         }
     </script>
