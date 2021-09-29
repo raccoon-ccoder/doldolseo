@@ -2,6 +2,9 @@ package com.finalprj.doldolseo.controller;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.service.LoginService;
+import com.finalprj.doldolseo.service.impl.crew.CrewBoardServiceImpl;
+import com.finalprj.doldolseo.service.impl.crew.CrewServiceImpl;
+import com.finalprj.doldolseo.service.impl.review.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +28,21 @@ public class LoginController {
     @Autowired
     private LoginService service;
 
+    @Autowired
+    private ReviewServiceImpl reviewService;
+
+    @Autowired
+    private CrewServiceImpl crewService;
+
+    @Autowired
+    private CrewBoardServiceImpl crewBoardService;
+
     @GetMapping(value="/main")
     public String main(@RequestParam(value="name", defaultValue = "world") String name, Model model){
         model.addAttribute("name", name);
+        model.addAttribute("reviewList", reviewService.getPopularReview());
+        model.addAttribute("crewList", crewService.getNewCrews());
+        model.addAttribute("crewPosts",crewBoardService.getPopularPosts());
         return "main";
     }
 

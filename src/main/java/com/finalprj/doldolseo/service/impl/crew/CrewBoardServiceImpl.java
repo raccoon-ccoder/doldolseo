@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CrewBoardServiceImpl {
@@ -27,7 +28,7 @@ public class CrewBoardServiceImpl {
     //크루활동 게시글 전체
     public Page<CrewPostDTO> getCrewPosts(Pageable pageable) {
         Page<CrewPost> crewPostsEntity = repository.findAll(pageable);
-        System.out.println(crewPostsEntity.getContent().get(1).getContent());
+        //System.out.println(crewPostsEntity.getContent().get(1).getContent());
         Page<CrewPostDTO> crewPosts = modelMapper.map(crewPostsEntity, new TypeToken<Page<CrewPostDTO>>() {
         }.getType());
 
@@ -47,12 +48,15 @@ public class CrewBoardServiceImpl {
     @Transactional
     public CrewPostDTO getCrewPost(Long postNo) {
         CrewPost crewPostEntity = repository.findByPostNo(postNo);
+        increaseHit(crewPostEntity);
         //크루포인트 1증가
 //        crewPostEntity.getCrew().setCrewPoint(crewPostEntity.getCrew().getCrewPoint()+1);
         CrewPostDTO dto = modelMapper.map(crewPostEntity, CrewPostDTO.class);
 
         return dto;
     }
+
+    public void increaseHit(CrewPost post) { post.setHit(post.getHit() +1);}
 
     //크루게시글 등록
     @Transactional
@@ -69,6 +73,13 @@ public class CrewBoardServiceImpl {
         CrewPost post = repository.save(crewPostEntity);
 
         return modelMapper.map(post, CrewPostDTO.class);
+    }
+
+    // 인기 크루게시글 조회
+    public List<CrewPostDTO> getPopularPosts(){
+        List<CrewPost> posts = repository.findTop5ByOrderByHitDesc();
+        List<CrewPostDTO> postDTOS = modelMapper.map(posts, new TypeToken<List<CrewPostDTO>>(){}.getType());
+        return postDTOS;
     }
 
     public void deletePost(Long postNo) {

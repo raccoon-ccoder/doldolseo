@@ -112,7 +112,6 @@ public class PlanServiceImpl implements PlanService {
             if((place.size()==1) && plan_intro.size() == 0){     // 여행 날짜가 1일, 플랜이 1개이며 메모가 없는 플래너일경우
                 PlanDTO plan = PlanDTO.builder()
                         .planner(Planner.builder().plannerNo(planner_no).build())
-                        .planNo(planNo.get(i))
                         .day(days.get(i))
                         .name(place.get(i))
                         .intro(null)

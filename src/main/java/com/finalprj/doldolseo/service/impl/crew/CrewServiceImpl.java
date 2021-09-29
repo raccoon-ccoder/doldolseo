@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CrewServiceImpl {
@@ -63,6 +64,14 @@ public class CrewServiceImpl {
 
         return crew;
     }
+
+    /* 신생 크루 조회 */
+    public List<CrewDTO> getNewCrews(){
+        List<Crew> crews = repository.findTop3ByOrderByCrewNoDesc();
+        List<CrewDTO> newCrews = modelMapper.map(crews, new TypeToken<List<CrewDTO>>(){}.getType());
+        return newCrews;
+    }
+
 
     /* 크루 상세 조회 */
     public CrewDTO getCrewById(String id) {

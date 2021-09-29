@@ -75,7 +75,7 @@
                         <td>${mapFactory.areaMap.get(review.areaNo)}</td>
                         <td><a href="${pageContext.request.contextPath}/review/${review.reviewNo}">${review.title}</a>
                         </td>
-                        <td>${review.member.id}</td>
+                        <td>${review.member.nickname}</td>
                         <td>${dateYMDMH}</td>
                         <td>${review.hit}</td>
                     </tr>

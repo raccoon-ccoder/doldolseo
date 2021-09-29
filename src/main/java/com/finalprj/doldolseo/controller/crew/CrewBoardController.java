@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +66,10 @@ public class CrewBoardController {
         model.addAttribute("crewPosts", crewPosts);
 
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-        boolean hasCrew = crewMemberService.isJoinedCrew(memberDTO.getId());
+        boolean hasCrew = false;
+        if(memberDTO != null){
+            hasCrew = crewMemberService.isJoinedCrew(memberDTO.getId());
+        }
 
         model.addAttribute("isJoinedCrew", hasCrew);
         return "/crew/crewBoard/crewBoardList";
@@ -84,6 +88,7 @@ public class CrewBoardController {
 
         //멤버 리스트 전달객체
         List<Member> memberList = new ArrayList<>();
+
         String[] idList = crewPost.getMemberList().split(",");
 
         for (int i = 0; i < idList.length; i++) {

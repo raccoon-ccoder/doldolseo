@@ -18,7 +18,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception){
         try{
             request.setAttribute("result","false");
-            request.getRequestDispatcher("/memberL").forward(request,response);
+            request.getRequestDispatcher("/doldolseo/memberL").forward(request,response);
         }catch (Exception e){
             System.out.println("LoginFailHandler err : " + e.getMessage());
         }

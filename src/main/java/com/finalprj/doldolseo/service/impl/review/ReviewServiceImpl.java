@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
         return entityToDto(review);
     }
 
+    @Transactional
     public ReviewDTO getReviewHitAndChangeContentImgSource(Long reviewNo) {
         Review review = repository.findByReviewNo(reviewNo);
         increaseHit(review);
@@ -55,7 +57,13 @@ public class ReviewServiceImpl implements ReviewService {
         return entityToDto(review);
     }
 
-    @Transactional
+    public List<ReviewDTO> getPopularReview(){
+        List<Review> reviews = repository.findTop3ByCourseImgNameNotNullOrderByHitDesc();
+        List<ReviewDTO> reviewList = modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>(){}.getType());
+        return reviewList;
+    }
+
+    //@Transactional
     public void changeContentImgSrc(Review review) {
         String content = review.getContent();
         if (content != null) {
@@ -63,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
     }
 
-    @Transactional
+    //@Transactional
     public void increaseHit(Review review) {
         review.setHit(review.getHit() + 1);
     }
