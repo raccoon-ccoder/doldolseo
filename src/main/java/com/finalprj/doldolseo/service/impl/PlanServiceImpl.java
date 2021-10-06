@@ -25,8 +25,10 @@ public class PlanServiceImpl implements PlanService {
     @Autowired
     private PlanRepository repository;
 
-    public void insertPlan(List<PlanDTO> planDTOS){
+    /* 사용자가 작성한 플랜들을 DB에 저장하는 메소드 */
+    public void insertPlan(List<PlanDTO> planDTOS, Planner planner){
         for(PlanDTO dto : planDTOS){
+            dto.setPlanner(planner);
             repository.save(dtoToEntity(dto));
         }
     }
@@ -73,71 +75,9 @@ public class PlanServiceImpl implements PlanService {
         repository.deleteAllByPlannerPlannerNo(plannerNo);
     }
 
-    /* plnaInsert.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
-    public List<PlanDTO> returnPlan(List<Date> days, List<String> place, List<String> place_intro, List<Float> X, List<Float> Y, Long planner_no){
-        List<PlanDTO> plans = new ArrayList<PlanDTO>();
-
-        for(int i=0;i<days.size();i++){
-            if((place.size()==1) && place_intro.size() == 0){    // 여행 날짜가 1일, 플랜이 1개이며 메모가 없는 플래너일경우
-                PlanDTO plan = PlanDTO.builder()
-                        .planner(Planner.builder().plannerNo(planner_no).build())
-                        .day(days.get(i))
-                        .name(place.get(i))
-                        .intro(null)
-                        .x(X.get(i))
-                        .y(Y.get(i))
-                        .build();
-                plans.add(plan);
-            }else{
-                PlanDTO plan = PlanDTO.builder()
-                        .planner(Planner.builder().plannerNo(planner_no).build())
-                        .day(days.get(i))
-                        .name(place.get(i))
-                        .intro(place_intro.get(i))
-                        .x(X.get(i))
-                        .y(Y.get(i))
-                        .build();
-                plans.add(plan);
-            }
-
-        }
-        return  plans;
-    }
-
-    /* planUpdate.jsp에서 전달받은 값들을 List<Plan>으로 반환 */
-    public List<PlanDTO> returnUpdatePlan(List<Date> days, List<String> place, List<String> plan_intro, List<Float> X, List<Float> Y,List<Long> planNo, Long planner_no){
-        List<PlanDTO> plans = new ArrayList<PlanDTO>();
-
-        for(int i=0;i<days.size();i++){
-            if((place.size()==1) && plan_intro.size() == 0){     // 여행 날짜가 1일, 플랜이 1개이며 메모가 없는 플래너일경우
-                PlanDTO plan = PlanDTO.builder()
-                        .planner(Planner.builder().plannerNo(planner_no).build())
-                        .day(days.get(i))
-                        .name(place.get(i))
-                        .intro(null)
-                        .x(X.get(i))
-                        .y(Y.get(i))
-                        .build();
-                plans.add(plan);
-            }else{
-                PlanDTO plan = PlanDTO.builder()
-                        .planner(Planner.builder().plannerNo(planner_no).build())
-                        .planNo(planNo.get(i))
-                        .day(days.get(i))
-                        .name(place.get(i))
-                        .intro(plan_intro.get(i))
-                        .x(X.get(i))
-                        .y(Y.get(i))
-                        .build();
-                plans.add(plan);
-            }
-        }
-
-        return  plans;
-    }
-
-    public void updatePlans(List<PlanDTO> updatedPlans, Long plannerNo){
-        List<PlanDTO> origin_plans = selectPlan(plannerNo);
+    /* 사용자가 수정한 플랜들을 DB에 반영 (저장, 수정, 삭제) */
+    public void updatePlans(List<PlanDTO> updatedPlans, Planner planner){
+        List<PlanDTO> origin_plans = selectPlan(planner.getPlannerNo());
 
         // 사용자가 삭제한 플랜들 DB에서 삭제
         for(PlanDTO oldPlan : origin_plans){
@@ -156,7 +96,7 @@ public class PlanServiceImpl implements PlanService {
         }
 
         // 수정된 플랜들 DB 반영
-        insertPlan(updatedPlans);
+        insertPlan(updatedPlans, planner);
     }
 
     public int getDiffDayCount(Date fromDate, Date toDate){
@@ -178,58 +118,5 @@ public class PlanServiceImpl implements PlanService {
         return result;
     }
 
-    public List<Date> changeDateList(List<String> dates, List<String> times) throws ParseException {
-        List<Date> result = new ArrayList<Date>();
 
-        for(int i=0;i<dates.size();i++){
-            SimpleDateFormat recvSimpleFormat = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-            SimpleDateFormat tranSimpleFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-            Date dateDate = recvSimpleFormat.parse(dates.get(i));
-            String stringDate = tranSimpleFormat.format(dateDate);
-
-            String stringDay = stringDate + " " + times.get(i);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            Date dateDay = format.parse(stringDay);
-            result.add(dateDay);
-        }
-
-        return result;
-    }
-
-    public List<Date> changeDateListForUpdate(List<String> dates, List<String> times) throws ParseException {
-        List<Date> result = new ArrayList<Date>();
-
-        for(int i=0;i<dates.size();i++){
-            String stringDay = dates.get(i) + " " + times.get(i);
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-            Date dateDay = format.parse(stringDay);
-            result.add(dateDay);
-        }
-
-        return result;
-    }
-
-    public List<Float> changeFloatList(List<String> data){
-        List<Float> result = new ArrayList<Float>();
-        for(int i=0;i<data.size();i++){
-            Float floatNum = Float.parseFloat(data.get(i));
-            result.add(floatNum);
-        }
-        return result;
-    }
-
-    public List<Long> changeLongList(List<String> data){
-        List<Long> result = new ArrayList<Long>();
-        for(int i=0;i<data.size();i++){
-            if(!(data.get(i) == "")){
-                Long longNum = Long.parseLong(data.get(i));
-                result.add(longNum);
-            }else{
-                result.add(null);
-            }
-        }
-        return result;
-    }
 }

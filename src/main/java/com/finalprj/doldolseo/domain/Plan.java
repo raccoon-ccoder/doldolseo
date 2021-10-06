@@ -28,7 +28,6 @@ public class Plan {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PLAN_SEQ_GENERATOR")
     private Long planNo;
 
-    // plannerNo 아래 코드로 변경
     @ManyToOne
     @JoinColumn(name = "planner_no")
     private Planner planner;

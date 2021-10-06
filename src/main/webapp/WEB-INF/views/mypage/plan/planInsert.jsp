@@ -23,61 +23,64 @@
                 $('.planI-daybox').css("background-color","#1b3067");
                 $(this).css("background-color","#5882fa");
             });
+
             $(".planI-header__button--sumbit").click(function () {
-                var date = [];
-                var place = [];
-                var plan_intro = [];
-                var y = [];
-                var x = [];
-                var time = [];
-                var title = document.getElementById('title').value;
-                var f_date = document.getElementById('f_date').value;
-                var l_date = document.getElementById('l_date').value;
-                var planner_intro = document.getElementById('intro').value;
                 var isValid = true;
+
                 $('.planI-plansbox').each(function (i){
                     if($(this).children().length < 2){
                         alert("각 여행일에는 최소 1개의 일정을 추가해주세요.");
                         isValid = false;
+                        return false;
                     }
                 });
 
+                $('.planI-planbox').each(function (i){
+                    if($(this).find('.planI-plandetail__input--time').val() == ""){
+                        alert("시간은 필수 입력 항목입니다.");
+                        isValid = false;
+                        return false;
+                    }
+                });
+
+                var member = {
+                    id : "${member.id}"
+                };
+
+                var planner = {
+                    title : document.getElementById('title').value,
+                    fDate : document.getElementById('f_date').value,
+                    lDate : document.getElementById('l_date').value,
+                    intro : document.getElementById('intro').value,
+                    member : member
+                };
+
+                var dataList = new Array();
+
                 if(isValid == true){
                     $('.planI-planbox').each(function (i){
-                        date.push($(this).attr("data-date"));
-                        y.push($(this).attr("data-y"));
-                        x.push($(this).attr("data-x"));
-                        place.push($(this).attr("data-place"));
-                        time.push($(this).find('.planI-plandetail__input--time').val());
+                        var data = {
+                            day : $(this).attr("data-date") + " " + $(this).find('.planI-plandetail__input--time').val(),
+                            name : $(this).attr("data-place"),
+                            intro : $(this).find('.planI-plandetail__input--intro').val(),
+                            x : $(this).attr("data-x"),
+                            y : $(this).attr("data-y")
+                        };
 
-                        if($(this).val() == null || $(this).val() == ""){
-                            plan_intro.push(null);
-                        }else{
-                            plan_intro.push($(this).find('.planI-plandetail__input--intro').val());
-                        }
+                        dataList.push(data);
                     });
 
-                    for(var i=0;i<time.length;i++){
-                        if(time[i] == ""){
-                            alert("시간은 필수 입력 항목입니다.");
-                            return false;
-                        }
-                    }
+                    var toData = {
+                        planList : dataList,
+                        planner : planner
+                    };
+
+                    console.log(toData);
 
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/plannerInsert?member.id=${member.id}",
-                        data:{
-                            date : date,
-                            place : place,
-                            plan_intro : plan_intro,
-                            y : y,
-                            x : x,
-                            time : time,
-                            title : title,
-                            fDate : f_date,
-                            lDate : l_date,
-                            intro : planner_intro
-                        },
+                        url:"${pageContext.request.contextPath}/plannerInsert",
+                        contentType:'application/json',
+                        data: JSON.stringify(toData),
                         type:"post",
                         success: function (data) {
                             location.href="${pageContext.request.contextPath}/" + data;
@@ -130,7 +133,7 @@
     <div class="planI-planscontainer">
 
         <c:forEach items="${days}" var="day" varStatus="status">
-            <div class="planI-plansbox" data-date="${day}">
+            <div class="planI-plansbox" data-date="<fmt:formatDate value="${day}" pattern="yyyy-MM-dd" />">
                 <div class="planI-plansboxtitle">DAY${status.count} | <fmt:formatDate value="${day}" pattern="MM.dd E요일" /></div>
             </div>
         </c:forEach>

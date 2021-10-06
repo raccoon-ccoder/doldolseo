@@ -25,6 +25,12 @@ public class PlannerServiceImpl implements PlannerService {
     @Autowired
     private PlannerRepository repository;
 
+    // 추가된 코드
+    public Planner insertPlanner(Planner planner){
+        Planner savedPlanner =  repository.save(planner);
+        return savedPlanner;
+    }
+
     @Override
     public PlannerDTO insertPlanner(PlannerDTO dto) throws ParseException {
         Planner entity = dtoToEntity(dto);

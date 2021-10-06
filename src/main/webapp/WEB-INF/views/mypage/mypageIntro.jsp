@@ -49,7 +49,7 @@
     <!--로그인 전 화면-->
     <div id="header-miniprofileBox__guest">
         <button id="header-button__b1" type="button" onclick="location.href='${pageContext.request.contextPath}/memberL'">LOGIN</button>
-        <button id="header-button__b2" type="button" onclick="location.href='${pageContext.request.contextPath}/memberJ'">JOIN</button>
+        <button id="header-button__b2" type="button" onclick="location.href='${pageContext.request.contextPath}/member'">JOIN</button>
     </div>
     <!-- // 로그인 전 화면-->
 </div>
