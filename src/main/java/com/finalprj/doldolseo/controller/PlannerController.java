@@ -1,5 +1,7 @@
 package com.finalprj.doldolseo.controller;
 
+import com.finalprj.doldolseo.domain.Member;
+import com.finalprj.doldolseo.domain.Planner;
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.PlanDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;
@@ -8,14 +10,13 @@ import com.finalprj.doldolseo.service.impl.PlannerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /*
  *  플래너 Controller
@@ -58,36 +59,22 @@ public class PlannerController {
         return "/mypage/plan/planList";
     }
 
-    // 플래너 생성
+    // 플래너 저장
     @RequestMapping(value = "/plannerInsert", method = RequestMethod.POST)
     @ResponseBody
-    public String planInsert(@RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "plan_intro[]") List<String> plan_intro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
-        PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
-
-        List<Date> days = planService.changeDateList(date, time);
-        List<Float> float_x = planService.changeFloatList(x);
-        List<Float> float_y = planService.changeFloatList(y);
-
-        List<PlanDTO> plans = planService.returnPlan(days, place, plan_intro, float_x, float_y, plannerDTO.getPlannerNo());
-        planService.insertPlan(plans);
-        return "planL?id=" + dto.getMember().getId();
+    public String planInsert(@RequestBody PlanDTO param) throws ParseException {
+       Planner planner = plannerService.insertPlanner(param.getPlanner());
+       planService.insertPlan(param.getPlanList(), planner);
+       return "planL?id=" + planner.getMember().getId();
     }
 
     // 플래너 수정
     @RequestMapping(value = "/plannerUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String plannerUpdate(@RequestParam(value = "planNo[]") List<String> planNo, @RequestParam(value = "date[]") List<String> date, @RequestParam(value = "place[]") List<String> place, @RequestParam(value = "planIntro[]") List<String> planIntro, @RequestParam(value = "y[]") List<String> y, @RequestParam(value = "x[]") List<String> x, @RequestParam(value = "time[]") List<String> time, PlannerDTO dto) throws ParseException {
-        PlannerDTO plannerDTO = plannerService.insertPlanner(dto);
-
-        List<Date> days = planService.changeDateListForUpdate(date, time);
-        List<Float> float_x = planService.changeFloatList(x);
-        List<Float> float_y = planService.changeFloatList(y);
-        List<Long> long_planNo = planService.changeLongList(planNo);
-
-        List<PlanDTO> plans = planService.returnUpdatePlan(days, place, planIntro, float_x, float_y, long_planNo, plannerDTO.getPlannerNo());
-        planService.updatePlans(plans, dto.getPlannerNo());
-
-        return "planD?plannerNo=" + dto.getPlannerNo();
+    public String plannerUpdate(@RequestBody PlanDTO param) throws ParseException {
+        Planner planner = plannerService.insertPlanner(param.getPlanner());
+        planService.updatePlans(param.getPlanList(), planner);
+        return "planD?plannerNo=" + planner.getPlannerNo();
     }
 
     // 플래너 삭제

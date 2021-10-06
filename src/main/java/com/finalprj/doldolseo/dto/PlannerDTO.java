@@ -1,5 +1,6 @@
 package com.finalprj.doldolseo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.finalprj.doldolseo.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,31 +31,30 @@ public class PlannerDTO {
     private String title;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date lDate;
 
     private String intro;
     private Date wDate;
 
-    public void setFDate(String fDate) throws ParseException {
-        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
-        Date first_date = fm.parse(fDate);
-        this.fDate = first_date;
-    }
 
-    public void setLDate(String lDate) throws ParseException {
-        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
-        Date last_date = fm.parse(lDate);
-        this.lDate = last_date;
-    }
-
-    public void setWDate(String WDate) throws ParseException {
-        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
-        Date write_date = fm.parse(WDate);
-        this.wDate = write_date;
-    }
+//    public void setFDate(String fDate) throws ParseException {
+//        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
+//        Date first_date = fm.parse(fDate);
+//        this.fDate = first_date;
+//    }
+//
+//    public void setLDate(String lDate) throws ParseException {
+//        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
+//        Date last_date = fm.parse(lDate);
+//        this.lDate = last_date;
+//    }
+//
+//    public void setWDate(String WDate) throws ParseException {
+//        SimpleDateFormat fm  = new SimpleDateFormat("yyyy-MM-dd");
+//        Date write_date = fm.parse(WDate);
+//        this.wDate = write_date;
+//    }
 }

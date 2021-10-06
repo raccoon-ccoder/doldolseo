@@ -24,70 +24,66 @@
                 $(this).css("background-color","#5882fa");
             });
             $(".planI-header__button--sumbit").click(function () {
-                var date = [];
-                var place = [];
-                var plan_intro = [];
-                var y = [];
-                var x = [];
-                var time = [];
-                var planNo = [];
-
-                var title = document.getElementById('title').value;
-                var fDate = document.getElementById('fDate').value;
-                var lDate = document.getElementById('lDate').value;
-                var planner_intro = document.getElementById('intro').value;
                 var isValid = true;
 
                 $('.planI-plansbox').each(function (i){
                     if($(this).children().length < 2){
                         alert("각 여행일에는 최소 1개의 일정을 추가해주세요.");
                         isValid = false;
+                        return false;
                     }
                 });
 
+                $('.planI-planbox').each(function (i){
+                    if($(this).find('.planI-plandetail__input--time').val() == ""){
+                        alert("시간은 필수 입력 항목입니다.");
+                        isValid = false;
+                        return false;
+                    }
+                });
+
+                var member = {
+                    id : "${member.id}"
+                };
+
+                var planner = {
+                    plannerNo : ${planner_user.plannerNo},
+                    title : document.getElementById('title').value,
+                    fDate : document.getElementById('fDate').value,
+                    lDate : document.getElementById('lDate').value,
+                    intro : document.getElementById('intro').value,
+                    member : member,
+                    wDate : "<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />"
+                };
+
+                var dataList = new Array();
+
                 if(isValid == true){
                     $('.planI-planbox').each(function (i){
-                        date.push($(this).attr("data-date"));
-                        y.push($(this).attr("data-y"));
-                        x.push($(this).attr("data-x"));
-                        place.push($(this).attr("data-place"));
-                        time.push($(this).find('.planI-plandetail__input--time').val());
 
-                        if($(this).attr("data-planNo") == ""){
-                            planNo.push(null)
-                        }else{
-                            planNo.push($(this).attr("data-planNo"));
-                        }
+                        var data = {
+                            planNo : $(this).attr("data-planNo"),
+                            day : $(this).attr("data-date") + " " + $(this).find('.planI-plandetail__input--time').val(),
+                            name : $(this).attr("data-place"),
+                            intro : $(this).find('.planI-plandetail__input--intro').val(),
+                            x : $(this).attr("data-x"),
+                            y : $(this).attr("data-y")
+                        };
 
-                        if($(this).val() == null || $(this).val() == ""){
-                            plan_intro.push(null);
-                        }else{
-                            plan_intro.push($(this).find('.planI-plandetail__input--intro').val());
-                        }
+                        dataList.push(data);
                     });
 
-                    for(var i=0;i<time.length;i++){
-                        if(time[i] == ""){
-                            alert("시간은 필수 입력 항목입니다.");
-                            return false;
-                        }
-                    }
+                    var toData = {
+                        planList : dataList,
+                        planner : planner
+                    };
+
+                    console.log(toData);
+
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/plannerUpdate?member.id=${member.id}&wDate=<fmt:formatDate value="${planner_user.getWDate()}" pattern="yyyy-MM-dd" />",
-                        data:{
-                            date : date,
-                            place : place,
-                            planIntro : plan_intro,
-                            y : y,
-                            x : x,
-                            time : time,
-                            planNo : planNo,
-                            plannerNo : ${planner_user.plannerNo},
-                            title : title,
-                            fDate : fDate,
-                            lDate : lDate,
-                            intro : planner_intro
-                        },
+                        url:"${pageContext.request.contextPath}/plannerUpdate",
+                        contentType:'application/json',
+                        data: JSON.stringify(toData),
                         type:"post",
                         success: function (data) {
                             location.href="${pageContext.request.contextPath}/" + data;

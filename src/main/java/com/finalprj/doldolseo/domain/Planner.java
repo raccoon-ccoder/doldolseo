@@ -1,10 +1,13 @@
 package com.finalprj.doldolseo.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -31,7 +34,6 @@ public class Planner {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PLANNER_SEQ_GENERATOR")
     private Long plannerNo;
 
-    // 추가 코드
     @ManyToOne
     @JoinColumn(name = "ID")
     private Member member;
@@ -40,18 +42,18 @@ public class Planner {
     private String title;
 
     @Column(name = "f_date", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date fDate;
 
     @Column(name = "l_date", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date lDate;
 
+    @Column(name = "intro", nullable = true)
     private String intro;
 
     @Column(name = "w_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
     private Date wDate;
 
     @PrePersist
