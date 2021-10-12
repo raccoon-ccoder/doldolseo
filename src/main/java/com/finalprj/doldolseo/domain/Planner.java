@@ -42,22 +42,27 @@ public class Planner {
     private String title;
 
     @Column(name = "f_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fDate;
 
     @Column(name = "l_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date lDate;
 
     @Column(name = "intro", nullable = true)
     private String intro;
 
     @Column(name = "w_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+9")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date wDate;
 
     @PrePersist
-    protected void onWrite(){
+    protected void prePersist(){
+        wDate = new Date();
+    }
+
+    @PreUpdate
+    protected void preUpdate(){
         wDate = new Date();
     }
 }

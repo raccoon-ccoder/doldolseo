@@ -71,7 +71,7 @@
             <ul class="mypageD-listcontainer__ul--blue" >
                 <li class="mypageD-listcontainer__li--big">마이 페이지</li>
                 <li class="mypageD-listcontainer__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="mypageD-listcontainer__a--blue"><img class="mypageD-listcontainer__img--small" src="_image/mypage/person.png">&nbsp;  개인 정보</a></li>
-                <li class="mypageD-listcontainer__li--small"><a href="${pageContext.request.contextPath}/planL?id=${member.id}" class="mypageD-listcontainer__a--blue"><img class="mypageD-listcontainer__img--small" src="_image/mypage/planner.png">&nbsp;&nbsp;내 플래너</a></li>
+                <li class="mypageD-listcontainer__li--small"><a href="${pageContext.request.contextPath}/users/${member.id}/planners" class="mypageD-listcontainer__a--blue"><img class="mypageD-listcontainer__img--small" src="_image/mypage/planner.png">&nbsp;&nbsp;내 플래너</a></li>
             </ul>
         </div>
         <!-- // 마이페이지 네비바 -->

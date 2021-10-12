@@ -52,15 +52,6 @@
             }
             show(current);
         });
-
-        function deletePlanner(plannerNo){
-            var result = confirm("플래너를 삭제하시겠습니까?");
-            if(result == false){
-                return false;
-            }else if(result == true){
-                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&member.id=${member.id}';
-            }
-        }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
@@ -81,8 +72,8 @@
         <div class="planD-navbox">
             <ul class="planD-navbox__ul--blue">
                 <li class="planD-navbox__li--big">마이 페이지</li>
-                <li class="planD-navbox__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="planD-navbox__a--blue"><img class="planD-navbox__img--small" src="_image/mypage/person.png">&nbsp;  개인 정보</a></li>
-                <li class="planD-navbox__li--small"><a href="${pageContext.request.contextPath}/planL?id=${member.id}" class="planD-navbox__a--blue"><img class="planD-navbox__img--small" src="_image/mypage/planner.png">&nbsp;&nbsp;내 플래너</a></li>
+                <li class="planD-navbox__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="planD-navbox__a--blue"><img class="planD-navbox__img--small" src="${pageContext.request.contextPath}/_image/mypage/person.png">&nbsp;  개인 정보</a></li>
+                <li class="planD-navbox__li--small"><a href="${pageContext.request.contextPath}/users/${member.id}/planners" class="planD-navbox__a--blue"><img class="planD-navbox__img--small" src="${pageContext.request.contextPath}/_image/mypage/planner.png">&nbsp;&nbsp;내 플래너</a></li>
             </ul>
         </div>
         <!-- // 내 프로필 nav-->
@@ -112,7 +103,7 @@
                 <div class="planD-btnbox">
 
                     <button class="planD-btnbox__button--blue" id="btn">수정</button>
-                    <button class="planD-btnbox__button--gray" onclick="deletePlanner(${planner.plannerNo})">삭제</button>
+                    <button class="planD-btnbox__button--gray" onclick="deletePlanner('${planner.plannerNo}','${member.id}','${pageContext.request.contextPath}')">삭제</button>
                 </div>
             </div>
             <!-- // 플래너 상단 (제목) -->
@@ -313,7 +304,7 @@
 
             <!-- 플래너 팝업창 입력 부분 -->
             <div class="planD-popcontentbox">
-                <form action="${pageContext.request.contextPath}/goPlanU?plannerNo=${planner.plannerNo}&wDate=${planner.getWDate()}" method="post" name="popupFrm" onsubmit="return popupCheck()">
+                <form action="${pageContext.request.contextPath}/users/${member.id}/planners/${planner.plannerNo}/edit" method="get" name="popupFrm" onsubmit="return popupCheck()">
 
                     <div class="planD-popdetailbox">
                         <span class="planD-popdetailbox__span--big">여행제목</span>

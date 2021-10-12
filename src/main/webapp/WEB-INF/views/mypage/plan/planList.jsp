@@ -18,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+
             $("#btn").click(function () {
                 $("#popup").fadeIn();
             });
@@ -27,15 +28,6 @@
             });
 
         });
-
-        function deletePlanner(plannerNo){
-            var result = confirm("플래너를 삭제하시겠습니까?");
-            if(result == false){
-                return false;
-            }else if(result == true){
-                window.location.href='${pageContext.request.contextPath}/plannerDelete?plannerNo='+plannerNo +'&member.id=${member.id}';
-            }
-        }
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
@@ -56,8 +48,8 @@
     <div class="planL-navbox">
         <ul class="planL-navbox__ul--blue">
             <li class="planL-navbox__li--big">마이 페이지</li>
-            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;  개인 정보</a></li>
-            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/planL?id=${member.id}" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="_image/mypage/person.png">&nbsp;&nbsp;내 플래너</a></li>
+            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/mypageD?id=${member.id}" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="${pageContext.request.contextPath}/_image/mypage/person.png">&nbsp;  개인 정보</a></li>
+            <li class="planL-navbox__li--small"><a href="${pageContext.request.contextPath}/users/${member.id}/planners" class="planL-navbox__a--blue"><img class="planL-navbox__img--small" src="${pageContext.request.contextPath}/_image/mypage/planner.png">&nbsp;&nbsp;내 플래너</a></li>
         </ul>
     </div>
     <!-- // 마이페이지 네비바-->
@@ -80,7 +72,7 @@
                 <div class="planL-detailbox">
 
                     <div class="planL-detailmap" >
-                        <div class="planL-map" id="map${status.count}" onclick="location.href='${pageContext.request.contextPath}/planD?plannerNo=${planner.plannerNo}'" ></div> <!-- 플래너 상세 페이지로 이동하는 경로 -->
+                        <div class="planL-map" id="map${status.count}" onclick="location.href='${pageContext.request.contextPath}/users/${member.id}/planners/${planner.plannerNo}'" ></div> <!-- 플래너 상세 페이지로 이동하는 경로 -->
                     </div>
 
                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cb0b3988eb15f5d9ee7b535c89c89b5c"></script>
@@ -134,7 +126,7 @@
                         <fmt:parseNumber value="${planner.getFDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="first"/>
                         <fmt:parseNumber value="${planner.getLDate().getTime() / (1000*60*60*24)}" integerOnly="true" var="last"/>
                         <span class="planL-detailinfo__span--days">${last - first + 1}DAYS</span>
-                        <button onclick="deletePlanner(${planner.plannerNo})" class="planL-detailinfo__button--blue">삭제</button>
+                        <button onclick="deletePlanner('${planner.plannerNo}','${member.id}','${pageContext.request.contextPath}')" class="planL-detailinfo__button--blue">삭제</button>
                     </div>
 
                 </div>
@@ -163,7 +155,7 @@
 
         <!-- 플래너 팝업창 입력 부분 -->
         <div class="planL-popcontentbox">
-            <form action="${pageContext.request.contextPath}/goPlanI?id=${member.id}" method="post" name="popupFrm" onsubmit="return popupCheck()">
+            <form action="${pageContext.request.contextPath}/users/${member.id}/planners/new" method="get" name="popupFrm" onsubmit="return popupCheck()">
 
                 <div class="planL-popdetailbox">
                     <span class="planL-popdetailbox__span--big">여행제목</span>
