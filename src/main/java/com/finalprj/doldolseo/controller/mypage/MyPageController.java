@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.controller;
+package com.finalprj.doldolseo.controller.mypage;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.dto.PlannerDTO;

@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.controller;
+package com.finalprj.doldolseo.controller.member;
 
 import com.finalprj.doldolseo.dto.MemberDTO;
 import com.finalprj.doldolseo.service.LoginService;

@@ -18,6 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            history.replaceState({}, null, location.pathname);
+
             $('.planI-daybox').click(function(e) {
                 e.preventDefault();
                 $('.planI-daybox').css("background-color","#1b3067");
@@ -55,11 +57,13 @@
                     member : member
                 };
 
-                var dataList = new Array();
+                var planList = new Array();
 
                 if(isValid == true){
+
                     $('.planI-planbox').each(function (i){
-                        var data = {
+                        // 플랜 1개의 데이터
+                        var plan = {
                             day : $(this).attr("data-date") + " " + $(this).find('.planI-plandetail__input--time').val(),
                             name : $(this).attr("data-place"),
                             intro : $(this).find('.planI-plandetail__input--intro').val(),
@@ -67,23 +71,24 @@
                             y : $(this).attr("data-y")
                         };
 
-                        dataList.push(data);
+                        // 배열에 Plan 데이터 담기
+                        planList.push(plan);
                     });
 
+                    // Plan 배열, Planner 데이터 묶기
                     var toData = {
-                        planList : dataList,
+                        planList : planList,
                         planner : planner
                     };
 
-                    console.log(toData);
-
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/plannerInsert",
+                        url:"${pageContext.request.contextPath}/api/users/${member.id}/planners",
                         contentType:'application/json',
                         data: JSON.stringify(toData),
-                        type:"post",
+                        type:"POST",
                         success: function (data) {
-                            location.href="${pageContext.request.contextPath}/" + data;
+                            alert("플래너가 생성되었습니다.");
+                            location.replace('${pageContext.request.contextPath}/users/${member.id}/planners');
                         }
                     });
                 }
@@ -105,7 +110,7 @@
 
 <!-- header -->
 <div class="planI-header">
-    <a href="${pageContext.request.contextPath}/main"><img src="_image/plan/logo.png"></a>
+    <a href="${pageContext.request.contextPath}/main"><img src="${pageContext.request.contextPath}/_image/plan/logo.png"></a>
 
     <button class="planI-header__button--sumbit">저장</button>
     <button class="planI-header__button--close" onclick="location.href='${pageContext.request.contextPath}/planL?id=${member.id}'">닫기</button>
@@ -231,6 +236,7 @@
     }
     // 검색결과 항목을 Element로 반환하는 함수입니다
     function getListItem(index, places) {
+        var contextPath = '${pageContext.request.contextPath}';
         var el = document.createElement('li'),
             itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
@@ -242,7 +248,7 @@
         }
         itemStr += '  <span class="tel">' + places.phone  + '</span>' +
             '</div>';
-        itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x +  '\')">+</button></div>';
+        itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x + '\',\'' +   contextPath  +  '\')">+</button></div>';
         el.innerHTML = itemStr;
         el.className = 'item';
         return el;

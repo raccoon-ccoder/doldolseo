@@ -283,13 +283,13 @@ plansChange(plans_current);
 사용 페이지 :   planInsert.jsp
 함수 설명 : 장소 검색 후 추가 버튼 클릭시 일정 부분에 일정 추가하는 함수
  */
-function planInsert(place_name,place_y,place_x){
+function planInsert(place_name,place_y,place_x, contextPath){
      var parent =  $('.planI-plansbox[style*="display: block"]');
      var data_date = parent.attr('data-date');
      var num = parent.children().length; // 하위 엘리먼트기에 일정 - 제목 (DAY) 부분도 포함됨
 
     if(num<10){ // 일정은 9개까지만 추가 가능
-        parent.append(getHtml(place_name,place_y,place_x,num, data_date));
+        parent.append(getHtml(place_name,place_y,place_x,num, data_date,contextPath));
     }else{
         alert("일정은 최대 9개로 제한됩니다.");
     }
@@ -301,11 +301,11 @@ function planInsert(place_name,place_y,place_x){
 사용 페이지 :   planInsert.jsp
 함수 설명 : 일정 추가시 일정 관련 <div> 코드 생성해주는 함수
  */
-function getHtml(place_name,place_y,place_x,num, data_date){
+function getHtml(place_name,place_y,place_x,num, data_date, contextPath){
     var div = '<div class="planI-planbox" data-date="' + data_date + '" data-y = "' + place_y + '" data-x = "' + place_x + '" data-place = "' + place_name + '" data-planNo="">';
 
     div += '<div class="planI-plannum">';
-    div += '<img src="_image/plan/num/number' + num + '.png" class="planI-plannum__img-navy">';
+    div += '<img src="' + contextPath + '/_image/plan/num/number' + num + '.png" class="planI-plannum__img-navy">';
     div += '<span class="planI-plannum__span--time">시간</span>';
     div += '<span class="planI-plannum__span--memo">메모</span></div>';
     div += '<div class="planI-plandetail">';
@@ -338,4 +338,29 @@ function planDelete(num){
         $(this).find('button').attr("onclick", btn);
         ++ num;
     });
+}
+
+/*
+작성자 : 백정연
+작성일 : 211011
+사용 페이지 :   planList.jsp, planDetail.jsp
+함수 설명 : 플래너 삭제 기능
+ */
+function deletePlanner(plannerNo,userId, contextPath){
+    var result = confirm("플래너를 삭제하시겠습니까?");
+    if(result == false){
+        return false;
+    }else if(result == true){
+        $.ajax({
+            type:'DELETE',
+            url: contextPath + '/api/users/' + userId +'/planners/' + plannerNo,
+            success : function(){
+                alert("플래너가 삭제되었습니다");
+                location.replace(contextPath + '/users/' + userId + '/planners');
+            },
+            error: function (request,status,error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 public class PlanDTO {
     private Long planNo;
     private Planner planner;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+9")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private Date day;
     private String name;
     private String intro;

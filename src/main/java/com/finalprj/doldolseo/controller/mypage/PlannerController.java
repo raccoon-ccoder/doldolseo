@@ -1,4 +1,4 @@
-package com.finalprj.doldolseo.controller;
+package com.finalprj.doldolseo.controller.mypage;
 
 import com.finalprj.doldolseo.domain.Member;
 import com.finalprj.doldolseo.domain.Planner;
@@ -36,58 +36,35 @@ public class PlannerController {
     private PlanServiceImpl planService;
 
     // 플래너 상세 조회
-    @RequestMapping("/planD")
-    public String planDetail(PlannerDTO dto, Model model) throws Exception {
-        PlannerDTO planner = plannerService.selectPlanner(dto.getPlannerNo());
+    @GetMapping("/users/{userid}/planners/{plannerid}")
+    public String planDetail(@PathVariable("plannerid") long plannerId, Model model) throws Exception {
+        PlannerDTO planner = plannerService.selectPlanner(plannerId);
         List<Date> dates = planService.getDiffDays(planner.getFDate(), planner.getLDate());
-        List<PlanDTO> plans = planService.selectPlan(dto.getPlannerNo());
+        List<PlanDTO> plans = planService.selectPlan(plannerId);
         model.addAttribute("planner", planner);
         model.addAttribute("dates", dates);
         model.addAttribute("plans", plans);
-
         return "/mypage/plan/planDetail";
     }
 
     // 플래너 목록 조회
-    @RequestMapping("/planL")
-    public String planList(MemberDTO dto, Model model) throws Exception {
-        List<PlannerDTO> planners = plannerService.selectPlanners(dto.getId());
+    @GetMapping("/users/{userid}/planners")
+    public String planList(@PathVariable("userid") String userId, Model model) throws Exception {
+        List<PlannerDTO> planners = plannerService.selectPlanners(userId);
         List<PlanDTO> plans = planService.joinPlans(planners);
+        for(PlanDTO dto : plans){
+            System.out.println(dto.getPlanner().getPlannerNo());
+            System.out.println(dto.getName());
+            System.out.println(dto.getX());
+        }
         model.addAttribute("planners", planners);
         model.addAttribute("plans", plans);
 
         return "/mypage/plan/planList";
     }
 
-    // 플래너 저장
-    @RequestMapping(value = "/plannerInsert", method = RequestMethod.POST)
-    @ResponseBody
-    public String planInsert(@RequestBody PlanDTO param) throws ParseException {
-       Planner planner = plannerService.insertPlanner(param.getPlanner());
-       planService.insertPlan(param.getPlanList(), planner);
-       return "planL?id=" + planner.getMember().getId();
-    }
-
-    // 플래너 수정
-    @RequestMapping(value = "/plannerUpdate", method = RequestMethod.POST)
-    @ResponseBody
-    public String plannerUpdate(@RequestBody PlanDTO param) throws ParseException {
-        Planner planner = plannerService.insertPlanner(param.getPlanner());
-        planService.updatePlans(param.getPlanList(), planner);
-        return "planD?plannerNo=" + planner.getPlannerNo();
-    }
-
-    // 플래너 삭제
-    @RequestMapping("plannerDelete")
-    public String deletePlanner(PlannerDTO dto, Model model) {
-        planService.deletePlans(dto.getPlannerNo());
-        plannerService.deletePlanner(dto.getPlannerNo());
-
-        return "redirect:/planL?id=" + dto.getMember().getId();
-    }
-
-    // 플래너 작성 폼
-    @RequestMapping("/goPlanI")
+    // 플래너 작성 폼 이동
+    @GetMapping("/users/{userid}/planners/new")
     public String goIsertPage(PlannerDTO dto, Model model) throws Exception {
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());
         model.addAttribute("days", days);
@@ -96,9 +73,10 @@ public class PlannerController {
         return "/mypage/plan/planInsert";
     }
 
-    // 플래너 수정 폼
-    @RequestMapping("/goPlanU")
-    public String goUpdatePage(PlannerDTO dto, Model model) throws Exception {
+    // 플래너 수정 폼 이동
+    @GetMapping("/users/{userid}/planners/{plannerid}/edit")
+    public String goUpdatePage(PlannerDTO dto, Model model,@PathVariable("plannerid") long plannerId) throws Exception {
+        dto.setPlannerNo(plannerId);
         List<Date> days = planService.getDiffDays(dto.getFDate(), dto.getLDate());
         List<PlanDTO> plans = planService.selectPlan(dto.getPlannerNo());
         model.addAttribute("days", days);
