@@ -2,16 +2,23 @@
 
 ## 프로젝트 개요
 다양한 여행 관련 플랫폼을 사용하면서 바라는 점이나 추가되었으면 하는 부분들에서 고안한 프로젝트로 기존 플랫폼들과 차별화하여 **서울시 관광 정보 제공, 플래너 작성, 여행 후기 공유, 여행 크루 모집**과 같은 기능을 가진 Spring Framework를 이용한 서울 여행 웹 애플리케이션을 제작하였습니다. 
-- 서울 각 지역 관광지 리스트 및 상세정보, 지역 및 테마에 따른 카테고리 분류, 검색 기능 제공
-- 나만의 여행 플래너 작성 서비스 (일정 관리 가능)
-- 여행 리뷰 공유 게시판 (조회수 순으로 베스트 코스 선정, 댓글)
-- 다양한 테마의 크루 모집 및 크루 게시판을 통한 커뮤니티 기능
-- 한국관광공사 Tour API, KAKAO Map API, OpenWeather 날씨 API 사용
+
+- 특징
+    - 서울 각 지역 관광지 리스트 및 상세정보, 지역 및 테마에 따른 카테고리 분류, 검색 기능 제공
+    - 나만의 여행 플래너 작성 서비스 (일정 관리 가능)
+    - 여행 리뷰 공유 게시판 (조회수 순으로 베스트 코스 선정, 댓글)
+    - 다양한 테마의 크루 모집 및 크루 게시판을 통한 커뮤니티 기능
+    - 한국관광공사 Tour API, KAKAO Map API, OpenWeather 날씨 API 사용
+
+- 개발 기간 : 2021.07.12 ~ 2021.08.16
+- 참여 인원 : 3명 (프론트엔드, 백엔드 구분 없음)
+- 담당 파트
+    - REST API를 이용한 플래너 CRUD 구현 및 플래너 관련 페이지 담당
+    - Bcrypt 사용하여 사용자 PW 암호화, Spring Security를 활용한 인증, 인가 구현
+    - 회원 가입, 회원 탈퇴 구현 및 마이 페이지 담당
+    - AWS (Amazon Web Services)를 이용한 프로젝트 배포
 
 
-## 프로젝트 기간 & 팀원
-- 2021.07.12 ~ 2021.08.16
-- 김경일(팀장), 백정연(팀원), 이영(팀원)
 
 
 ## 기술 스택
@@ -28,6 +35,8 @@
 
 ## 돌고돌아서울 웹사이트
 [돌고돌아서울 둘러보기](http://52.78.185.163:8080/doldolseo/main)
+
+( test용 계정 - ID : test, PASSWORD : test1234! )
 
 ## 설계
 ### ERD
@@ -54,12 +63,6 @@
 
 ### 크루 가입 및 크루 게시판 조회
 ![crew](https://user-images.githubusercontent.com/77538818/135034093-37c764b3-4124-498f-86e7-52841bc53d6a.gif)
-
-
-## What I Did
-- Spring Security를 활용한 회원가입, 로그인, 회원 탈퇴 기능 및 회원 관련 페이지 담당
-- 카카오지도 API 활용 여행 플래너 CRUD 기능 및 플래너 관련 페이지 담당
-- Oracle 클라우드, AWS (Amazon Web Services)를 이용한 프로젝트 배포 
 
 
 ## 협업 방식
@@ -99,17 +102,14 @@
 
 + 플래너 작성시 1개가 아닌, 여러 개의 데이터(일정)을 어떤 방식으로 Controller에게 넘기고 DB에 저장해야할지 고민
 	- Plan 객체 구성에 필요한 데이터(날짜, 장소명, x좌표, y좌표, 메모, 시간)을 일정 추가 시 해당 div 태그의 속성으로 부여 후 ajax를 통해 2차원 배열로 Controller에게 전달
-	
-	
-	<img src="https://user-images.githubusercontent.com/77538818/135031339-f36bb354-b4d3-44c3-8b8d-5a1fa551a24d.png" width="60%" height="50%" />
-	
-	
-	- Service에서 전달 받은 String 타입의 2차원 배열을 알맞은 타입으로 가공 후 JPA의 saveAll() 메서드로 DB에 저장
-	
-	
-	<img src="https://user-images.githubusercontent.com/77538818/135033063-70f17ee6-d4fd-4e44-a0cd-62acbc507089.png" width="80%" />
-	
-	![스크린샷 2021-09-28 오후 3 13 47](https://user-images.githubusercontent.com/77538818/135033132-0547d390-6853-46e3-9f8e-740b12842489.png)
+
+        ![스크린샷 2021-10-12 오후 12 02 32](https://user-images.githubusercontent.com/77538818/136888055-3bbdd64d-8233-4bca-b4dc-aa5531c73971.png)
+
+    
+    - Controller는 @RequestBody 어노테이션을 이용해 List<Plan> 타입의  planList 객체와 바인딩시킨 후 Service 단에서 JPA의 save() 메소드를 이용해 Database에 Plan 데이터 저장
+        
+		 ![스크린샷 2021-10-12 오후 12 14 06](https://user-images.githubusercontent.com/77538818/136888074-15513e9b-8770-4144-93c9-5d7c64bf6f6d.png)
+
 
 
 
