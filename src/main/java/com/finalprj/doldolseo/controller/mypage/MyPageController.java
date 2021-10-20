@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -185,7 +186,7 @@ public class MyPageController {
             HttpSession session = request.getSession();
             session.invalidate();
             model.addAttribute("removeResult", 0);
-            url = "/main";
+            url = "redirect:/main";
         } else {
             model.addAttribute("removeResult", 1);
             url = "redirect:/mypageD?id=" + dto.getId();

@@ -28,6 +28,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class PlannerApiController {
+    @Autowired
+    private PlannerServiceImpl plannerService;
+
+    @Autowired
+    private PlanServiceImpl planService;
+
     // 플래너 저장
     @PostMapping(value = "/users/{userid}/planners")
     public ResponseEntity<PlannerDTO> planInsert(@RequestBody PlanDTO param,@PathVariable("userid") String userId) {
@@ -41,12 +47,6 @@ public class PlannerApiController {
 
         return ResponseEntity.created(location).build();
     }
-
-    @Autowired
-    private PlannerServiceImpl plannerService;
-
-    @Autowired
-    private PlanServiceImpl planService;
 
     // 플래너 수정
     @PutMapping("/users/{userid}/planners/{plannerid}/edit")

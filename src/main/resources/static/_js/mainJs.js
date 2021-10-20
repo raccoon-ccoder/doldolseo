@@ -298,12 +298,11 @@ function planInsert(place_name,place_y,place_x, contextPath){
 /*
 작성자 : 백정연
 작성일 : 210729
-사용 페이지 :   planInsert.jsp
+사용 페이지 : planInsert.jsp
 함수 설명 : 일정 추가시 일정 관련 <div> 코드 생성해주는 함수
  */
 function getHtml(place_name,place_y,place_x,num, data_date, contextPath){
     var div = '<div class="planI-planbox" data-date="' + data_date + '" data-y = "' + place_y + '" data-x = "' + place_x + '" data-place = "' + place_name + '" data-planNo="">';
-
     div += '<div class="planI-plannum">';
     div += '<img src="' + contextPath + '/_image/plan/num/number' + num + '.png" class="planI-plannum__img-navy">';
     div += '<span class="planI-plannum__span--time">시간</span>';

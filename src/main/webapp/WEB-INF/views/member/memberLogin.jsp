@@ -72,7 +72,7 @@
             <div id="memberL-btncontainer">
                 <input type="submit" class="memberL-btncontainer__input-big" value="로그인">
                 <input type="button" class="memberL-btncontainer__input-big" value="회원가입"
-                       onclick="location.href='${pageContext.request.contextPath}/memberJ'">
+                       onclick="location.href='${pageContext.request.contextPath}/member'">
             </div>
         </form>
     </div>
