@@ -52,11 +52,7 @@ public class PlannerController {
     public String planList(@PathVariable("userid") String userId, Model model) throws Exception {
         List<PlannerDTO> planners = plannerService.selectPlanners(userId);
         List<PlanDTO> plans = planService.joinPlans(planners);
-        for(PlanDTO dto : plans){
-            System.out.println(dto.getPlanner().getPlannerNo());
-            System.out.println(dto.getName());
-            System.out.println(dto.getX());
-        }
+
         model.addAttribute("planners", planners);
         model.addAttribute("plans", plans);
 
