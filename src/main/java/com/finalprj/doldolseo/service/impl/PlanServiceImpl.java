@@ -26,11 +26,18 @@ public class PlanServiceImpl implements PlanService {
     private PlanRepository repository;
 
     /* 사용자가 작성한 플랜들을 DB에 저장하는 메소드 */
-    public void insertPlan(List<PlanDTO> planDTOS, Planner planner){
+    public List<Plan> insertPlan(List<PlanDTO> planDTOS, Planner planner){
+        List<Plan> plans = new ArrayList<>();
+
         for(PlanDTO dto : planDTOS){
             dto.setPlanner(planner);
-            repository.save(dtoToEntity(dto));
+            Plan plan = repository.save(dtoToEntity(dto));
+            if(plan == null){
+                return null;
+            }
+            plans.add(plan);
         }
+        return plans;
     }
 
     /* 플래너 번호에 따른 플랜들을 List 타입으로 반환하는 메소드 */
@@ -76,7 +83,7 @@ public class PlanServiceImpl implements PlanService {
     }
 
     /* 사용자가 수정한 플랜들을 DB에 반영 (저장, 수정, 삭제) */
-    public void updatePlans(List<PlanDTO> updatedPlans, Planner planner){
+    public List<Plan> updatePlans(List<PlanDTO> updatedPlans, Planner planner){
         List<PlanDTO> origin_plans = selectPlan(planner.getPlannerNo());
 
         // 사용자가 삭제한 플랜들 DB에서 삭제
@@ -96,7 +103,8 @@ public class PlanServiceImpl implements PlanService {
         }
 
         // 수정된 플랜들 DB 반영
-        insertPlan(updatedPlans, planner);
+        List<Plan> plans = insertPlan(updatedPlans, planner);
+        return plans;
     }
 
     public int getDiffDayCount(Date fromDate, Date toDate){
