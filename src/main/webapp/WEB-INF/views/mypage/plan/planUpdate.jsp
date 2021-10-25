@@ -87,9 +87,12 @@
                         contentType:'application/json',
                         data: JSON.stringify(toData),
                         type:"PUT",
-                        success: function (data) {
-                            alert("플래너가 수정되었습니다.");
-                            location.replace('${pageContext.request.contextPath}/users/${member.id}/planners');
+                        success: function (data, textStatus, request) {
+                            alert(data);
+                            location.replace(request.getResponseHeader("location"));
+                        },
+                        error: function(data){
+                            console.log(data.responseText);
                         }
                     });
                 }

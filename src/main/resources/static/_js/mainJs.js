@@ -353,9 +353,9 @@ function deletePlanner(plannerNo,userId, contextPath){
         $.ajax({
             type:'DELETE',
             url: contextPath + '/api/users/' + userId +'/planners/' + plannerNo,
-            success : function(){
-                alert("플래너가 삭제되었습니다");
-                location.replace(contextPath + '/users/' + userId + '/planners');
+            success: function (data, textStatus, request) {
+                alert(data);
+                location.replace(request.getResponseHeader("location"));
             },
             error: function (request,status,error) {
                 alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
