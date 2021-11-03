@@ -13,10 +13,11 @@
 - 개발 기간 : 2021.07.12 ~ 2021.08.16
 - 참여 인원 : 3명 (프론트엔드, 백엔드 구분 없음)
 - 담당 파트
-    - REST API를 이용한 플래너 CRUD 구현 및 플래너 관련 페이지 담당
+    - Kakao Map API 활용 플래너 CRUD 구현 및 플래너 관련 페이지 담당
     - Bcrypt 사용하여 사용자 PW 암호화, Spring Security를 활용한 인증, 인가 구현
     - 회원 가입, 회원 탈퇴 구현 및 마이 페이지 담당
     - AWS (Amazon Web Services)를 이용한 프로젝트 배포
+    - REST API 적용 리팩토링 및 업데이트 중
 
 
 
@@ -79,37 +80,36 @@
 
 ## 문제해결 아카이브
 
- + 3명이 함께 작업을 하기에 효율적인 프로젝트 관리와 협업에 대한 고민
-	 - 프로젝트 제작에 앞서 변수 네이밍, 주석 형식 지정과 같은 작업을 진행
-	 - 프로젝트는 Github에서 관리하고 기능별로 브랜치를 생성하여 작업 후 commit하고 변경된 사항을 Pull Request하는 방식으로 진행
-
-+ 시행착오를 줄이고자 작업 시작 전 프로젝트 기능, UI 관련 세부 사항까지 정리
-	- 팀원들의 아이디어를 취합하여 와이어프레임 작성
-	
-	( 와이어프레임 예시 )
-	
-	<img src="https://user-images.githubusercontent.com/77538818/135045587-fd452a92-e321-4874-bc46-1101123170a7.png" width="45%" ><img src="https://user-images.githubusercontent.com/77538818/135045643-d15fc161-286d-4c6c-9c13-7e2179cbe292.png" width="45%" >
-	
-	- 기능 사항 회의 완료 후 각자 맡은 페이지에 대한 스토리보드 작성 
-
-
-+ 서로 어떤 작업을 하고 있는지 잘 몰라서 생기는 의사소통 문제와 오해
-	- To Do List를 작성하고 아침마다 오늘 할 작업을 팀원에게 브리핑하여 크로스체크하며 일정 조율
-	- Commit 메세지 규칙을 정함으로써 직관적으로 서로의 작업을 공유 
-
-+ 수정한 프로젝트를 AWS E2C 서버에 올릴 때마다 프로젝트 내부 폴더에 있던 이미지 데이터들이 날아가는 문제
-	- tomcat의 webapps 폴더 내부가 아닌 외부에 이미지 업로드 폴더를 생성하고 server.xml에서 사진 업로드 경로를 설정하여 사용함으로써 해결  
-
-+ 플래너 작성시 1개가 아닌, 여러 개의 데이터(일정)을 어떤 방식으로 Controller에게 넘기고 DB에 저장해야할지 고민
-	- Plan 객체 구성에 필요한 데이터(날짜, 장소명, x좌표, y좌표, 메모, 시간)을 일정 추가 시 해당 div 태그의 속성으로 부여 후 ajax를 통해 2차원 배열로 Controller에게 전달
-
-        ![스크린샷 2021-10-12 오후 12 02 32](https://user-images.githubusercontent.com/77538818/136888055-3bbdd64d-8233-4bca-b4dc-aa5531c73971.png)
-
+1. Open API에서 제공하는 여러 데이터를 Controller에게 전달하여 DB에 저장하는 방법
+- 고민 : 플래너 작성시 키워드로 장소 검색 후 일정 추가시 장소에 대한 정보(x좌표, y좌표)를 어떻게 보관하고 플래너 저장시 여러 개의 일정 데이터를 어떤 방식으로 Controller에게 전달할 수 있을까?
+- 해결 : 검색한 장소 목록에서 일정 추가 버튼 클릭시 일정 관련 div가 생성되는데 이때 div 태그에 임의 속성명을 지정하여 속성값으로 x좌표,y좌표를 전달하였고 플래너 저장 버튼 클릭시 ajax를 호출하고 일정 관련 데이터들을 배열에 담아 Controller에게 json 형식으로 전달하였습니다.
     
-    - Controller는 @RequestBody 어노테이션을 이용해 List<Plan> 타입의  planList 객체와 바인딩시킨 후 Service 단에서 JPA의 save() 메소드를 이용해 Database에 Plan 데이터 저장
-        
-		 ![스크린샷 2021-10-12 오후 12 14 06](https://user-images.githubusercontent.com/77538818/136888074-15513e9b-8770-4144-93c9-5d7c64bf6f6d.png)
+![스크린샷 2021-10-25 오후 10 35 23](https://user-images.githubusercontent.com/77538818/140046628-e1ae3fee-89fd-458f-be7e-0fd5016ad9af.png)
+    
+KAKAO Map API에서 조회된 데이터 기반으로 일정 추가시 일정 관련 div 생성하는 함수
 
+![스크린샷 2021-10-12 오후 12 02 32](https://user-images.githubusercontent.com/77538818/140046645-c973c19d-7c4f-4d3e-bd56-266224d75c35.png)
 
+플래너 저장시 배열에 일정 관련 데이터를 넣어 json 타입으로 Controller에게 전달
 
+![스크린샷 2021-10-20 오후 7 06 47](https://user-images.githubusercontent.com/77538818/140046650-c2f4e8a0-51f5-462b-aed4-2d4f7adea9b1.png)
+    
+@RequestBody 어노테이션을 이용해 List<Plan> 타입의  planList 객체와 바인딩하여 Service 단에서 JPA의 save() 메소드로 Database에 Plan 데이터 저장    
+    
+
+2. Spring MVC 패턴으로 개발한 프로젝트를 RESTful 하게 리팩토링하는 방법
+- 고민 : @Controller 어노테이션으로 View를 반환하는 Controller에서 @RestController로 변경하면 View를 반환할 수가 없는데 어떤 방식으로 URI의 요청결과를 반환해야 할까?
+- 해결 : View를 반환하는 Controller, 데이터를 반환하는 APIController로 분리하였고 데이터 저장,수정, 삭제의 경우 클라이언트 화면에서 버튼을 누르는 등의 동작에 따라 자바스크립트로 비동기 요청을 보냈습니다. 이런 요청들에 대해 PlannerAPIController에서 가장 깔끔한 JSON 형식으로 이동할 URI와 응답 결과를 반환하였습니다.
+
+![스크린샷 2021-10-25 오후 11 08 57](https://user-images.githubusercontent.com/77538818/140046928-2e68d379-7f7e-4787-9558-c6166a027cf8.png)
+	
+플래너 상세 페이지에서 플래너 삭제 버튼 클릭시 실행되는 자바스크립트 함수로 ajax 실행하여PlannerAPIController의 플래너 삭제 메소드 호출
+
+![스크린샷 2021-10-25 오후 11 16 15](https://user-images.githubusercontent.com/77538818/140046949-c9bc253c-d4f6-4c57-b1ef-e3fe887cd315.png)
+	
+삭제할 플래너가 존재하지 않을 경우 오류 메시지와 상태 반환, 삭제가 완료되었다면 플래너 목록으로 이동하는 URI와 성공 메세지 반환
+
+3. AWS EC2에 프로젝트 배포시 이미지 파일 저장 경로
+- 고민 : 프로젝트 내부에 이미지 경로를 설정하여 저장할 경우 수정한 프로젝트를  AWS E2C 서버에 올릴 때마다 프로젝트에 사용되는 이미지 데이터들이 날아가는데 어떤 방식으로 변경해야 할까?
+- 해결 : 프로젝트 내부 경로 (tomcat/webapps/프로젝트/이미지 폴더명) 이 아닌 외부(webapps 폴더 외부)에 이미지 업로드 폴더 생성 후 톰캣의 server.xml에서 사진 업로드 경로를 설정하여 사용함으로써 해결하였습니다.
 
