@@ -86,23 +86,26 @@ public class MyPageController {
 
         // 사용자 크루활동글 목록
         Page<CrewPostDTO> crewPostList = service.getCrewPostListByUser(dto.getId(), pageable);
-        model.addAttribute("pagingParam", new PagingParam(5, crewPostList));
+
+        model.addAttribute("crewPostPaging", new PagingParam(5, crewPostList));
         model.addAttribute("crewPostList", crewPostList);
 
         // 사용자 크루활동댓글 목록
         Page<CrewCommentDTO> crewCommentList = service.getCrewCommentListByUser(dto.getId(), pageable);
-        model.addAttribute("pagingParam", new PagingParam(5, crewCommentList));
+
+        model.addAttribute("crewCommentPaging", new PagingParam(5, crewCommentList));
         model.addAttribute("crewCommentList", crewCommentList);
+
 
         // 사용자 후기글 목록
         Page<ReviewDTO> reviewList = service.getReviewListByUser(dto.getId(), pageable);
-        model.addAttribute("pagingParam", new PagingParam(5, reviewList));
+        model.addAttribute("reviewListPaging", new PagingParam(5, reviewList));
         model.addAttribute("reviewList", reviewList);
 
         // 사용자 댓글 목록
-        Page<ReviewCommentDTO> commentList = service.getReviewCommentListByUser(dto.getId(), pageable);
-        model.addAttribute("pagingParam", new PagingParam(5, commentList));
-        model.addAttribute("commentList", commentList);
+        Page<ReviewCommentDTO> reviewCommentList = service.getReviewCommentListByUser(dto.getId(), pageable);
+        model.addAttribute("reviewCommentPaging", new PagingParam(5, reviewCommentList));
+        model.addAttribute("commentList", reviewCommentList);
 
         return "/mypage/mypageDetail";
     }

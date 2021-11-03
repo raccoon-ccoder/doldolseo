@@ -75,6 +75,10 @@ public class PlannerApiController {
     // 플래너 삭제
     @DeleteMapping("/users/{userid}/planners/{plannerid}")
     public ResponseEntity<String> deletePlanner(@PathVariable("plannerid") long plannerId, @PathVariable("userid") String userId) {
+        PlannerDTO dto = plannerService.selectPlanner(plannerId);
+        if(dto == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 플래너가 존재하지 않습니다, 다시 확인해주세요.");
+        }
         planService.deletePlans(plannerId);
         plannerService.deletePlanner(plannerId);
 

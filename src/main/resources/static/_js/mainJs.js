@@ -347,6 +347,7 @@ function planDelete(num){
  */
 function deletePlanner(plannerNo,userId, contextPath){
     var result = confirm("플래너를 삭제하시겠습니까?");
+
     if(result == false){
         return false;
     }else if(result == true){
@@ -354,7 +355,9 @@ function deletePlanner(plannerNo,userId, contextPath){
             type:'DELETE',
             url: contextPath + '/api/users/' + userId +'/planners/' + plannerNo,
             success: function (data, textStatus, request) {
+                // 응답 결과 메세지 알림
                 alert(data);
+                // 플래너 목록 페이지로 이동하는 Controller 호출
                 location.replace(request.getResponseHeader("location"));
             },
             error: function (request,status,error) {
